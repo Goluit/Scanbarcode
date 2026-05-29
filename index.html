@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Dynamic Meta Tags handled by JS -->
+    <title>ScanBarcode Pro - Ultimate QR & Barcode Scanner</title>
+    <meta name="description" content="Free online QR and Barcode scanner. Scan from camera or image. Generate QR codes and Barcodes.">
+    <meta name="keywords" content="barcode scanner, qr scanner, scan barcode online, free qr scanner, ean scanner, upc scanner">
+    <meta name="author" content="ScanBarcode Pro">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="ScanBarcode Pro">
+    <meta property="og:description" content="Professional Scanning Tools">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#4f46e5',
+                        dark: '#0f172a',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Libraries -->
+    <!-- ZXing Browser Library Wrapper -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <!-- JsBarcode for 1D -->
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <!-- QRCode.js for 2D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.85);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Transitions */
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        #reader { width: 100%; border-radius: 0.5rem; overflow: hidden; }
+        #reader video { object-fit: cover; border-radius: 0.5rem; }
+    </style>
+
+    <!-- Dynamic Schema Injection Placeholder -->
+    <script type="application/ld+json" id="json-ld">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ScanBarcode Pro",
+      "url": "https://scanbarcodepro.com"
+    }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-dark dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-[60] flex flex-col gap-2"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="router.push('/')">
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-lg">
+                        <i class="fa-solid fa-barcode"></i>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight">ScanBarcode<span class="text-primary">Pro</span></span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-6 text-sm font-medium">
+                    <a href="/" class="nav-link hover:text-primary transition">Home</a>
+                    <a href="/scanner" class="nav-link hover:text-primary transition">Scanner</a>
+                    <a href="/generator" class="nav-link hover:text-primary transition">Generator</a>
+                    <a href="/history" class="nav-link hover:text-primary transition">History</a>
+                    <a href="/blog" class="nav-link hover:text-primary transition">Blog</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-moon dark:hidden text-gray-600"></i>
+                        <i class="fa-solid fa-sun hidden dark:inline text-yellow-400"></i>
+                    </button>
+                    <button class="md:hidden p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 border-b dark:border-gray-800 p-4 space-y-2 shadow-lg">
+            <a href="/" class="block py-2 hover:text-primary">Home</a>
+            <a href="/scanner" class="block py-2 hover:text-primary">Scanner</a>
+            <a href="/generator" class="block py-2 hover:text-primary">Generator</a>
+            <a href="/history" class="block py-2 hover:text-primary">History</a>
+            <a href="/blog" class="block py-2 hover:text-primary">Blog</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="app-root" class="flex-grow pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        
+        <!-- PAGE: HOME -->
+        <div id="page-home" class="page-section fade-in">
+            <div class="text-center py-16 lg:py-24">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                    The Ultimate Scanning Experience
+                </h1>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-10">
+                    ScanBarcode Pro provides enterprise-grade barcode and QR code scanning directly in your browser. Secure, fast, and free.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="router.push('/scanner')" class="bg-primary hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition transform hover:-translate-y-1 text-lg">
+                        <i class="fa-solid fa-camera mr-2"></i> Start Scanning
+                    </button>
+                    <button onclick="router.push('/generator')" class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white px-8 py-4 rounded-xl font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition text-lg">
+                        <i class="fa-solid fa-qrcode mr-2"></i> Create Code
+                    </button>
+                </div>
+            </div>
+
+            <!-- SEO Content Section -->
+            <article class="prose dark:prose-invert max-w-none glass-card p-8 rounded-2xl mb-16">
+                <h2>Everything You Need to Know About Barcodes & QR Codes</h2>
+                <p>
+                    Welcome to ScanBarcode Pro, the premier destination for all your scanning and generating needs. In an increasingly digital world, the ability to quickly interpret physical data is crucial. Whether you are a retailer managing inventory, a logistics professional tracking shipments, or a consumer checking product authenticity, our tools are designed for you.
+                </p>
+                
+                <h3>What is a Barcode Scanner?</h3>
+                <p>
+                    A barcode scanner is an input device that captures and reads information contained in a barcode. Traditional laser scanners read the reflection of light from the black and white lines. Our online scanner utilizes your device's high-definition camera and advanced ZXing decoding algorithms to read 1D barcodes (like UPC, EAN, Code 128) and 2D barcodes (like QR codes and Data Matrix) instantly.
+                </p>
+
+                <h3>What is a QR Code Scanner?</h3>
+                <p>
+                    QR (Quick Response) codes are two-dimensional matrix barcodes that can hold thousands of characters of data. Unlike standard barcodes, QR codes can be scanned from any direction. Our tool supports all standard QR formats, including URLs, WiFi credentials, vCards, and plain text.
+                </p>
+
+                <h3>How Barcode Scanning Works</h3>
+                <p>
+                    The process involves three main steps: illumination, reflection/conversion, and decoding. Our software illuminates the code with the camera flash (if needed), captures the image, and converts the light/dark areas into binary data. This binary string is then mapped to a character set based on the specific symbology (e.g., Code 128 set B).
+                </p>
+
+                <h3>Business Applications</h3>
+                <ul>
+                    <li><strong>Retail:</strong> Speed up checkout lines and manage stock levels.</li>
+                    <li><strong>Warehousing:</strong> Track inbound and outbound shipments with precision.</li>
+                    <li><strong>Healthcare:</strong> Verify patient IDs and medication administration.</li>
+                    <li><strong>Marketing:</strong> Engage customers with WiFi login QR codes and promotional URLs.</li>
+                </ul>
+
+                <h3>Security and Privacy</h3>
+                <p>
+                    We prioritize your privacy. ScanBarcode Pro is a client-side application. This means your camera feed and scan results are processed locally within your browser. No data is transmitted to our servers. This architecture ensures HIPAA compliance readiness and complete data security.
+                </p>
+            </article>
+
+            <!-- Feature Grid -->
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="glass-card p-8 rounded-2xl hover:shadow-xl transition">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-bolt"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Lightning Fast</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Optimized decoding engine for instant results.</p>
+                </div>
+                <div class="glass-card p-8 rounded-2xl hover:shadow-xl transition">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 text-purple-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-lock"></i></div>
+                    <h3 class="text-xl font-bold mb-2">100% Private</h3>
+                    <p class="text-gray-600 dark:text-gray-400">No server uploads. All processing happens on your device.</p>
+                </div>
+                <div class="glass-card p-8 rounded-2xl hover:shadow-xl transition">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900 text-green-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-globe"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Universal Access</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Works on iOS, Android, Windows, and macOS.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: SCANNER -->
+        <div id="page-scanner" class="page-section hidden fade-in">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="relative bg-black rounded-2xl overflow-hidden shadow-2xl aspect-video flex items-center justify-center">
+                        <div id="reader" class="w-full h-full"></div>
+                        <!-- Overlay Controls -->
+                        <div class="absolute inset-0 pointer-events-none flex flex-col justify-between p-4">
+                            <div class="flex justify-between pointer-events-auto">
+                                <button onclick="scanner.toggleTorch()" id="btn-torch" class="hidden bg-gray-800/80 text-white p-3 rounded-full hover:bg-gray-700 transition"><i class="fa-solid fa-bolt"></i></button>
+                            </div>
+                            <div class="flex justify-center gap-4 pointer-events-auto pb-4">
+                                <button onclick="scanner.start()" id="btn-start" class="bg-primary text-white px-6 py-2 rounded-full font-bold shadow-lg">Start Camera</button>
+                                <button onclick="scanner.stop()" id="btn-stop" class="hidden bg-red-600 text-white px-6 py-2 rounded-full font-bold shadow-lg">Stop</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tools -->
+                    <div class="glass-card p-4 rounded-xl flex flex-wrap gap-4 items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <label class="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                                <i class="fa-solid fa-upload"></i>
+                                <span>Scan Image</span>
+                                <input type="file" class="hidden" accept="image/*" onchange="scanner.scanFile(this)">
+                            </label>
+                            <div id="zoom-container" class="hidden flex items-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+                                <input type="range" min="1" max="10" value="1" step="0.1" class="w-24" oninput="scanner.setZoom(this.value)">
+                            </div>
+                        </div>
+                        <div id="scan-status" class="text-sm font-medium text-gray-500">Camera Off</div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl h-fit">
+                    <h3 class="text-xl font-bold mb-4">Scan Result</h3>
+                    <div id="result-area" class="min-h-[150px] flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl mb-4 text-center p-4">
+                        <span class="text-gray-400">Result will appear here</span>
+                    </div>
+                    <div id="result-actions" class="hidden grid grid-cols-2 gap-2">
+                        <button onclick="scanner.copy()" class="col-span-1 bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900"><i class="fa-regular fa-copy"></i> Copy</button>
+                        <button onclick="scanner.share()" class="col-span-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"><i class="fa-solid fa-share-nodes"></i> Share</button>
+                        <button onclick="scanner.downloadTxt()" class="col-span-2 bg-primary text-white py-2 rounded-lg hover:bg-blue-600"><i class="fa-solid fa-file-arrow-down"></i> Download .txt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: GENERATOR -->
+        <div id="page-generator" class="page-section hidden fade-in">
+            <div class="glass-card rounded-2xl overflow-hidden">
+                <div class="flex border-b border-gray-200 dark:border-gray-700">
+                    <button onclick="generator.setTab('qr')" id="gen-tab-qr" class="flex-1 py-4 font-bold bg-gray-50 dark:bg-gray-800 text-primary border-b-2 border-primary">QR Generator</button>
+                    <button onclick="generator.setTab('barcode')" id="gen-tab-barcode" class="flex-1 py-4 font-bold text-gray-500 hover:text-gray-700">Barcode Generator</button>
+                </div>
+                
+                <div class="p-8 grid md:grid-cols-2 gap-8">
+                    <div id="gen-controls" class="space-y-6">
+                        <!-- Injected via JS -->
+                    </div>
+                    <div class="flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-800/50 rounded-xl p-8 min-h-[300px]">
+                        <div id="gen-output" class="bg-white p-4 rounded-lg shadow-sm">
+                            <span class="text-gray-400">Preview</span>
+                        </div>
+                        <button onclick="generator.download()" id="btn-dl-gen" class="hidden mt-6 bg-gray-800 dark:bg-white dark:text-gray-900 text-white px-6 py-2 rounded-lg font-medium">Download Image</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: HISTORY -->
+        <div id="page-history" class="page-section hidden fade-in">
+            <div class="glass-card rounded-2xl overflow-hidden">
+                <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                    <h2 class="text-2xl font-bold">Scan History</h2>
+                    <div class="flex gap-2">
+                        <button onclick="historyManager.export('csv')" class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200">Export CSV</button>
+                        <button onclick="historyManager.clear()" class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded hover:bg-red-200">Clear</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 dark:bg-gray-800">
+                            <tr>
+                                <th class="p-4 text-sm font-medium">Type</th>
+                                <th class="p-4 text-sm font-medium">Date</th>
+                                <th class="p-4 text-sm font-medium">Content</th>
+                                <th class="p-4 text-sm font-medium">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <!-- Items -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="history-empty" class="hidden p-8 text-center text-gray-500">No history found.</div>
+            </div>
+        </div>
+
+        <!-- PAGE: BLOG INDEX -->
+        <div id="page-blog" class="page-section hidden fade-in">
+            <h2 class="text-3xl font-bold mb-8">Latest Articles</h2>
+            <div id="blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamic Blog Cards -->
+            </div>
+            <div class="mt-8 flex justify-center">
+                <div class="flex gap-2">
+                    <button class="px-4 py-2 bg-white dark:bg-gray-800 border rounded hover:bg-gray-50">Prev</button>
+                    <button class="px-4 py-2 bg-primary text-white rounded">1</button>
+                    <button class="px-4 py-2 bg-white dark:bg-gray-800 border rounded hover:bg-gray-50">2</button>
+                    <button class="px-4 py-2 bg-white dark:bg-gray-800 border rounded hover:bg-gray-50">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: BLOG POST (Dynamic) -->
+        <div id="page-blog-post" class="page-section hidden fade-in">
+            <button onclick="router.back()" class="text-primary mb-4 hover:underline"><i class="fa-solid fa-arrow-left"></i> Back to Blog</button>
+            <div class="glass-card p-8 rounded-2xl max-w-4xl mx-auto">
+                <span id="post-category" class="text-blue-600 font-bold text-sm uppercase tracking-wider">Guide</span>
+                <h1 id="post-title" class="text-3xl md:text-4xl font-bold mt-2 mb-4">Article Title</h1>
+                <div class="flex items-center gap-4 text-gray-500 text-sm mb-8">
+                    <span><i class="fa-regular fa-calendar"></i> <span id="post-date">Oct 24, 2023</span></span>
+                    <span><i class="fa-solid fa-clock"></i> 5 min read</span>
+                </div>
+                <div id="post-content" class="prose dark:prose-invert max-w-none">
+                    <!-- Content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: SEO LANDING (Dynamic) -->
+        <div id="page-seo-landing" class="page-section hidden fade-in">
+            <div class="glass-card p-8 rounded-2xl max-w-4xl mx-auto">
+                <h1 id="seo-title" class="text-4xl font-bold mb-6 text-primary">SEO Title</h1>
+                <div class="prose dark:prose-invert max-w-none" id="seo-content">
+                    <!-- Dynamic SEO Content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: SEO FILES (Virtual) -->
+        <div id="page-seo-files" class="page-section hidden fade-in">
+            <h2 class="text-2xl font-bold mb-4">SEO Files & Config</h2>
+            <div class="glass-card p-6 rounded-xl mb-6">
+                <h3 class="font-bold text-lg mb-2">robots.txt</h3>
+                <pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded text-sm overflow-x-auto">
+User-agent: *
+Allow: /
+Sitemap: https://scanbarcodepro.com/sitemap.xml
+                </pre>
+            </div>
+            <div class="glass-card p-6 rounded-xl">
+                <h3 class="font-bold text-lg mb-2">sitemap.xml (Structure)</h3>
+                <pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded text-sm overflow-x-auto">
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+  &lt;url&gt;&lt;loc&gt;https://scanbarcodepro.com/&lt;/loc&gt;&lt;priority&gt;1.0&lt;/priority&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc&gt;https://scanbarcodepro.com/scanner&lt;/loc&gt;&lt;priority&gt;0.9&lt;/priority&gt;&lt;/url&gt;
+  &lt;!-- ... 100 blog URLs ... --&gt;
+&lt;/urlset&gt;
+                </pre>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center gap-6 mb-8 text-sm font-medium">
+                <a href="/about" class="hover:text-primary">About</a>
+                <a href="/privacy" class="hover:text-primary">Privacy</a>
+                <a href="/terms" class="hover:text-primary">Terms</a>
+                <a href="/contact" class="hover:text-primary">Contact</a>
+                <a href="/sitemap" class="hover:text-primary">Sitemap</a>
+            </div>
+            <p class="text-gray-400">&copy; 2023 ScanBarcode Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- APPLICATION LOGIC -->
+    <script>
+        // --- DATA & CONTENT GENERATION ---
+        const CONTENT = {
+            blogTopics: [
+                "Barcode Scanning Best Practices", "QR Code Marketing Strategies", "Understanding EAN vs UPC", 
+                "Inventory Management 101", "The Future of 2D Barcodes", "Secure WiFi with QR Codes", 
+                "vCard QR Codes for Networking", "Product Authentication Guide", "Retail Technology Trends", 
+                "Healthcare Barcode Safety", "Logistics Tracking Systems", "Code 128 vs Code 39", 
+                "DataMatrix vs QR Code", "Mobile Scanning Optimization", "PWA Benefits for Retail",
+                "Batch Barcode Generation", "APIs for Barcode Data", "Legal Aspects of Barcoding", 
+                "Sustainable Packaging & QR", "Augmented Reality Barcodes", "Print Quality for Scanning",
+                "How to Fix Unreadable Codes", "Global Barcode Standards", "GS1 Compliance Guide",
+                "Asset Tagging Solutions", "Library Management Systems", "Event Ticketing with QR",
+                "Restaurant Menu QR Codes", "Payment Gateways & QR", "Supply Chain Transparency",
+                "Anti-Counterfeiting Measures", "Barcode Art & Design", "Scanner Hardware Review",
+                "Android Camera APIs", "iOS Vision Framework", "WebAssembly Performance",
+                "Cloud vs Local Scanning", "Offline PWA Strategies", "User Experience in Scanning",
+                "Accessibility in Barcodes", "Color Theory for QR Codes", "Error Correction Levels",
+                "Micro QR Codes", "PDF417 Explained", "Aztec Codes Usage",
+                "MaxiCode for Logistics", "Pharmacode Guide", "POSTNET Barcode History",
+                "Intelligent Mail Barcode", "Australian Post Barcode", "Japan Postal Barcode",
+                "Singapore Postal Barcode", "RM4SCC Royal Mail", "KIX Code Netherlands",
+                "ITF-14 Shipping Codes", "GS1-128 Identification", "SSCC Serial Numbers",
+                "Global Location Number", "Global Trade Item Number", "Coupon Extended Barcodes",
+                "Return Forms Automation", "Direct Part Marking", "UID Marking Standards",
+                "IUID Compliance", "NASA Barcode Standards", "Military Logistics Barcodes",
+                "Aerospace Traceability", "Automotive Parts Marking", "Electronics Component ID",
+                "Fresh Produce Lookup", "Food Safety Traceability", "Recall Management Systems",
+                "Warranty Registration", "Customer Loyalty Programs", "Digital Receipts via QR",
+                "Dynamic QR Codes Explained", "Short URLs vs QR", "QR Code Analytics Guide",
+                "A/B Testing with QR", "Social Media Integration", "LinkedIn QR Networking",
+                "WhatsApp Business QR", "WiFi QR Security Risks", "NFC vs QR Codes",
+                "Beacon vs Barcode", "IoT Sensor Scanning", "RFID vs Barcode Comparison"
+            ],
+            seoRoutes: [
+                { path: 'scan-barcode-online', title: 'Scan Barcode Online - Free Tool', keywords: ['online', 'free', 'tool'] },
+                { path: 'free-barcode-scanner', title: 'Free Barcode Scanner App', keywords: ['app', 'mobile'] },
+                { path: 'scan-barcode-from-image', title: 'Scan Barcode from Image File', keywords: ['image', 'upload'] },
+                { path: 'scan-qr-code-online', title: 'Scan QR Code Online Instantly', keywords: ['qr', 'instant'] },
+                { path: 'ean-barcode-scanner', title: 'EAN Barcode Scanner for Retail', keywords: ['ean', 'retail'] },
+                { path: 'upc-barcode-scanner', title: 'UPC Barcode Scanner Guide', keywords: ['upc', 'products'] },
+                { path: 'online-qr-generator', title: 'Online QR Generator Free', keywords: ['generator', 'create'] },
+                { path: 'wifi-qr-generator', title: 'WiFi QR Generator for Business', keywords: ['wifi', 'network'] }
+            ]
+        };
+
+        // --- ROUTER SYSTEM (Next.js Simulation) ---
+        const router = {
+            routes: {
+                '/': 'page-home',
+                '/scanner': 'page-scanner',
+                '/generator': 'page-generator',
+                '/history': 'page-history',
+                '/blog': 'page-blog',
+                '/sitemap': 'page-seo-files'
+            },
+
+            init() {
+                window.addEventListener('popstate', () => this.handleLocation());
+                document.addEventListener('click', e => {
+                    const link = e.target.closest('a');
+                    if (link && link.getAttribute('href').startsWith('/')) {
+                        e.preventDefault();
+                        this.push(link.getAttribute('href'));
+                    }
+                });
+                this.handleLocation();
+            },
+
+            push(path) {
+                window.history.pushState({}, '', path);
+                this.handleLocation();
+            },
+            
+            back() {
+                window.history.back();
+            },
+
+            handleLocation() {
+                const path = window.location.pathname;
+                
+                // Stop scanner if leaving scanner
+                if (path !== '/scanner' && app.state.isScanning) app.scanner.stop();
+
+                // Hide all sections
+                document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+
+                // Check static routes
+                if (this.routes[path]) {
+                    document.getElementById(this.routes[path]).classList.remove('hidden');
+                    window.scrollTo(0,0);
+                    return;
+                }
+
+                // Check Dynamic Blog Route: /blog/:id
+                if (path.startsWith('/blog/') && path.length > 6) {
+                    const id = parseInt(path.split('/')[2]);
+                    if (!isNaN(id)) {
+                        app.renderBlogPost(id);
+                        return;
+                    }
+                }
+
+                // Check Dynamic SEO Routes
+                const seoPage = CONTENT.seoRoutes.find(r => '/' + r.path === path);
+                if (seoPage) {
+                    app.renderSEOLanding(seoPage);
+                    return;
+                }
+
+                // Fallback for other "pages" (About, Privacy, etc.) - generic template
+                if (path === '/about' || path === '/privacy' || path === '/terms' || path === '/contact') {
+                    app.renderGenericPage(path);
+                    return;
+                }
+
+                // 404
+                this.push('/');
+            }
+        };
+
+        // --- APPLICATION CONTROLLER ---
+        const app = {
+            state: {
+                history: JSON.parse(localStorage.getItem('sb_history')) || [],
+                theme: localStorage.getItem('theme') || 'system',
+                currentResult: null,
+                html5QrCode: null,
+                isScanning: false
+            },
+
+            init() {
+                // Theme
+                this.applyTheme();
+                document.getElementById('theme-toggle').addEventListener('click', () => this.toggleTheme());
+
+                // Router
+                router.init();
+
+                // Initializers
+                this.scanner.init();
+                this.generator.init();
+                this.historyManager.render();
+                this.blogManager.renderIndex();
+            },
+
+            toggleTheme() {
+                this.state.theme = this.state.theme === 'dark' ? 'light' : 'dark';
+                localStorage.setItem('theme', this.state.theme);
+                this.applyTheme();
+            },
+
+            applyTheme() {
+                const isDark = this.state.theme === 'dark' || (this.state.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                document.documentElement.classList.toggle('dark', isDark);
+            },
+
+            toast(msg, type='success') {
+                const c = document.getElementById('toast-container');
+                const t = document.createElement('div');
+                t.className = `${type === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white px-4 py-3 rounded shadow-lg fade-in flex items-center gap-2`;
+                t.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'check' : 'exclamation'}-circle"></i> ${msg}`;
+                c.appendChild(t);
+                setTimeout(() => t.remove(), 3000);
+            },
+
+            // --- SCANNER LOGIC ---
+            scanner: {
+                init() {
+                    document.getElementById('btn-start').addEventListener('click', () => this.start());
+                    document.getElementById('btn-stop').addEventListener('click', () => this.stop());
+                },
+                
+                async start() {
+                    try {
+                        app.state.html5QrCode = new Html5Qrcode("reader");
+                        const cameras = await Html5QrCode.getCameras();
+                        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+                        
+                        // Prefer back camera
+                        const cameraId = cameras.find(c => c.label.toLowerCase().includes('back'))?.id || cameras[0].id;
+
+                        await app.state.html5QrCode.start(cameraId, config, this.onSuccess, () => {});
+                        
+                        app.state.isScanning = true;
+                        document.getElementById('btn-start').classList.add('hidden');
+                        document.getElementById('btn-stop').classList.remove('hidden');
+                        document.getElementById('scan-status').innerText = "Scanning...";
+                        document.getElementById('scan-status').classList.add('text-green-500');
+                        
+                        // Check Torch/Zoom capabilities (Simulated for UI)
+                        document.getElementById('btn-torch').classList.remove('hidden');
+                        document.getElementById('zoom-container').classList.remove('hidden');
+
+                    } catch (err) {
+                        app.toast("Camera permission denied.", "error");
+                    }
+                },
+
+                stop() {
+                    if (app.state.html5QrCode && app.state.isScanning) {
+                        app.state.html5QrCode.stop().then(() => {
+                            app.state.html5QrCode.clear();
+                            app.state.isScanning = false;
+                            document.getElementById('btn-start').classList.remove('hidden');
+                            document.getElementById('btn-stop').classList.add('hidden');
+                            document.getElementById('scan-status').innerText = "Camera Off";
+                            document.getElementById('scan-status').classList.remove('text-green-500');
+                        });
+                    }
+                },
+
+                scanFile(input) {
+                    if (input.files.length === 0) return;
+                    const html5QrCode = new Html5Qrcode("reader");
+                    html5QrCode.scanFile(input.files[0], true)
+                        .then(text => {
+                            this.processResult(text, "File");
+                            html5QrCode.clear();
+                        })
+                        .catch(err => app.toast("No code found in image", "error"));
+                },
+
+                toggleTorch() {
+                    // Note: Actual torch support varies by browser/device
+                    app.state.html5QrCode.applyVideoConstraints({ advanced: [{ torch: true }] })
+                        .then(() => app.toast("Torch Enabled"))
+                        .catch(() => app.toast("Torch not supported", "error"));
+                },
+
+                setZoom(val) {
+                    // Note: Zoom requires track capabilities
+                    app.state.html5QrCode.applyVideoConstraints({ advanced: [{ zoom: parseFloat(val) }] })
+                        .catch(() => {}); // Silent fail if not supported
+                },
+
+                onSuccess(decodedText, result) {
+                    this.processResult(decodedText, result.result.format.formatName);
+                },
+
+                processResult(text, type) {
+                    app.state.currentResult = text;
+                    document.getElementById('result-area').innerHTML = `
+                        <div class="text-center w-full">
+                            <div class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded inline-block mb-2">${type}</div>
+                            <p class="font-mono font-bold break-all">${text}</p>
+                        </div>
+                    `;
+                    document.getElementById('result-actions').classList.remove('hidden');
+                    app.historyManager.add(text, type);
+                },
+
+                copy() { navigator.clipboard.writeText(app.state.currentResult); app.toast("Copied!"); },
+                async share() { 
+                    if(navigator.share) await navigator.share({ text: app.state.currentResult }); 
+                },
+                downloadTxt() {
+                    const blob = new Blob([app.state.currentResult], { type: 'text/plain' });
+                    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'scan.txt'; a.click();
+                }
+            },
+
+            // --- GENERATOR LOGIC ---
+            generator: {
+                currentTab: 'qr',
+                blob: null,
+
+                init() {
+                    this.renderControls();
+                },
+
+                setTab(tab) {
+                    this.currentTab = tab;
+                    document.getElementById('gen-tab-qr').className = tab === 'qr' ? 'flex-1 py-4 font-bold bg-gray-50 dark:bg-gray-800 text-primary border-b-2 border-primary' : 'flex-1 py-4 font-bold text-gray-500 hover:text-gray-700';
+                    document.getElementById('gen-tab-barcode').className = tab === 'barcode' ? 'flex-1 py-4 font-bold bg-gray-50 dark:bg-gray-800 text-primary border-b-2 border-primary' : 'flex-1 py-4 font-bold text-gray-500 hover:text-gray-700';
+                    this.renderControls();
+                },
+
+                renderControls() {
+                    const c = document.getElementById('gen-controls');
+                    if (this.currentTab === 'qr') {
+                        c.innerHTML = `
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Content</label>
+                                <textarea id="qr-data" rows="4" class="w-full bg-gray-50 dark:bg-gray-800 border rounded p-2"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Correction Level</label>
+                                <select id="qr-ec" class="w-full bg-gray-50 dark:bg-gray-800 border rounded p-2">
+                                    <option value="L">Low (7%)</option>
+                                    <option value="M" selected>Medium (15%)</option>
+                                    <option value="Q">Quartile (25%)</option>
+                                    <option value="H">High (30%)</option>
+                                </select>
+                            </div>
+                            <button onclick="app.generator.generateQR()" class="w-full bg-primary text-white py-3 rounded-lg font-bold">Generate QR</button>
+                        `;
+                    } else {
+                        c.innerHTML = `
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Format</label>
+                                <select id="bar-format" class="w-full bg-gray-50 dark:bg-gray-800 border rounded p-2">
+                                    <option value="CODE128">Code 128</option>
+                                    <option value="EAN13">EAN-13</option>
+                                    <option value="UPC">UPC</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Value</label>
+                                <input type="text" id="bar-data" class="w-full bg-gray-50 dark:bg-gray-800 border rounded p-2">
+                            </div>
+                            <button onclick="app.generator.generateBar()" class="w-full bg-primary text-white py-3 rounded-lg font-bold">Generate Barcode</button>
+                        `;
+                    }
+                },
+
+                generateQR() {
+                    const data = document.getElementById('qr-data').value;
+                    if(!data) return app.toast("Enter data", "error");
+                    document.getElementById('gen-output').innerHTML = "";
+                    new QRCode(document.getElementById("gen-output"), {
+                        text: data, width: 200, height: 200, correctLevel: QRCode.CorrectLevel[document.getElementById('qr-ec').value]
+                    });
+                    setTimeout(() => this.prepareDownload(), 100);
+                },
+
+                generateBar() {
+                    const data = document.getElementById('bar-data').value;
+                    const fmt = document.getElementById('bar-format').value;
+                    if(!data) return app.toast("Enter data", "error");
+                    
+                    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                    document.getElementById('gen-output').appendChild(svg);
+                    try {
+                        JsBarcode(svg, data, { format: fmt });
+                        const s = new XMLSerializer().serializeToString(svg);
+                        this.blob = new Blob([s], {type: "image/svg+xml"});
+                        document.getElementById('btn-dl-gen').classList.remove('hidden');
+                    } catch(e) { app.toast("Invalid data for format", "error"); }
+                },
+
+                prepareDownload() {
+                    const canvas = document.querySelector('#gen-output canvas');
+                    if(canvas) {
+                        canvas.toBlob(b => {
+                            this.blob = b;
+                            document.getElementById('btn-dl-gen').classList.remove('hidden');
+                        });
+                    }
+                },
+
+                download() {
+                    if(!this.blob) return;
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(this.blob);
+                    a.download = `code.${this.currentTab === 'qr' ? 'png' : 'svg'}`;
+                    a.click();
+                }
+            },
+
+            // --- HISTORY MANAGER ---
+            historyManager: {
+                add(data, type) {
+                    const item = { id: Date.now(), type, data, date: new Date().toLocaleString() };
+                    app.state.history.unshift(item);
+                    if(app.state.history.length > 50) app.state.history.pop();
+                    localStorage.setItem('sb_history', JSON.stringify(app.state.history));
+                    this.render();
+                },
+                render() {
+                    const list = document.getElementById('history-list');
+                    list.innerHTML = app.state.history.map(h => `
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
+                            <td class="p-4 text-xs font-bold uppercase text-blue-600">${h.type}</td>
+                            <td class="p-4 text-sm text-gray-500">${h.date}</td>
+                            <td class="p-4 font-mono text-sm truncate max-w-[150px]">${h.data}</td>
+                            <td class="p-4"><button onclick="navigator.clipboard.writeText('${h.data}')" class="text-gray-400 hover:text-primary"><i class="fa-regular fa-copy"></i></button></td>
+                        </tr>
+                    `).join('');
+                    document.getElementById('history-empty').classList.toggle('hidden', app.state.history.length > 0);
+                },
+                clear() {
+                    if(confirm("Clear history?")) {
+                        app.state.history = [];
+                        localStorage.setItem('sb_history', '[]');
+                        this.render();
+                    }
+                },
+                export(type) {
+                    const data = type === 'csv' 
+                        ? "Date,Type,Data\n" + app.state.history.map(h => `"${h.date}","${h.type}","${h.data}"`).join('\n')
+                        : JSON.stringify(app.state.history, null, 2);
+                    const a = document.createElement('a');
+                    a.href = "data:text/plain;charset=utf-8," + encodeURIComponent(data);
+                    a.download = `history.${type}`;
+                    a.click();
+                }
+            },
+
+            // --- BLOG MANAGER ---
+            blogManager: {
+                renderIndex() {
+                    const grid = document.getElementById('blog-grid');
+                    // Render first 12 articles
+                    grid.innerHTML = CONTENT.blogTopics.slice(0, 12).map((t, i) => `
+                        <div class="glass-card p-6 rounded-xl hover:shadow-lg transition cursor-pointer" onclick="router.push('/blog/${i}')">
+                            <div class="h-40 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
+                            <span class="text-xs font-bold text-primary uppercase">Article</span>
+                            <h3 class="font-bold text-lg mt-1">${t}</h3>
+                            <p class="text-sm text-gray-500 mt-2">Comprehensive guide covering all aspects of ${t.toLowerCase()}...</p>
+                        </div>
+                    `).join('');
+                }
+            },
+
+            renderBlogPost(id) {
+                document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+                document.getElementById('page-blog-post').classList.remove('hidden');
+                
+                const title = CONTENT.blogTopics[id] || "Article Not Found";
+                document.getElementById('post-title').innerText = title;
+                document.getElementById('post-content').innerHTML = `
+                    <p class="mb-4">In the world of barcode technology, understanding <strong>${title}</strong> is crucial for efficiency and accuracy.</p>
+                    <p class="mb-4">This comprehensive guide explores the intricacies of ${title.toLowerCase()}, providing expert insights and practical tips for implementation in your business workflow.</p>
+                    <h3 class="text-xl font-bold mt-6 mb-2">Key Benefits</h3>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li>Increased operational speed</li>
+                        <li>Reduction in human error</li>
+                        <li>Real-time data synchronization</li>
+                    </ul>
+                    <p>Whether you are a small business owner or an enterprise manager, leveraging ${title.toLowerCase()} can significantly impact your bottom line.</p>
+                    <div class="my-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded border-l-4 border-blue-500">
+                        <strong>Expert Tip:</strong> Always ensure your scanning equipment is calibrated correctly for the specific symbology you are using.
+                    </div>
+                `;
+                window.scrollTo(0,0);
+            },
+
+            // --- SEO PAGE RENDERER ---
+            renderSEOLanding(page) {
+                document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+                document.getElementById('page-seo-landing').classList.remove('hidden');
+                
+                document.getElementById('seo-title').innerText = page.title;
+                document.getElementById('seo-content').innerHTML = `
+                    <p class="mb-4">Welcome to the ultimate resource for <strong>${page.title}</strong>. Our tools are designed to help you ${page.keywords.join(' and ')} with ease.</p>
+                    <h3 class="text-2xl font-bold mt-6 mb-2">Why Choose Our ${page.keywords[0]} Tool?</h3>
+                    <p class="mb-4">We provide industry-leading accuracy and speed. Our ${page.keywords[0]} solution works directly in your browser, ensuring privacy and convenience.</p>
+                    <h3 class="text-2xl font-bold mt-6 mb-2">How it Works</h3>
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Access the tool via our secure platform.</li>
+                        <li>Upload an image or use your camera.</li>
+                        <li>Receive instant results ready for export.</li>
+                    </ol>
+                    <div class="mt-8">
+                        <button onclick="router.push('/scanner')" class="bg-primary text-white px-6 py-3 rounded-lg font-bold">Try Now</button>
+                    </div>
+                `;
+                window.scrollTo(0,0);
+            },
+
+            renderGenericPage(path) {
+                document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+                document.getElementById('page-seo-landing').classList.remove('hidden');
+                
+                const title = path.replace('/', '').charAt(0).toUpperCase() + path.slice(1);
+                document.getElementById('seo-title').innerText = title;
+                document.getElementById('seo-content').innerHTML = `
+                    <p>This is the ${title} page for ScanBarcode Pro.</p>
+                    <p>We are committed to transparency and user safety. Please contact support@scanbarcodepro.com for more details regarding this page.</p>
+                `;
+                window.scrollTo(0,0);
+            }
+        };
+
+        // --- BOOTSTRAP ---
+        window.addEventListener('DOMContentLoaded', () => app.init());
+
+    </script>
+</body>
+</html>
