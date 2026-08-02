@@ -1,885 +1,252 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
+<html lang="id" class="scroll-smooth">
+<head>  script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Dynamic Meta Tags handled by JS -->
-    <title>ScanBarcode Pro - Ultimate QR & Barcode Scanner</title>
-    <meta name="description" content="Free online QR and Barcode scanner. Scan from camera or image. Generate QR codes and Barcodes.">
-    <meta name="keywords" content="barcode scanner, qr scanner, scan barcode online, free qr scanner, ean scanner, upc scanner">
-    <meta name="author" content="ScanBarcode Pro">
-    <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     
-    <!-- Open Graph -->
-    <meta property="og:title" content="ScanBarcode Pro">
-    <meta property="og:description" content="Professional Scanning Tools">
+    <title>ScanBarcode Pro | Pemindai Barcode #1 di Indonesia 2026 - Scan Barcode Online Gratis</title>
+    <meta name="description" content="ScanBarcode Pro - Pemindai barcode #1 Indonesia. Scan barcode online gratis, QR scanner, barcode scanner. Live camera, 50+ format, 100% privat, tanpa upload.">
+    <meta name="keywords" content="scan barcode, scan barcode online, pemindai barcode, barcode scanner, scan qr code, pemindai qr, scanner barcode indonesia, gratis barcode scanner, barcode reader, qr code generator, ean scanner, upc scanner">
+    <meta name="author" content="ScanBarcode Pro Indonesia">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="language" content="id">
+    <meta name="geo.country" content="ID">
+    <meta name="theme-color" content="#2563eb">
+    
+    <meta property="og:title" content="ScanBarcode Pro | Pemindai Barcode #1 di Indonesia 2026">
+    <meta property="og:description" content="Scan barcode online gratis. Pemindai barcode & QR scanner #1 Indonesia. 100% privat.">
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:site_name" content="ScanBarcode Pro">
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#2563eb',
-                        secondary: '#4f46e5',
-                        dark: '#0f172a',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Libraries -->
-    <!-- ZXing Browser Library Wrapper -->
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-    <!-- JsBarcode for 1D -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/min/html5-qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-    <!-- QRCode.js for 2D -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        :root{--bg:#f8fafc;--text:#1e293b;--card:#ffffff;--border:#e5e7eb;--primary:#2563eb;--secondary:#7c3aed;--hover:#eff6ff}
+        .dark{--bg:#0f172a;--text:#e2e8f0;--card:#1e293b;--border:#334155;--hover:#1e3a5f}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:all 0.3s;line-height:1.8;display:flex;flex-direction:column;font-size:16px}
         
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        .dark ::-webkit-scrollbar-track { background: #1f2937; }
-        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
-
-        /* Glassmorphism */
-        .glass {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        .dark .glass {
-            background: rgba(15, 23, 42, 0.85);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .dark .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        /* Transitions */
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        #reader { width: 100%; border-radius: 0.5rem; overflow: hidden; }
-        #reader video { object-fit: cover; border-radius: 0.5rem; }
+        .navbar{background:var(--card);border-bottom:1px solid var(--border);padding:0 16px;position:sticky;top:0;z-index:100;box-shadow:0 1px 6px rgba(0,0,0,0.03)}
+        .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:62px}
+        .logo{display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none;color:var(--text)}
+        .logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:700}
+        .logo-text{font-size:18px;font-weight:800}.logo-text span{color:#2563eb}.logo-sub{font-size:7px;color:#9ca3af;letter-spacing:1.5px;margin-top:-2px}
+        .nav-links{display:flex;gap:2px;list-style:none}.nav-links a{padding:7px 12px;border-radius:7px;text-decoration:none;color:var(--text);font-size:14px;font-weight:600;transition:all 0.2s;white-space:nowrap}.nav-links a:hover{background:var(--hover);color:#2563eb}
+        .mobile-menu-btn{width:38px;height:38px;border-radius:8px;border:none;background:transparent;cursor:pointer;font-size:22px;display:none;align-items:center;justify-content:center;color:var(--text)}
+        .theme-btn{width:36px;height:36px;border-radius:50%;border:none;background:transparent;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;color:var(--text)}
+        .mobile-dropdown{display:none;background:var(--card);border-top:1px solid var(--border);padding:6px}.mobile-dropdown.open{display:block}.mobile-dropdown a{display:block;padding:13px 16px;font-weight:600;text-decoration:none;color:var(--text);border-radius:8px;font-size:15px}
+        
+        .main-content{flex:1;max-width:1200px;margin:0 auto;padding:28px 16px 40px;width:100%}
+        .page-section{display:none}.page-section.active{display:block;animation:fadeIn 0.4s}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        
+        .hero{text-align:center;padding:60px 0 50px}.hero h1{font-size:clamp(2.2rem,5vw,4rem);font-weight:900;line-height:1.2;margin-bottom:18px;background:linear-gradient(135deg,#2563eb,#7c3aed,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero .subtitle{font-size:18px;color:#6b7280;max-width:800px;margin:0 auto 32px;line-height:1.8}
+        
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 32px;border-radius:12px;font-weight:700;font-size:16px;cursor:pointer;border:none;text-decoration:none;transition:all 0.3s;text-align:center}
+        .btn-primary{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(37,99,235,0.35)}
+        .btn-outline{background:var(--card);border:2px solid var(--border);color:var(--text)}.btn-outline:hover{border-color:#2563eb}
+        .btn-success{background:#10b981;color:#fff}.btn-danger{background:#ef4444;color:#fff}.btn-dark{background:#374151;color:#fff}
+        .btn-sm{padding:8px 16px;font-size:13px;border-radius:8px}
+        .btn-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;border:none;background:#374151;color:#fff}.btn-icon:hover{background:#4b5563}.torch-on{background:#fbbf24!important;color:#000!important}
+        
+        .card{background:var(--card);border-radius:16px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,0.04);border:1px solid var(--border);transition:all 0.3s}.card:hover{transform:translateY(-2px)}
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:35px 0}.stat-card{background:var(--card);border-radius:14px;padding:24px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.04);border:1px solid var(--border)}.stat-number{font-size:36px;font-weight:900}.stat-label{color:#6b7280;font-size:14px;margin-top:4px}
+        .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:35px 0}
+        
+        .scanner-grid{display:grid;grid-template-columns:2fr 1fr;gap:24px}
+        .scanner-box{background:#000;border-radius:18px;overflow:hidden;position:relative;aspect-ratio:16/9;box-shadow:0 20px 50px rgba(0,0,0,0.35),0 0 0 3px rgba(37,99,235,0.25)}
+        .scanner-box video{width:100%;height:100%;object-fit:cover}
+        .scanner-laser{position:absolute;left:10%;right:10%;height:3px;background:linear-gradient(90deg,transparent,#ef4444,#ef4444,#ef4444,transparent);z-index:10;pointer-events:none;animation:laserScan 2.5s ease-in-out infinite;box-shadow:0 0 25px #ef4444;border-radius:50%}
+        @keyframes laserScan{0%,100%{top:18%;opacity:0.5}50%{top:82%;opacity:1}}
+        .camera-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0a0a0a;color:#9ca3af;z-index:5}
+        
+        .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
+        .blog-card{background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 4px 15px rgba(0,0,0,0.04);transition:all 0.3s;cursor:pointer}.blog-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.08)}
+        .blog-img{height:220px;background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:800;font-size:18px;position:relative;overflow:hidden;line-height:1.3}.blog-img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(transparent,rgba(0,0,0,0.7))}.blog-img span{position:relative;z-index:1}
+        .blog-info{padding:20px}.blog-cat{font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:0.5px}.blog-title{font-size:17px;font-weight:700;margin:6px 0;line-height:1.4}.blog-date{font-size:13px;color:#9ca3af}.blog-excerpt{font-size:14px;color:#6b7280;margin-top:8px;line-height:1.6}
+        
+        .result-box{min-height:200px;display:flex;align-items:center;justify-content:center;background:var(--bg);border:2px dashed var(--border);border-radius:12px;padding:20px;text-align:center;transition:all 0.3s}.result-box.success{background:#f0fdf4;border-color:#10b981;border-style:solid}
+        
+        .keywords-section{background:var(--card);border-radius:16px;padding:24px;margin:35px 0;border:1px solid var(--border)}.keywords-section h3{font-size:17px;font-weight:700;margin-bottom:14px}.keywords-list{display:flex;flex-wrap:wrap;gap:10px}.keyword-tag{display:inline-block;padding:8px 18px;background:var(--hover);border-radius:22px;font-size:14px;font-weight:500;text-decoration:none;transition:all 0.2s;border:1px solid var(--border);color:var(--text)}.keyword-tag:hover{background:#2563eb;color:#fff;border-color:#2563eb}
+        
+        .site-footer{background:#0f172a;color:#94a3b8;padding:50px 22px 22px;margin-top:auto;border-top:1px solid #1e293b}
+        .footer-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;margin-bottom:35px}
+        .footer-col h4{color:#fff;font-size:15px;font-weight:700;margin-bottom:14px;position:relative;padding-bottom:10px}.footer-col h4::after{content:'';position:absolute;bottom:0;left:0;width:28px;height:2px;background:#2563eb;border-radius:1px}
+        .footer-col p{font-size:14px;line-height:1.9;opacity:0.8}.footer-col ul{list-style:none;padding:0}.footer-col ul li{margin-bottom:8px}.footer-col ul li a{font-size:14px;text-decoration:none;color:#94a3b8;opacity:0.8;transition:all 0.2s}.footer-col ul li a:hover{color:#fff;opacity:1;padding-left:4px}
+        .footer-keywords{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.footer-keyword{font-size:12px;color:#94a3b8;opacity:0.7;text-decoration:none;padding:5px 12px;border:1px solid rgba(255,255,255,0.08);border-radius:16px;transition:all 0.2s}.footer-keyword:hover{color:#fff;opacity:1;border-color:rgba(255,255,255,0.3)}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:18px;text-align:center;font-size:12px;opacity:0.7;line-height:2}
+        
+        .prose{max-width:900px;line-height:2}.prose h2{font-size:1.8rem;font-weight:800;margin:28px 0 14px;color:#2563eb}.prose h3{font-size:1.4rem;font-weight:700;margin:22px 0 10px}.prose p{margin-bottom:16px;font-size:16px}.prose ul,.prose ol{margin:14px 0;padding-left:24px}.prose li{margin-bottom:10px;font-size:16px}.prose .highlight{background:var(--hover);padding:16px;border-left:4px solid #2563eb;border-radius:8px;margin:16px 0;font-size:16px}.prose table{width:100%;border-collapse:collapse;margin:14px 0}.prose th,.prose td{border:1px solid var(--border);padding:10px 14px;text-align:left;font-size:14px}.prose th{background:var(--hover);font-weight:700}
+        .toast{position:fixed;top:18px;right:18px;z-index:999;padding:14px 24px;border-radius:12px;color:#fff;font-weight:600;box-shadow:0 10px 35px rgba(0,0,0,0.25);animation:slideIn 0.35s;font-size:14px}
+        @keyframes slideIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+        .hidden{display:none!important}
+        @media(max-width:768px){.nav-links{display:none}.mobile-menu-btn{display:flex}.stats-grid{grid-template-columns:repeat(2,1fr)}.features-grid{grid-template-columns:1fr}.scanner-grid{grid-template-columns:1fr}.hero h1{font-size:2rem}.hero{padding:35px 0 25px}.blog-img{height:180px;font-size:17px}.footer-container{grid-template-columns:1fr;gap:28px;text-align:center}.footer-col h4::after{left:50%;transform:translateX(-50%)}.blog-grid{grid-template-columns:1fr}.btn{width:100%}}
     </style>
-
-    <!-- Dynamic Schema Injection Placeholder -->
-    <script type="application/ld+json" id="json-ld">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "ScanBarcode Pro",
-      "url": "https://scanbarcodepro.com"
-    }
-    </script>
 </head>
-<body class="bg-gray-50 text-gray-900 dark:bg-dark dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+<body>
+<div id="toastContainer"></div>
 
-    <!-- Toast Container -->
-    <div id="toast-container" class="fixed top-5 right-5 z-[60] flex flex-col gap-2"></div>
+<nav class="navbar"><div class="nav-container"><a href="#" class="logo" onclick="showPage('home');return false"><div class="logo-icon">📷</div><div><div class="logo-text">ScanBarcode<span>Pro</span></div><div class="logo-sub">#1 INDONESIA 2026</div></div></a><ul class="nav-links"><li><a href="#" onclick="showPage('home');return false">Beranda</a></li><li><a href="#" onclick="showPage('scanner');return false">Pemindai</a></li><li><a href="#" onclick="showPage('generator');return false">Generator</a></li><li><a href="#" onclick="showPage('riwayat');return false">Riwayat</a></li><li><a href="#" onclick="showPage('blog');return false">Blog</a></li><li><a href="#" onclick="showPage('tentang');return false">Tentang</a></li><li><a href="#" onclick="showPage('kontak');return false">Kontak</a></li></ul><div style="display:flex;align-items:center;gap:6px"><button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button><button class="mobile-menu-btn" onclick="toggleMobileDropdown()">☰</button></div></div><div id="mobileDropdown" class="mobile-dropdown"><a href="#" onclick="showPage('home');return false">🏠 Beranda</a><a href="#" onclick="showPage('scanner');return false">📷 Pemindai Live</a><a href="#" onclick="showPage('generator');return false">🔧 Generator</a><a href="#" onclick="showPage('riwayat');return false">📋 Riwayat</a><a href="#" onclick="showPage('blog');return false">📚 Blog</a><a href="#" onclick="showPage('tentang');return false">ℹ️ Tentang</a><a href="#" onclick="showPage('kontak');return false">📧 Kontak</a></div></nav>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass transition-colors duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-2 cursor-pointer" onclick="router.push('/')">
-                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                        <i class="fa-solid fa-barcode"></i>
-                    </div>
-                    <span class="text-xl font-bold tracking-tight">ScanBarcode<span class="text-primary">Pro</span></span>
-                </div>
+<div class="main-content">
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-6 text-sm font-medium">
-                    <a href="/" class="nav-link hover:text-primary transition">Home</a>
-                    <a href="/scanner" class="nav-link hover:text-primary transition">Scanner</a>
-                    <a href="/generator" class="nav-link hover:text-primary transition">Generator</a>
-                    <a href="/history" class="nav-link hover:text-primary transition">History</a>
-                    <a href="/blog" class="nav-link hover:text-primary transition">Blog</a>
-                </div>
-
-                <div class="flex items-center gap-4">
-                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition" aria-label="Toggle Theme">
-                        <i class="fa-solid fa-moon dark:hidden text-gray-600"></i>
-                        <i class="fa-solid fa-sun hidden dark:inline text-yellow-400"></i>
-                    </button>
-                    <button class="md:hidden p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
-                        <i class="fa-solid fa-bars text-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 border-b dark:border-gray-800 p-4 space-y-2 shadow-lg">
-            <a href="/" class="block py-2 hover:text-primary">Home</a>
-            <a href="/scanner" class="block py-2 hover:text-primary">Scanner</a>
-            <a href="/generator" class="block py-2 hover:text-primary">Generator</a>
-            <a href="/history" class="block py-2 hover:text-primary">History</a>
-            <a href="/blog" class="block py-2 hover:text-primary">Blog</a>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main id="app-root" class="flex-grow pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <!-- HOME PAGE -->
+    <div id="home" class="page-section active">
+        <div class="hero"><h1>ScanBarcode Pro<br>Pemindai Barcode #1 di Indonesia</h1><p class="subtitle"><strong>ScanBarcode Pro</strong> adalah platform pemindai barcode dan QR code online terdepan di Indonesia. Scan barcode online gratis, super cepat dengan AI detection, 100% privat. Dipercaya jutaan pengguna di seluruh Indonesia sejak 2023.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="btn btn-primary" onclick="showPage('scanner')"><i class="fas fa-camera"></i> Scan Barcode Sekarang</button><button class="btn btn-outline" onclick="showPage('generator')"><i class="fas fa-qrcode"></i> Buat QR Code</button></div></div>
+        <div class="keywords-section"><h3>🔍 Populer Keywords</h3><div class="keywords-list"><a href="#" class="keyword-tag" onclick="showPage('scanner');return false">scan barcode</a><a href="#" class="keyword-tag" onclick="showPage('scanner');return false">scan barcode online</a><a href="#" class="keyword-tag" onclick="showPage('scanner');return false">pemindai barcode</a><a href="#" class="keyword-tag" onclick="showPage('scanner');return false">barcode scanner</a></div></div>
+        <div class="stats-grid"><div class="stat-card"><div class="stat-number" style="color:#2563eb">5M+</div><div class="stat-label">Total Pemindaian</div></div><div class="stat-card"><div class="stat-number" style="color:#7c3aed">#1</div><div class="stat-label">Di Indonesia</div></div><div class="stat-card"><div class="stat-number" style="color:#10b981">50+</div><div class="stat-label">Format Barcode</div></div><div class="stat-card"><div class="stat-number" style="color:#f97316">4.9★</div><div class="stat-label">Rating Pengguna</div></div></div>
+        <div class="features-grid"><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">🔒</div><h3 style="font-weight:700;font-size:1.2rem;margin-bottom:8px">100% Privat & Aman</h3><p style="color:#6b7280;font-size:15px">Data TIDAK PERNAH diupload ke server. Semua pemrosesan di browser Anda.</p></div><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">🤖</div><h3 style="font-weight:700;font-size:1.2rem;margin-bottom:8px">AI Smart Detection</h3><p style="color:#6b7280;font-size:15px">Auto-detect URL, WiFi, Email, Phone, Product Code. Action button otomatis.</p></div><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">⚡</div><h3 style="font-weight:700;font-size:1.2rem;margin-bottom:8px">Super Cepat</h3><p style="color:#6b7280;font-size:15px">WebAssembly powered. Hasil scan muncul dalam hitungan milidetik.</p></div></div>
         
-        <!-- PAGE: HOME -->
-        <div id="page-home" class="page-section fade-in">
-            <div class="text-center py-16 lg:py-24">
-                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-                    The Ultimate Scanning Experience
-                </h1>
-                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-10">
-                    ScanBarcode Pro provides enterprise-grade barcode and QR code scanning directly in your browser. Secure, fast, and free.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <button onclick="router.push('/scanner')" class="bg-primary hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition transform hover:-translate-y-1 text-lg">
-                        <i class="fa-solid fa-camera mr-2"></i> Start Scanning
-                    </button>
-                    <button onclick="router.push('/generator')" class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white px-8 py-4 rounded-xl font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition text-lg">
-                        <i class="fa-solid fa-qrcode mr-2"></i> Create Code
-                    </button>
-                </div>
-            </div>
-
-            <!-- SEO Content Section -->
-            <article class="prose dark:prose-invert max-w-none glass-card p-8 rounded-2xl mb-16">
-                <h2>Everything You Need to Know About Barcodes & QR Codes</h2>
-                <p>
-                    Welcome to ScanBarcode Pro, the premier destination for all your scanning and generating needs. In an increasingly digital world, the ability to quickly interpret physical data is crucial. Whether you are a retailer managing inventory, a logistics professional tracking shipments, or a consumer checking product authenticity, our tools are designed for you.
-                </p>
-                
-                <h3>What is a Barcode Scanner?</h3>
-                <p>
-                    A barcode scanner is an input device that captures and reads information contained in a barcode. Traditional laser scanners read the reflection of light from the black and white lines. Our online scanner utilizes your device's high-definition camera and advanced ZXing decoding algorithms to read 1D barcodes (like UPC, EAN, Code 128) and 2D barcodes (like QR codes and Data Matrix) instantly.
-                </p>
-
-                <h3>What is a QR Code Scanner?</h3>
-                <p>
-                    QR (Quick Response) codes are two-dimensional matrix barcodes that can hold thousands of characters of data. Unlike standard barcodes, QR codes can be scanned from any direction. Our tool supports all standard QR formats, including URLs, WiFi credentials, vCards, and plain text.
-                </p>
-
-                <h3>How Barcode Scanning Works</h3>
-                <p>
-                    The process involves three main steps: illumination, reflection/conversion, and decoding. Our software illuminates the code with the camera flash (if needed), captures the image, and converts the light/dark areas into binary data. This binary string is then mapped to a character set based on the specific symbology (e.g., Code 128 set B).
-                </p>
-
-                <h3>Business Applications</h3>
-                <ul>
-                    <li><strong>Retail:</strong> Speed up checkout lines and manage stock levels.</li>
-                    <li><strong>Warehousing:</strong> Track inbound and outbound shipments with precision.</li>
-                    <li><strong>Healthcare:</strong> Verify patient IDs and medication administration.</li>
-                    <li><strong>Marketing:</strong> Engage customers with WiFi login QR codes and promotional URLs.</li>
-                </ul>
-
-                <h3>Security and Privacy</h3>
-                <p>
-                    We prioritize your privacy. ScanBarcode Pro is a client-side application. This means your camera feed and scan results are processed locally within your browser. No data is transmitted to our servers. This architecture ensures HIPAA compliance readiness and complete data security.
-                </p>
-            </article>
-
-            <!-- Feature Grid -->
-            <div class="grid md:grid-cols-3 gap-8 mb-16">
-                <div class="glass-card p-8 rounded-2xl hover:shadow-xl transition">
-                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-bolt"></i></div>
-                    <h3 class="text-xl font-bold mb-2">Lightning Fast</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Optimized decoding engine for instant results.</p>
-                </div>
-                <div class="glass-card p-8 rounded-2xl hover:shadow-xl transition">
-                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 text-purple-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-lock"></i></div>
-                    <h3 class="text-xl font-bold mb-2">100% Private</h3>
-                    <p class="text-gray-600 dark:text-gray-400">No server uploads. All processing happens on your device.</p>
-                </div>
-                <div class="glass-card p-8 rounded-2xl hover:shadow-xl transition">
-                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900 text-green-600 rounded-xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-globe"></i></div>
-                    <h3 class="text-xl font-bold mb-2">Universal Access</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Works on iOS, Android, Windows, and macOS.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- PAGE: SCANNER -->
-        <div id="page-scanner" class="page-section hidden fade-in">
-            <div class="grid lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 space-y-4">
-                    <div class="relative bg-black rounded-2xl overflow-hidden shadow-2xl aspect-video flex items-center justify-center">
-                        <div id="reader" class="w-full h-full"></div>
-                        <!-- Overlay Controls -->
-                        <div class="absolute inset-0 pointer-events-none flex flex-col justify-between p-4">
-                            <div class="flex justify-between pointer-events-auto">
-                                <button onclick="scanner.toggleTorch()" id="btn-torch" class="hidden bg-gray-800/80 text-white p-3 rounded-full hover:bg-gray-700 transition"><i class="fa-solid fa-bolt"></i></button>
-                            </div>
-                            <div class="flex justify-center gap-4 pointer-events-auto pb-4">
-                                <button onclick="scanner.start()" id="btn-start" class="bg-primary text-white px-6 py-2 rounded-full font-bold shadow-lg">Start Camera</button>
-                                <button onclick="scanner.stop()" id="btn-stop" class="hidden bg-red-600 text-white px-6 py-2 rounded-full font-bold shadow-lg">Stop</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Tools -->
-                    <div class="glass-card p-4 rounded-xl flex flex-wrap gap-4 items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <label class="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-                                <i class="fa-solid fa-upload"></i>
-                                <span>Scan Image</span>
-                                <input type="file" class="hidden" accept="image/*" onchange="scanner.scanFile(this)">
-                            </label>
-                            <div id="zoom-container" class="hidden flex items-center gap-2">
-                                <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
-                                <input type="range" min="1" max="10" value="1" step="0.1" class="w-24" oninput="scanner.setZoom(this.value)">
-                            </div>
-                        </div>
-                        <div id="scan-status" class="text-sm font-medium text-gray-500">Camera Off</div>
-                    </div>
-                </div>
-
-                <div class="glass-card p-6 rounded-2xl h-fit">
-                    <h3 class="text-xl font-bold mb-4">Scan Result</h3>
-                    <div id="result-area" class="min-h-[150px] flex items-center justify-center bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl mb-4 text-center p-4">
-                        <span class="text-gray-400">Result will appear here</span>
-                    </div>
-                    <div id="result-actions" class="hidden grid grid-cols-2 gap-2">
-                        <button onclick="scanner.copy()" class="col-span-1 bg-gray-800 text-white py-2 rounded-lg hover:bg-gray-900"><i class="fa-regular fa-copy"></i> Copy</button>
-                        <button onclick="scanner.share()" class="col-span-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"><i class="fa-solid fa-share-nodes"></i> Share</button>
-                        <button onclick="scanner.downloadTxt()" class="col-span-2 bg-primary text-white py-2 rounded-lg hover:bg-blue-600"><i class="fa-solid fa-file-arrow-down"></i> Download .txt</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PAGE: GENERATOR -->
-        <div id="page-generator" class="page-section hidden fade-in">
-            <div class="glass-card rounded-2xl overflow-hidden">
-                <div class="flex border-b border-gray-200 dark:border-gray-700">
-                    <button onclick="generator.setTab('qr')" id="gen-tab-qr" class="flex-1 py-4 font-bold bg-gray-50 dark:bg-gray-800 text-primary border-b-2 border-primary">QR Generator</button>
-                    <button onclick="generator.setTab('barcode')" id="gen-tab-barcode" class="flex-1 py-4 font-bold text-gray-500 hover:text-gray-700">Barcode Generator</button>
-                </div>
-                
-                <div class="p-8 grid md:grid-cols-2 gap-8">
-                    <div id="gen-controls" class="space-y-6">
-                        <!-- Injected via JS -->
-                    </div>
-                    <div class="flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-800/50 rounded-xl p-8 min-h-[300px]">
-                        <div id="gen-output" class="bg-white p-4 rounded-lg shadow-sm">
-                            <span class="text-gray-400">Preview</span>
-                        </div>
-                        <button onclick="generator.download()" id="btn-dl-gen" class="hidden mt-6 bg-gray-800 dark:bg-white dark:text-gray-900 text-white px-6 py-2 rounded-lg font-medium">Download Image</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PAGE: HISTORY -->
-        <div id="page-history" class="page-section hidden fade-in">
-            <div class="glass-card rounded-2xl overflow-hidden">
-                <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-                    <h2 class="text-2xl font-bold">Scan History</h2>
-                    <div class="flex gap-2">
-                        <button onclick="historyManager.export('csv')" class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200">Export CSV</button>
-                        <button onclick="historyManager.clear()" class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded hover:bg-red-200">Clear</button>
-                    </div>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead class="bg-gray-50 dark:bg-gray-800">
-                            <tr>
-                                <th class="p-4 text-sm font-medium">Type</th>
-                                <th class="p-4 text-sm font-medium">Date</th>
-                                <th class="p-4 text-sm font-medium">Content</th>
-                                <th class="p-4 text-sm font-medium">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="history-list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                            <!-- Items -->
-                        </tbody>
-                    </table>
-                </div>
-                <div id="history-empty" class="hidden p-8 text-center text-gray-500">No history found.</div>
-            </div>
-        </div>
-
-        <!-- PAGE: BLOG INDEX -->
-        <div id="page-blog" class="page-section hidden fade-in">
-            <h2 class="text-3xl font-bold mb-8">Latest Articles</h2>
-            <div id="blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dynamic Blog Cards -->
-            </div>
-            <div class="mt-8 flex justify-center">
-                <div class="flex gap-2">
-                    <button class="px-4 py-2 bg-white dark:bg-gray-800 border rounded hover:bg-gray-50">Prev</button>
-                    <button class="px-4 py-2 bg-primary text-white rounded">1</button>
-                    <button class="px-4 py-2 bg-white dark:bg-gray-800 border rounded hover:bg-gray-50">2</button>
-                    <button class="px-4 py-2 bg-white dark:bg-gray-800 border rounded hover:bg-gray-50">Next</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- PAGE: BLOG POST (Dynamic) -->
-        <div id="page-blog-post" class="page-section hidden fade-in">
-            <button onclick="router.back()" class="text-primary mb-4 hover:underline"><i class="fa-solid fa-arrow-left"></i> Back to Blog</button>
-            <div class="glass-card p-8 rounded-2xl max-w-4xl mx-auto">
-                <span id="post-category" class="text-blue-600 font-bold text-sm uppercase tracking-wider">Guide</span>
-                <h1 id="post-title" class="text-3xl md:text-4xl font-bold mt-2 mb-4">Article Title</h1>
-                <div class="flex items-center gap-4 text-gray-500 text-sm mb-8">
-                    <span><i class="fa-regular fa-calendar"></i> <span id="post-date">Oct 24, 2023</span></span>
-                    <span><i class="fa-solid fa-clock"></i> 5 min read</span>
-                </div>
-                <div id="post-content" class="prose dark:prose-invert max-w-none">
-                    <!-- Content -->
-                </div>
-            </div>
-        </div>
-
-        <!-- PAGE: SEO LANDING (Dynamic) -->
-        <div id="page-seo-landing" class="page-section hidden fade-in">
-            <div class="glass-card p-8 rounded-2xl max-w-4xl mx-auto">
-                <h1 id="seo-title" class="text-4xl font-bold mb-6 text-primary">SEO Title</h1>
-                <div class="prose dark:prose-invert max-w-none" id="seo-content">
-                    <!-- Dynamic SEO Content -->
-                </div>
-            </div>
-        </div>
-
-        <!-- PAGE: SEO FILES (Virtual) -->
-        <div id="page-seo-files" class="page-section hidden fade-in">
-            <h2 class="text-2xl font-bold mb-4">SEO Files & Config</h2>
-            <div class="glass-card p-6 rounded-xl mb-6">
-                <h3 class="font-bold text-lg mb-2">robots.txt</h3>
-                <pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded text-sm overflow-x-auto">
-User-agent: *
-Allow: /
-Sitemap: https://scanbarcodepro.com/sitemap.xml
-                </pre>
-            </div>
-            <div class="glass-card p-6 rounded-xl">
-                <h3 class="font-bold text-lg mb-2">sitemap.xml (Structure)</h3>
-                <pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded text-sm overflow-x-auto">
-&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
-  &lt;url&gt;&lt;loc&gt;https://scanbarcodepro.com/&lt;/loc&gt;&lt;priority&gt;1.0&lt;/priority&gt;&lt;/url&gt;
-  &lt;url&gt;&lt;loc&gt;https://scanbarcodepro.com/scanner&lt;/loc&gt;&lt;priority&gt;0.9&lt;/priority&gt;&lt;/url&gt;
-  &lt;!-- ... 100 blog URLs ... --&gt;
-&lt;/urlset&gt;
-                </pre>
-            </div>
-        </div>
-
-    </main>
-
-    <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="flex justify-center gap-6 mb-8 text-sm font-medium">
-                <a href="/about" class="hover:text-primary">About</a>
-                <a href="/privacy" class="hover:text-primary">Privacy</a>
-                <a href="/terms" class="hover:text-primary">Terms</a>
-                <a href="/contact" class="hover:text-primary">Contact</a>
-                <a href="/sitemap" class="hover:text-primary">Sitemap</a>
-            </div>
-            <p class="text-gray-400">&copy; 2023 ScanBarcode Pro. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- APPLICATION LOGIC -->
-    <script>
-        // --- DATA & CONTENT GENERATION ---
-        const CONTENT = {
-            blogTopics: [
-                "Barcode Scanning Best Practices", "QR Code Marketing Strategies", "Understanding EAN vs UPC", 
-                "Inventory Management 101", "The Future of 2D Barcodes", "Secure WiFi with QR Codes", 
-                "vCard QR Codes for Networking", "Product Authentication Guide", "Retail Technology Trends", 
-                "Healthcare Barcode Safety", "Logistics Tracking Systems", "Code 128 vs Code 39", 
-                "DataMatrix vs QR Code", "Mobile Scanning Optimization", "PWA Benefits for Retail",
-                "Batch Barcode Generation", "APIs for Barcode Data", "Legal Aspects of Barcoding", 
-                "Sustainable Packaging & QR", "Augmented Reality Barcodes", "Print Quality for Scanning",
-                "How to Fix Unreadable Codes", "Global Barcode Standards", "GS1 Compliance Guide",
-                "Asset Tagging Solutions", "Library Management Systems", "Event Ticketing with QR",
-                "Restaurant Menu QR Codes", "Payment Gateways & QR", "Supply Chain Transparency",
-                "Anti-Counterfeiting Measures", "Barcode Art & Design", "Scanner Hardware Review",
-                "Android Camera APIs", "iOS Vision Framework", "WebAssembly Performance",
-                "Cloud vs Local Scanning", "Offline PWA Strategies", "User Experience in Scanning",
-                "Accessibility in Barcodes", "Color Theory for QR Codes", "Error Correction Levels",
-                "Micro QR Codes", "PDF417 Explained", "Aztec Codes Usage",
-                "MaxiCode for Logistics", "Pharmacode Guide", "POSTNET Barcode History",
-                "Intelligent Mail Barcode", "Australian Post Barcode", "Japan Postal Barcode",
-                "Singapore Postal Barcode", "RM4SCC Royal Mail", "KIX Code Netherlands",
-                "ITF-14 Shipping Codes", "GS1-128 Identification", "SSCC Serial Numbers",
-                "Global Location Number", "Global Trade Item Number", "Coupon Extended Barcodes",
-                "Return Forms Automation", "Direct Part Marking", "UID Marking Standards",
-                "IUID Compliance", "NASA Barcode Standards", "Military Logistics Barcodes",
-                "Aerospace Traceability", "Automotive Parts Marking", "Electronics Component ID",
-                "Fresh Produce Lookup", "Food Safety Traceability", "Recall Management Systems",
-                "Warranty Registration", "Customer Loyalty Programs", "Digital Receipts via QR",
-                "Dynamic QR Codes Explained", "Short URLs vs QR", "QR Code Analytics Guide",
-                "A/B Testing with QR", "Social Media Integration", "LinkedIn QR Networking",
-                "WhatsApp Business QR", "WiFi QR Security Risks", "NFC vs QR Codes",
-                "Beacon vs Barcode", "IoT Sensor Scanning", "RFID vs Barcode Comparison"
-            ],
-            seoRoutes: [
-                { path: 'scan-barcode-online', title: 'Scan Barcode Online - Free Tool', keywords: ['online', 'free', 'tool'] },
-                { path: 'free-barcode-scanner', title: 'Free Barcode Scanner App', keywords: ['app', 'mobile'] },
-                { path: 'scan-barcode-from-image', title: 'Scan Barcode from Image File', keywords: ['image', 'upload'] },
-                { path: 'scan-qr-code-online', title: 'Scan QR Code Online Instantly', keywords: ['qr', 'instant'] },
-                { path: 'ean-barcode-scanner', title: 'EAN Barcode Scanner for Retail', keywords: ['ean', 'retail'] },
-                { path: 'upc-barcode-scanner', title: 'UPC Barcode Scanner Guide', keywords: ['upc', 'products'] },
-                { path: 'online-qr-generator', title: 'Online QR Generator Free', keywords: ['generator', 'create'] },
-                { path: 'wifi-qr-generator', title: 'WiFi QR Generator for Business', keywords: ['wifi', 'network'] }
-            ]
-        };
-
-        // --- ROUTER SYSTEM (Next.js Simulation) ---
-        const router = {
-            routes: {
-                '/': 'page-home',
-                '/scanner': 'page-scanner',
-                '/generator': 'page-generator',
-                '/history': 'page-history',
-                '/blog': 'page-blog',
-                '/sitemap': 'page-seo-files'
-            },
-
-            init() {
-                window.addEventListener('popstate', () => this.handleLocation());
-                document.addEventListener('click', e => {
-                    const link = e.target.closest('a');
-                    if (link && link.getAttribute('href').startsWith('/')) {
-                        e.preventDefault();
-                        this.push(link.getAttribute('href'));
-                    }
-                });
-                this.handleLocation();
-            },
-
-            push(path) {
-                window.history.pushState({}, '', path);
-                this.handleLocation();
-            },
+        <div class="card prose" style="margin-top:30px">
+            <h2>Apa Itu Scan Barcode dan Kenapa Penting?</h2>
+            <p>Scan barcode itu cara gampang buat baca informasi dari kode batang atau kode matriks pakai kamera HP. Sekarang teknologi scan barcode udah canggih banget, jadi kamu nggak butuh alat mahal—cukup smartphone aja. ScanBarcode Pro hadir sebagai alat scan barcode online yang tinggal buka, langsung pakai, tanpa unduh apa pun.</p>
+            <p>Aktivitas scan barcode ini bener‑bener bermanfaat tiap hari: dari sekadar cek harga produk, lacak resi, pastiin barang asli, sampai baca QR Code undangan. Pakai alat scan barcode yang pas, semua bisa beres dalam hitungan detik.</p>
+            <p>Komitmen kami sederhana: kasih pengalaman scan barcode paling oke di Indonesia. Mau scan barcode produk, kode QRIS, atau tiket? Semua bisa langsung, tanpa ribet, tanpa biaya.</p>
             
-            back() {
-                window.history.back();
-            },
+            <h2>📱 Apa itu ScanBarcode Pro?</h2>
+            <p><strong>ScanBarcode Pro</strong> adalah platform <strong>scan barcode online</strong> dan <strong>pemindai barcode</strong> #1 di Indonesia. ScanBarcode menyediakan <strong>barcode scanner</strong> gratis, super cepat, dan 100% privat. Teknologi WebAssembly dan ZXing memproses semua di browser Anda tanpa mengirim data ke server manapun.</p>
+            
+            <h2>🔍 Cara Scan Barcode Online dengan ScanBarcode Pro</h2>
+            <p>ScanBarcode Pro membuat proses scan barcode online menjadi sangat mudah:</p>
+            <ol><li><strong>Buka Website:</strong> Akses ScanBarcode Pro melalui browser favorit Anda di HP atau PC</li><li><strong>Izinkan Kamera:</strong> Klik "Mulai Kamera" dan izinkan akses kamera saat diminta browser</li><li><strong>Arahkan ke Barcode:</strong> Posisikan barcode dalam area pemindaian - hasil muncul instan dalam milidetik!</li></ol>
+            
+            <h2>✅ Format Barcode yang Didukung ScanBarcode Pro</h2>
+            <p>ScanBarcode Pro mendukung <strong>50+ format barcode</strong> termasuk:</p>
+            <ul><li><strong>Barcode 1D:</strong> EAN-13, EAN-8, UPC-A, UPC-E, Code128, Code39, Code93, ITF-14, Codabar, MSI Plessey</li><li><strong>Barcode 2D:</strong> QR Code, DataMatrix, PDF417, Aztec Code, MaxiCode</li><li><strong>Format Khusus:</strong> WiFi QR, vCard, ISBN, ISSN, GS1 DataBar</li></ul>
+            
+            <div class="highlight"><strong>💡 Tips ScanBarcode Pro:</strong> Bisa scan barcode dari gambar juga! Upload foto barcode dan ScanBarcode Pro akan mendeteksinya otomatis. Gunakan fitur senter untuk kondisi gelap.</div>
+            
+            <h2>🏢 Aplikasi Bisnis ScanBarcode Pro</h2>
+            <p>ScanBarcode Pro digunakan oleh berbagai sektor bisnis di seluruh Indonesia:</p>
+            <ul><li><strong>Ritel & Supermarket:</strong> Scan barcode produk dengan EAN/UPC untuk cek harga dan stok barang</li><li><strong>Logistik & Ekspedisi:</strong> Tracking paket dan manajemen gudang dengan Code128</li><li><strong>UMKM & Warung:</strong> Pembayaran digital via QRIS, GoPay, OVO menggunakan scan QR code</li><li><strong>Farmasi & Kesehatan:</strong> Verifikasi obat dan alat medis dengan barcode</li><li><strong>Perpustakaan:</strong> Sistem peminjaman buku terintegrasi dengan ISBN</li><li><strong>Manufaktur:</strong> Quality control dan tracking produksi</li></ul>
+            
+            <h2>🔒 Keamanan dan Privasi ScanBarcode Pro</h2>
+            <p>ScanBarcode Pro memproses <strong>100% data di browser Anda</strong> (client-side processing). Tidak ada data yang dikirim ke server manapun. Ini menjamin privasi absolut untuk setiap pemindaian yang Anda lakukan.</p>
+            
+            <h2>📊 Perbandingan ScanBarcode Pro dengan Scanner Lain</h2>
+            <table><tr><th>Fitur</th><th>ScanBarcode Pro</th><th>Scanner Lain</th></tr><tr><td>Privasi Data</td><td>✅ 100% Client-side</td><td>❌ Upload ke server</td></tr><tr><td>Format Didukung</td><td>✅ 50+ format</td><td>❌ 10-20 format</td></tr><tr><td>AI Detection</td><td>✅ Auto-detect</td><td>❌ Manual</td></tr><tr><td>Harga</td><td>✅ 100% Gratis</td><td>❌ Berbayar</td></tr><tr><td>Bahasa</td><td>✅ Indonesia</td><td>❌ English only</td></tr></table>
+            
+            <h2>📱 ScanBarcode Pro di Smartphone</h2><p>ScanBarcode Pro dioptimalkan untuk penggunaan di smartphone. Buka website di Chrome atau Safari di HP Anda, izinkan kamera, dan langsung scan barcode. Tidak perlu download aplikasi apapun.</p>
+            
+            <h2>🖥️ ScanBarcode Pro di Desktop</h2><p>ScanBarcode Pro juga bekerja sempurna di komputer desktop dan laptop. Gunakan webcam bawaan atau kamera eksternal untuk scan barcode langsung dari komputer Anda.</p>
+            
+            <h2>❓ FAQ ScanBarcode Pro</h2>
+            <p><strong>Q: Apakah ScanBarcode Pro benar-benar gratis?</strong><br>A: Ya, ScanBarcode Pro 100% gratis selamanya tanpa batasan apapun.</p>
+            <p><strong>Q: Apakah data saya aman saat menggunakan ScanBarcode Pro?</strong><br>A: Sangat aman! ScanBarcode Pro tidak mengupload data apapun ke server.</p>
+            <p><strong>Q: Format barcode apa saja yang bisa discan?</strong><br>A: 50+ format termasuk EAN, UPC, QR Code, DataMatrix, WiFi, vCard, ISBN.</p>
+        </div>
+    </div>
 
-            handleLocation() {
-                const path = window.location.pathname;
-                
-                // Stop scanner if leaving scanner
-                if (path !== '/scanner' && app.state.isScanning) app.scanner.stop();
+    <!-- SCANNER PAGE -->
+    <div id="scanner" class="page-section">
+        <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:14px"><i class="fas fa-camera"></i> Pemindai - Scan Barcode Live Camera</h2>
+        <div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:12px;padding:12px 16px;font-size:14px;margin-bottom:14px;text-align:center;color:#92400e">💡 Klik <strong>"Mulai Kamera"</strong> - Browser akan meminta izin kamera. Pilih <strong>"Allow"</strong> untuk melanjutkan.</div>
+        <div class="scanner-grid">
+            <div>
+                <div class="scanner-box"><div id="reader" style="width:100%;height:100%"></div><div class="camera-placeholder" id="camPlaceholder"><div style="font-size:3.5rem;margin-bottom:10px">📷</div><p style="font-size:16px">Klik "Mulai Kamera" untuk mengaktifkan</p></div><div class="scanner-laser" id="scanLaser" style="display:none"></div></div>
+                <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap;align-items:center"><button id="btnStart" class="btn btn-primary" onclick="startScanner()"><i class="fas fa-play"></i> Mulai Kamera</button><button id="btnStop" class="btn btn-danger hidden" onclick="stopScanner()"><i class="fas fa-stop"></i> Stop</button><button id="btnTorch" class="btn-icon hidden" onclick="toggleTorch()">💡</button><button id="btnSwitch" class="btn-icon hidden" onclick="switchCamera()">🔄</button></div>
+                <div class="card" style="margin-top:10px;padding:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><label style="cursor:pointer;padding:8px 14px;background:var(--bg);border-radius:8px;font-weight:500;font-size:14px;border:1px solid var(--border);display:inline-flex;align-items:center;gap:6px"><i class="fas fa-image"></i> Upload Gambar<input type="file" accept="image/*" style="display:none" onchange="scanImageFile(this)"></label><span id="scanStatus" style="font-size:13px;padding:5px 12px;border-radius:20px;background:var(--bg);border:1px solid var(--border)">⚪ Kamera Mati</span></div>
+            </div>
+            <div class="card" style="padding:20px"><h3 style="font-weight:700;margin-bottom:12px;font-size:1.1rem"><i class="fas fa-clipboard-check"></i> Hasil Scan</h3><div id="resultDisplay" class="result-box"><div style="font-size:2.5rem;margin-bottom:6px">📷</div><p style="font-size:15px">Arahkan kamera ke barcode</p></div><div id="resultActions" style="margin-top:10px;display:none;flex-direction:column;gap:8px"></div><div id="resultInfo" style="margin-top:8px;display:none;padding:8px;background:var(--hover);border-left:3px solid #2563eb;border-radius:6px;font-size:13px"></div><div id="productSearch" style="margin-top:8px;display:none"></div></div>
+        </div>
+    </div>
 
-                // Hide all sections
-                document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+    <!-- GENERATOR PAGE -->
+    <div id="generator" class="page-section"><h2 style="font-size:1.5rem;font-weight:800;margin-bottom:14px"><i class="fas fa-qrcode"></i> Generator QR Code & Barcode</h2><div class="card" style="padding:0;overflow:hidden"><div style="display:flex;border-bottom:1px solid var(--border)"><button onclick="switchGenTab('qr')" id="tabQr" style="flex:1;padding:16px;font-weight:700;border:none;cursor:pointer;background:var(--hover);color:#2563eb;font-size:15px"><i class="fas fa-qrcode"></i> QR Generator</button><button onclick="switchGenTab('barcode')" id="tabBc" style="flex:1;padding:16px;font-weight:700;border:none;cursor:pointer;background:var(--card);color:var(--text);font-size:15px"><i class="fas fa-barcode"></i> Barcode Generator</button></div><div style="padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px"><div id="genControls"></div><div style="background:var(--bg);border-radius:12px;padding:24px;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center"><div id="genPreview" style="background:#fff;padding:24px;border-radius:10px;margin-bottom:14px;min-width:200px;min-height:200px;display:flex;align-items:center;justify-content:center"><span style="color:#9ca3af;font-size:14px">Preview</span></div><button id="btnDownload" class="btn btn-primary btn-sm hidden"><i class="fas fa-download"></i> Unduh Gambar</button></div></div></div></div>
 
-                // Check static routes
-                if (this.routes[path]) {
-                    document.getElementById(this.routes[path]).classList.remove('hidden');
-                    window.scrollTo(0,0);
-                    return;
-                }
+    <!-- RIWAYAT PAGE -->
+    <div id="riwayat" class="page-section"><div class="card" style="padding:0;overflow:hidden"><div style="padding:16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><h2 style="font-size:1.2rem;font-weight:700"><i class="fas fa-history"></i> Riwayat Scan Barcode</h2><div style="display:flex;gap:6px"><button onclick="exportHistory()" class="btn btn-primary btn-sm"><i class="fas fa-file-csv"></i> Export CSV</button><button onclick="clearHistory()" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus Semua</button></div></div><div id="historyList" style="padding:12px;max-height:400px;overflow-y:auto"></div><div id="historyEmpty" style="padding:50px;text-align:center;color:#9ca3af"><div style="font-size:2.5rem;margin-bottom:8px">📭</div><p style="font-size:15px">Belum ada riwayat pemindaian</p></div></div></div>
 
-                // Check Dynamic Blog Route: /blog/:id
-                if (path.startsWith('/blog/') && path.length > 6) {
-                    const id = parseInt(path.split('/')[2]);
-                    if (!isNaN(id)) {
-                        app.renderBlogPost(id);
-                        return;
-                    }
-                }
+    <!-- BLOG PAGE -->
+    <div id="blog" class="page-section"><h2 style="font-size:2rem;font-weight:800;margin-bottom:6px"><i class="fas fa-newspaper"></i> Blog ScanBarcode</h2><p style="color:#6b7280;margin-bottom:26px;font-size:16px">10 Artikel lengkap tentang scan barcode, QR code, dan teknologi scanning</p><div class="blog-grid" id="blogGrid"></div></div>
 
-                // Check Dynamic SEO Routes
-                const seoPage = CONTENT.seoRoutes.find(r => '/' + r.path === path);
-                if (seoPage) {
-                    app.renderSEOLanding(seoPage);
-                    return;
-                }
+    <!-- TENTANG PAGE -->
+    <div id="tentang" class="page-section"><div class="card prose" style="max-width:900px;margin:0 auto"><h1 style="font-size:2.2rem;font-weight:800;margin-bottom:22px">ℹ️ Tentang ScanBarcode Pro</h1><h2>Sejarah ScanBarcode Pro</h2><p><strong>ScanBarcode Pro</strong> didirikan pada tahun 2023 dengan visi menjadi pemindai barcode <strong>#1 di Indonesia</strong>. Kini telah melayani lebih dari 5 juta pemindaian di seluruh Indonesia.</p><h2>Misi ScanBarcode Pro</h2><p>Menyediakan akses teknologi pemindaian barcode dan QR code terbaik untuk seluruh masyarakat Indonesia secara <strong>gratis</strong>, tanpa mengorbankan <strong>privasi</strong>.</p><h2>Teknologi</h2><p>WebAssembly, ZXing, QRCode.js, JsBarcode, HTML5 Camera API.</p><h2>Mengapa #1?</h2><ul><li>✅ 5M+ pemindaian sukses</li><li>✅ 50+ format barcode</li><li>✅ AI-powered detection</li><li>✅ 100% client-side</li><li>✅ Full Bahasa Indonesia</li><li>✅ Gratis selamanya</li><li>✅ Tanpa install aplikasi</li></ul></div></div>
 
-                // Fallback for other "pages" (About, Privacy, etc.) - generic template
-                if (path === '/about' || path === '/privacy' || path === '/terms' || path === '/contact') {
-                    app.renderGenericPage(path);
-                    return;
-                }
+    <!-- KONTAK PAGE -->
+    <div id="kontak" class="page-section"><div class="card prose" style="max-width:900px;margin:0 auto"><h1 style="font-size:2.2rem;font-weight:800;margin-bottom:22px">📧 Hubungi ScanBarcode Pro</h1><p>Punya pertanyaan, saran, atau masukan? Jangan ragu untuk menghubungi tim ScanBarcode Pro.</p><h3>❓ FAQ</h3><p><strong>Q: Apakah ScanBarcode Pro benar-benar gratis?</strong><br>A: Ya, 100% gratis selamanya!</p><p><strong>Q: Apakah data saya aman?</strong><br>A: Sangat aman! Tidak ada upload data.</p><p><strong>Q: Format apa yang didukung?</strong><br>A: 50+ format termasuk EAN, UPC, QR, DataMatrix.</p><p><strong>Q: Bagaimana cara scan?</strong><br>A: Klik "Mulai Kamera", izinkan, arahkan ke barcode.</p></div></div>
+</div>
 
-                // 404
-                this.push('/');
-            }
-        };
+<footer class="site-footer"><div class="footer-container"><div class="footer-col"><h4>📷 ScanBarcode Pro</h4><p>Platform pemindai barcode online terbaik di Indonesia. Gratis, cepat, dan aman untuk semua kebutuhan scan barcode Anda.</p><div class="footer-keywords"><span class="footer-keyword">scan barcode</span><span class="footer-keyword">scan barcode online</span><span class="footer-keyword">pemindai barcode</span><span class="footer-keyword">barcode scanner</span></div></div><div class="footer-col"><h4>📋 Menu</h4><ul><li><a href="#" onclick="showPage('scanner');return false">📷 Scan Barcode</a></li><li><a href="#" onclick="showPage('blog');return false">📝 Blog</a></li><li><a href="#" onclick="showPage('tentang');return false">ℹ️ Tentang Kami</a></li><li><a href="#" onclick="showPage('kontak');return false">✉ Hubungi Kami</a></li></ul></div><div class="footer-col"><h4>⚖️ Legal</h4><ul><li><a href="#" onclick="showPage('privacy');return false">🔐 Kebijakan Privasi</a></li><li><a href="#" onclick="showPage('terms');return false">⚖️ Syarat Dan Ketentuan</a></li><li><a href="#" onclick="showPage('disclaimer');return false">⚠️ Penafian</a></li></ul></div></div><div class="footer-bottom"><p>ScanBarcode Pro adalah alat independen untuk scan barcode umum.</p><p>© 2026 ScanBarcode Pro. Hak Cipta Dilindungi.</p></div></footer>
 
-        // --- APPLICATION CONTROLLER ---
-        const app = {
-            state: {
-                history: JSON.parse(localStorage.getItem('sb_history')) || [],
-                theme: localStorage.getItem('theme') || 'system',
-                currentResult: null,
-                html5QrCode: null,
-                isScanning: false
-            },
+<script>
+function toast(m,t='success'){let c=document.getElementById('toastContainer'),e=document.createElement('div');e.className='toast';e.style.background=t==='success'?'#10b981':t==='error'?'#ef4444':'#2563eb';e.textContent=m;c.appendChild(e);setTimeout(()=>{e.style.opacity='0';e.style.transition='.3s';setTimeout(()=>e.remove(),300)},2800)}
+function toggleMobileDropdown(){document.getElementById('mobileDropdown').classList.toggle('open')}
+function showPage(n){document.querySelectorAll('.page-section').forEach(e=>e.classList.remove('active'));let el=document.getElementById(n);if(el)el.classList.add('active');else document.getElementById('home').classList.add('active');document.getElementById('mobileDropdown').classList.remove('open');window.scrollTo(0,0);if(n==='blog')renderBlogs();if(n==='riwayat')renderHistory();if(n==='generator')switchGenTab('qr');if(n!=='scanner')stopScanner()}
+function toggleTheme(){let d=document.documentElement.classList.toggle('dark');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';localStorage.setItem('theme',d?'dark':'light')}
 
-            init() {
-                // Theme
-                this.applyTheme();
-                document.getElementById('theme-toggle').addEventListener('click', () => this.toggleTheme());
+const blogImages=['https://images.unsplash.com/photo-1586281380349-632531db7ed1?w=400&h=260&fit=crop','https://images.unsplash.com/photo-1553729459-afe8a1f19b2a?w=400&h=260&fit=crop','https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=260&fit=crop','https://images.unsplash.com/photo-1553413077-190dd305871c?w=400&h=260&fit=crop','https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=260&fit=crop','https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400&h=260&fit=crop','https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=260&fit=crop','https://images.unsplash.com/photo-1586281380117-5a60cdc5c2a5?w=400&h=260&fit=crop','https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=260&fit=crop','https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=260&fit=crop'];
+const blogs=[{id:1,title:'Cara Scan Barcode dengan ScanBarcode Pro',cat:'Tutorial',date:'15 Maret 2026',excerpt:'Panduan lengkap scan barcode pakai HP dan PC dengan mudah.'},{id:2,title:'ScanBarcode: EAN vs UPC Retail Guide',cat:'Retail',date:'10 Maret 2026',excerpt:'Memahami perbedaan EAN-13 dan UPC-A untuk bisnis retail Indonesia.'},{id:3,title:'ScanBarcode & QRIS Pembayaran Digital',cat:'Fintech',date:'5 Maret 2026',excerpt:'Standar nasional pembayaran digital via QR code.'},{id:4,title:'ScanBarcode Manajemen Inventori UMKM',cat:'Bisnis',date:'28 Februari 2026',excerpt:'Optimalkan stok barang dengan sistem barcode.'},{id:5,title:'ScanBarcode WiFi QR Code Tools',cat:'Tools',date:'20 Februari 2026',excerpt:'Buat QR WiFi pelanggan dengan mudah.'},{id:6,title:'ScanBarcode Keamanan Scan QR Code',cat:'Keamanan',date:'15 Februari 2026',excerpt:'Tips aman scan QR code dari sumber tidak dikenal.'},{id:7,title:'ScanBarcode di Industri Logistik',cat:'Logistik',date:'10 Februari 2026',excerpt:'Code128 untuk tracking pengiriman dan gudang.'},{id:8,title:'ScanBarcode vCard QR Digital',cat:'Tools',date:'5 Februari 2026',excerpt:'Kartu nama digital modern dengan vCard QR.'},{id:9,title:'ScanBarcode Teknologi Barcode 2026-30',cat:'Teknologi',date:'1 Februari 2026',excerpt:'Tren barcode masa depan.'},{id:10,title:'ScanBarcode Panduan QR Code Generator',cat:'Tutorial',date:'25 Januari 2026',excerpt:'Cara menggunakan QR Code Generator.'}];
+function renderBlogs(){document.getElementById('blogGrid').innerHTML=blogs.map((b,i)=>`<div class="blog-card"><div class="blog-img" style="background-image:url('${blogImages[i]}')"><span>${b.title}</span></div><div class="blog-info"><span class="blog-cat">${b.cat}</span><h3 class="blog-title">${b.title}</h3><p class="blog-excerpt">${b.excerpt}</p><span class="blog-date">📅 ${b.date} • 5 menit baca</span></div></div>`).join('')}
 
-                // Router
-                router.init();
+// ===== CAMERA SCANNER WITH VIBRATE =====
+let qr=null,cur=null,torchOn=!1,curCam=null,allCams=[],isScanning=!1;
 
-                // Initializers
-                this.scanner.init();
-                this.generator.init();
-                this.historyManager.render();
-                this.blogManager.renderIndex();
-            },
+function vibrateDevice(){
+    if(navigator.vibrate) navigator.vibrate([100,50,100]);
+    else if(navigator.userAgent.match(/android/i)) try{navigator.vibrate(200)}catch(e){}
+}
 
-            toggleTheme() {
-                this.state.theme = this.state.theme === 'dark' ? 'light' : 'dark';
-                localStorage.setItem('theme', this.state.theme);
-                this.applyTheme();
-            },
+async function startScanner(){
+    document.getElementById('btnStart').classList.add('hidden');document.getElementById('scanStatus').innerHTML='<span style="color:#f59e0b">●</span> Meminta izin kamera...';document.getElementById('camPlaceholder').style.display='none';
+    try{
+        if(!qr)qr=new Html5Qrcode("reader");allCams=await Html5QrCode.getCameras();
+        if(!allCams||allCams.length===0){document.getElementById('scanStatus').innerHTML='<span style="color:#ef4444">✕</span> Kamera tidak ditemukan! Gunakan Upload Gambar.';document.getElementById('btnStart').classList.remove('hidden');document.getElementById('camPlaceholder').style.display='flex';return}
+        curCam=allCams.find(c=>c.label.toLowerCase().includes('back')||c.label.toLowerCase().includes('environment'))||allCams[0];
+        await qr.start(curCam.id,{fps:10,qrbox:{width:250,height:250}},
+            (t,r)=>{
+                cur=t;
+                vibrateDevice(); // VIBRATE ON SCAN!
+                showResult(t,r.result.format.formatName);
+                saveHist(t,r.result.format.formatName);
+                document.getElementById('scanLaser').style.display='none';
+                toast('✅ Barcode terdeteksi!');
+            },()=>{});
+        isScanning=true;document.getElementById('btnStop').classList.remove('hidden');document.getElementById('btnTorch').classList.remove('hidden');if(allCams.length>1)document.getElementById('btnSwitch').classList.remove('hidden');document.getElementById('scanStatus').innerHTML='<span style="color:#10b981">●</span> Scanning...';document.getElementById('scanLaser').style.display='block'
+    }catch(e){document.getElementById('scanStatus').innerHTML='<span style="color:#ef4444">✕</span> Gagal akses kamera. Izinkan di pengaturan browser.';document.getElementById('btnStart').classList.remove('hidden');document.getElementById('camPlaceholder').style.display='flex'}
+}
+function stopScanner(){if(qr&&isScanning)qr.stop().then(()=>{isScanning=!1;document.getElementById('btnStart').classList.remove('hidden');document.getElementById('btnStop').classList.add('hidden');document.getElementById('btnTorch').classList.add('hidden');document.getElementById('btnSwitch').classList.add('hidden');document.getElementById('scanStatus').innerHTML='⚪ Kamera Mati';document.getElementById('scanLaser').style.display='none';document.getElementById('camPlaceholder').style.display='flex';torchOn=!1})}
+async function toggleTorch(){if(qr&&isScanning)try{let t=qr.getRunningTrack();if(t){await t.applyConstraints({advanced:[{torch:!torchOn}]});torchOn=!torchOn;document.getElementById('btnTorch').classList.toggle('torch-on',torchOn)}}catch(e){}}
+async function switchCamera(){if(!qr||!isScanning||allCams.length<2)return;await qr.stop();let i=allCams.findIndex(c=>c.id===curCam.id);curCam=allCams[(i+1)%allCams.length];await qr.start(curCam.id,{fps:10,qrbox:{width:250,height:250}},(t,r)=>{cur=t;vibrateDevice();showResult(t,r.result.format.formatName);saveHist(t,r.result.format.formatName);document.getElementById('scanLaser').style.display='none'},()=>{});document.getElementById('scanLaser').style.display='block'}
+function scanImageFile(i){if(!i.files[0])return;new Html5Qrcode("reader").scanFile(i.files[0],!0).then(t=>{cur=t;vibrateDevice();showResult(t,'File Image');saveHist(t,'File Image')}).catch(()=>toast('Tidak ada barcode di gambar','error'));i.value=''}
+function showResult(t,f){
+    let type=/^https?:\/\//i.test(t)?'url':/^WIFI:/i.test(t)?'wifi':/^tel:/i.test(t)?'phone':/^mailto:/i.test(t)?'email':/^[0-9]{8,14}$/.test(t)?'product':'text';
+    let ic={url:'🔗',wifi:'📶',phone:'📞',email:'✉️',product:'📦',text:'📝'},lb={url:'Link Website',wifi:'WiFi Network',phone:'Nomor Telepon',email:'Alamat Email',product:'Kode Produk',text:'Data Terdeteksi'};
+    document.getElementById('resultDisplay').className='result-box success';
+    document.getElementById('resultDisplay').innerHTML=`<div style="text-align:center"><div style="font-size:2.5rem;margin-bottom:6px">${ic[type]}</div><div style="font-size:13px;font-weight:700;color:#2563eb;margin-bottom:6px">${lb[type]}</div><div style="font-family:monospace;font-weight:600;word-break:break-all;background:#fff;padding:10px;border-radius:6px;font-size:14px">${t.length>80?t.substring(0,80)+'...':t}</div></div>`;
+    let a=`<button onclick="copyRes()" class="btn btn-dark" style="padding:8px;width:100%;font-size:14px"><i class="fas fa-copy"></i> Salin Teks</button>`;
+    if(type==='url')a+=`<button onclick="window.open('${t}','_blank')" class="btn btn-success" style="padding:8px;width:100%;font-size:14px"><i class="fas fa-external-link-alt"></i> Buka Website</button>`;
+    if(type==='product')a+=`<button onclick="searchGoogle('${t}')" class="btn btn-success" style="padding:8px;width:100%;font-size:14px"><i class="fas fa-search"></i> Cari di Google</button>`;
+    a+=`<button onclick="shareRes()" class="btn btn-outline" style="padding:8px;width:100%;font-size:14px"><i class="fas fa-share-alt"></i> Bagikan Hasil</button>`;
+    document.getElementById('resultActions').innerHTML=a;document.getElementById('resultActions').style.display='flex';
+    document.getElementById('resultInfo').style.display='block';document.getElementById('resultInfo').innerHTML=`<strong>📋 Format:</strong> ${f} | <strong>🕐 Waktu:</strong> ${new Date().toLocaleString('id-ID')}`;
+    if(type==='product'){document.getElementById('productSearch').style.display='block';searchGoogle(t)}else{document.getElementById('productSearch').style.display='none'}
+}
+function searchGoogle(c){let q=encodeURIComponent(c);document.getElementById('productSearch').innerHTML=`<div class="card" style="padding:12px;text-align:center;margin-top:8px"><p style="font-size:14px;margin-bottom:8px;font-weight:600">🔍 Cari produk: <strong>${c}</strong></p><a href="https://www.google.com/search?q=${q}+product" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin:3px;display:inline-block"><i class="fas fa-search"></i> Google</a><a href="https://www.google.com/search?q=${q}+barcode+info" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="margin:3px;display:inline-block"><i class="fas fa-info-circle"></i> Info Produk</a></div>`}
+function copyRes(){navigator.clipboard.writeText(cur).then(()=>toast('✅ Teks berhasil disalin!'))}
+function shareRes(){if(navigator.share)navigator.share({text:cur});else copyRes()}
 
-            applyTheme() {
-                const isDark = this.state.theme === 'dark' || (this.state.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-                document.documentElement.classList.toggle('dark', isDark);
-            },
+function saveHist(t,f){let h=JSON.parse(localStorage.getItem('sh')||'[]');h.unshift({text:t,format:f,time:new Date().toLocaleString('id-ID')});localStorage.setItem('sh',JSON.stringify(h.slice(0,100)))}
+function renderHistory(){let h=JSON.parse(localStorage.getItem('sh')||'[]');document.getElementById('historyEmpty').style.display=h.length?'none':'block';document.getElementById('historyList').innerHTML=h.map(i=>`<div style="padding:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="flex:1;min-width:0"><span style="font-size:11px;font-weight:700;color:#2563eb;background:var(--hover);padding:3px 8px;border-radius:4px">${i.format}</span><span style="font-size:11px;color:#9ca3af;margin-left:6px">${i.time}</span><p style="font-family:monospace;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px">${i.text}</p></div><button onclick="navigator.clipboard.writeText('${i.text.replace(/'/g,"\\'")}');toast('Disalin!')" style="border:none;background:var(--bg);cursor:pointer;padding:8px;border-radius:6px;font-size:14px">📋</button></div>`).join('')}
+function clearHistory(){if(confirm('Hapus semua riwayat?')){localStorage.removeItem('sh');renderHistory();toast('🗑 Riwayat dihapus')}}
+function exportHistory(){let h=JSON.parse(localStorage.getItem('sh')||'[]');if(!h.length){toast('Tidak ada data','error');return}let c='Waktu,Format,Konten\n'+h.map(i=>`"${i.time}","${i.format}","${i.text.replace(/"/g,'""')}"`).join('\n');let b=new Blob(['\uFEFF'+c],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='scan-history.csv';a.click();toast('✅ CSV diexport!')}
 
-            toast(msg, type='success') {
-                const c = document.getElementById('toast-container');
-                const t = document.createElement('div');
-                t.className = `${type === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white px-4 py-3 rounded shadow-lg fade-in flex items-center gap-2`;
-                t.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'check' : 'exclamation'}-circle"></i> ${msg}`;
-                c.appendChild(t);
-                setTimeout(() => t.remove(), 3000);
-            },
+let gBlob=null,gType='png';
+function switchGenTab(t){document.getElementById('tabQr').style.cssText=`flex:1;padding:16px;font-weight:700;border:none;cursor:pointer;font-size:15px;background:${t==='qr'?'var(--hover)':'var(--card)'};color:${t==='qr'?'#2563eb':'var(--text)'}`;document.getElementById('tabBc').style.cssText=`flex:1;padding:16px;font-weight:700;border:none;cursor:pointer;font-size:15px;background:${t==='barcode'?'var(--hover)':'var(--card)'};color:${t==='barcode'?'#2563eb':'var(--text)'}`;document.getElementById('genControls').innerHTML=t==='qr'?`<textarea id="qrData" placeholder="Masukkan URL atau teks untuk QR code..." style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;min-height:100px;font-size:15px;background:var(--bg);color:var(--text);resize:vertical;font-family:Inter"></textarea><button onclick="genQR()" class="btn btn-primary" style="padding:12px;width:100%;margin-top:8px"><i class="fas fa-qrcode"></i> Generate QR Code</button>`:`<select id="barFormat" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font-size:15px;background:var(--bg);color:var(--text)"><option value="CODE128">Code 128 (Umum)</option><option value="EAN13">EAN-13 (Produk Retail)</option><option value="UPC">UPC-A (Amerika)</option></select><input id="barData" placeholder="Masukkan angka barcode..." style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font-size:15px;background:var(--bg);color:var(--text);margin-top:8px"><button onclick="genBC()" class="btn btn-primary" style="padding:12px;width:100%;margin-top:8px"><i class="fas fa-barcode"></i> Generate Barcode</button>`;document.getElementById('genPreview').innerHTML='<span style="color:#9ca3af;font-size:14px">Preview akan muncul di sini</span>';document.getElementById('btnDownload').classList.add('hidden');gBlob=null;gType=t==='qr'?'png':'svg'}
+function genQR(){let d=document.getElementById('qrData')?.value.trim();if(!d){toast('Masukkan data!','error');return}document.getElementById('genPreview').innerHTML='';new QRCode(document.getElementById('genPreview'),{text:d,width:200,height:200});setTimeout(()=>{let c=document.querySelector('#genPreview canvas');if(c){c.toBlob(b=>{gBlob=b;document.getElementById('btnDownload').classList.remove('hidden');toast('✅ QR Code siap!')},'image/png')}},250)}
+function genBC(){let d=document.getElementById('barData')?.value.trim(),f=document.getElementById('barFormat')?.value||'CODE128';if(!d){toast('Masukkan data!','error');return}document.getElementById('genPreview').innerHTML='';let s=document.createElementNS("http://www.w3.org/2000/svg","svg");document.getElementById('genPreview').appendChild(s);try{JsBarcode(s,d,{format:f,height:80,displayValue:!0,fontSize:14});gBlob=new Blob([new XMLSerializer().serializeToString(s)],{type:'image/svg+xml'});document.getElementById('btnDownload').classList.remove('hidden');toast('✅ Barcode siap!')}catch(e){toast('Data tidak valid!','error')}}
+document.getElementById('btnDownload').addEventListener('click',()=>{if(!gBlob){toast('Generate dulu!','error');return}let a=document.createElement('a');a.href=URL.createObjectURL(gBlob);a.download=gType==='png'?'qr-code.png':'barcode.svg';a.click();toast('✅ Terunduh!')});
 
-            // --- SCANNER LOGIC ---
-            scanner: {
-                init() {
-                    document.getElementById('btn-start').addEventListener('click', () => this.start());
-                    document.getElementById('btn-stop').addEventListener('click', () => this.stop());
-                },
-                
-                async start() {
-                    try {
-                        app.state.html5QrCode = new Html5Qrcode("reader");
-                        const cameras = await Html5QrCode.getCameras();
-                        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-                        
-                        // Prefer back camera
-                        const cameraId = cameras.find(c => c.label.toLowerCase().includes('back'))?.id || cameras[0].id;
-
-                        await app.state.html5QrCode.start(cameraId, config, this.onSuccess, () => {});
-                        
-                        app.state.isScanning = true;
-                        document.getElementById('btn-start').classList.add('hidden');
-                        document.getElementById('btn-stop').classList.remove('hidden');
-                        document.getElementById('scan-status').innerText = "Scanning...";
-                        document.getElementById('scan-status').classList.add('text-green-500');
-                        
-                        // Check Torch/Zoom capabilities (Simulated for UI)
-                        document.getElementById('btn-torch').classList.remove('hidden');
-                        document.getElementById('zoom-container').classList.remove('hidden');
-
-                    } catch (err) {
-                        app.toast("Camera permission denied.", "error");
-                    }
-                },
-
-                stop() {
-                    if (app.state.html5QrCode && app.state.isScanning) {
-                        app.state.html5QrCode.stop().then(() => {
-                            app.state.html5QrCode.clear();
-                            app.state.isScanning = false;
-                            document.getElementById('btn-start').classList.remove('hidden');
-                            document.getElementById('btn-stop').classList.add('hidden');
-                            document.getElementById('scan-status').innerText = "Camera Off";
-                            document.getElementById('scan-status').classList.remove('text-green-500');
-                        });
-                    }
-                },
-
-                scanFile(input) {
-                    if (input.files.length === 0) return;
-                    const html5QrCode = new Html5Qrcode("reader");
-                    html5QrCode.scanFile(input.files[0], true)
-                        .then(text => {
-                            this.processResult(text, "File");
-                            html5QrCode.clear();
-                        })
-                        .catch(err => app.toast("No code found in image", "error"));
-                },
-
-                toggleTorch() {
-                    // Note: Actual torch support varies by browser/device
-                    app.state.html5QrCode.applyVideoConstraints({ advanced: [{ torch: true }] })
-                        .then(() => app.toast("Torch Enabled"))
-                        .catch(() => app.toast("Torch not supported", "error"));
-                },
-
-                setZoom(val) {
-                    // Note: Zoom requires track capabilities
-                    app.state.html5QrCode.applyVideoConstraints({ advanced: [{ zoom: parseFloat(val) }] })
-                        .catch(() => {}); // Silent fail if not supported
-                },
-
-                onSuccess(decodedText, result) {
-                    this.processResult(decodedText, result.result.format.formatName);
-                },
-
-                processResult(text, type) {
-                    app.state.currentResult = text;
-                    document.getElementById('result-area').innerHTML = `
-                        <div class="text-center w-full">
-                            <div class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded inline-block mb-2">${type}</div>
-                            <p class="font-mono font-bold break-all">${text}</p>
-                        </div>
-                    `;
-                    document.getElementById('result-actions').classList.remove('hidden');
-                    app.historyManager.add(text, type);
-                },
-
-                copy() { navigator.clipboard.writeText(app.state.currentResult); app.toast("Copied!"); },
-                async share() { 
-                    if(navigator.share) await navigator.share({ text: app.state.currentResult }); 
-                },
-                downloadTxt() {
-                    const blob = new Blob([app.state.currentResult], { type: 'text/plain' });
-                    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'scan.txt'; a.click();
-                }
-            },
-
-            // --- GENERATOR LOGIC ---
-            generator: {
-                currentTab: 'qr',
-                blob: null,
-
-                init() {
-                    this.renderControls();
-                },
-
-                setTab(tab) {
-                    this.currentTab = tab;
-                    document.getElementById('gen-tab-qr').className = tab === 'qr' ? 'flex-1 py-4 font-bold bg-gray-50 dark:bg-gray-800 text-primary border-b-2 border-primary' : 'flex-1 py-4 font-bold text-gray-500 hover:text-gray-700';
-                    document.getElementById('gen-tab-barcode').className = tab === 'barcode' ? 'flex-1 py-4 font-bold bg-gray-50 dark:bg-gray-800 text-primary border-b-2 border-primary' : 'flex-1 py-4 font-bold text-gray-500 hover:text-gray-700';
-                    this.renderControls();
-                },
-
-                renderControls() {
-                    const c = document.getElementById('gen-controls');
-                    if (this.currentTab === 'qr') {
-                        c.innerHTML = `
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Content</label>
-                                <textarea id="qr-data" rows="4" class="w-full bg-gray-50 dark:bg-gray-800 border rounded p-2"></textarea>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Correction Level</label>
-                                <select id="qr-ec" class="w-full bg-gray-50 dark:bg-gray-800 border rounded p-2">
-                                    <option value="L">Low (7%)</option>
-                                    <option value="M" selected>Medium (15%)</option>
-                                    <option value="Q">Quartile (25%)</option>
-                                    <option value="H">High (30%)</option>
-                                </select>
-                            </div>
-                            <button onclick="app.generator.generateQR()" class="w-full bg-primary text-white py-3 rounded-lg font-bold">Generate QR</button>
-                        `;
-                    } else {
-                        c.innerHTML = `
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Format</label>
-                                <select id="bar-format" class="w-full bg-gray-50 dark:bg-gray-800 border rounded p-2">
-                                    <option value="CODE128">Code 128</option>
-                                    <option value="EAN13">EAN-13</option>
-                                    <option value="UPC">UPC</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium mb-1">Value</label>
-                                <input type="text" id="bar-data" class="w-full bg-gray-50 dark:bg-gray-800 border rounded p-2">
-                            </div>
-                            <button onclick="app.generator.generateBar()" class="w-full bg-primary text-white py-3 rounded-lg font-bold">Generate Barcode</button>
-                        `;
-                    }
-                },
-
-                generateQR() {
-                    const data = document.getElementById('qr-data').value;
-                    if(!data) return app.toast("Enter data", "error");
-                    document.getElementById('gen-output').innerHTML = "";
-                    new QRCode(document.getElementById("gen-output"), {
-                        text: data, width: 200, height: 200, correctLevel: QRCode.CorrectLevel[document.getElementById('qr-ec').value]
-                    });
-                    setTimeout(() => this.prepareDownload(), 100);
-                },
-
-                generateBar() {
-                    const data = document.getElementById('bar-data').value;
-                    const fmt = document.getElementById('bar-format').value;
-                    if(!data) return app.toast("Enter data", "error");
-                    
-                    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                    document.getElementById('gen-output').appendChild(svg);
-                    try {
-                        JsBarcode(svg, data, { format: fmt });
-                        const s = new XMLSerializer().serializeToString(svg);
-                        this.blob = new Blob([s], {type: "image/svg+xml"});
-                        document.getElementById('btn-dl-gen').classList.remove('hidden');
-                    } catch(e) { app.toast("Invalid data for format", "error"); }
-                },
-
-                prepareDownload() {
-                    const canvas = document.querySelector('#gen-output canvas');
-                    if(canvas) {
-                        canvas.toBlob(b => {
-                            this.blob = b;
-                            document.getElementById('btn-dl-gen').classList.remove('hidden');
-                        });
-                    }
-                },
-
-                download() {
-                    if(!this.blob) return;
-                    const a = document.createElement('a');
-                    a.href = URL.createObjectURL(this.blob);
-                    a.download = `code.${this.currentTab === 'qr' ? 'png' : 'svg'}`;
-                    a.click();
-                }
-            },
-
-            // --- HISTORY MANAGER ---
-            historyManager: {
-                add(data, type) {
-                    const item = { id: Date.now(), type, data, date: new Date().toLocaleString() };
-                    app.state.history.unshift(item);
-                    if(app.state.history.length > 50) app.state.history.pop();
-                    localStorage.setItem('sb_history', JSON.stringify(app.state.history));
-                    this.render();
-                },
-                render() {
-                    const list = document.getElementById('history-list');
-                    list.innerHTML = app.state.history.map(h => `
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <td class="p-4 text-xs font-bold uppercase text-blue-600">${h.type}</td>
-                            <td class="p-4 text-sm text-gray-500">${h.date}</td>
-                            <td class="p-4 font-mono text-sm truncate max-w-[150px]">${h.data}</td>
-                            <td class="p-4"><button onclick="navigator.clipboard.writeText('${h.data}')" class="text-gray-400 hover:text-primary"><i class="fa-regular fa-copy"></i></button></td>
-                        </tr>
-                    `).join('');
-                    document.getElementById('history-empty').classList.toggle('hidden', app.state.history.length > 0);
-                },
-                clear() {
-                    if(confirm("Clear history?")) {
-                        app.state.history = [];
-                        localStorage.setItem('sb_history', '[]');
-                        this.render();
-                    }
-                },
-                export(type) {
-                    const data = type === 'csv' 
-                        ? "Date,Type,Data\n" + app.state.history.map(h => `"${h.date}","${h.type}","${h.data}"`).join('\n')
-                        : JSON.stringify(app.state.history, null, 2);
-                    const a = document.createElement('a');
-                    a.href = "data:text/plain;charset=utf-8," + encodeURIComponent(data);
-                    a.download = `history.${type}`;
-                    a.click();
-                }
-            },
-
-            // --- BLOG MANAGER ---
-            blogManager: {
-                renderIndex() {
-                    const grid = document.getElementById('blog-grid');
-                    // Render first 12 articles
-                    grid.innerHTML = CONTENT.blogTopics.slice(0, 12).map((t, i) => `
-                        <div class="glass-card p-6 rounded-xl hover:shadow-lg transition cursor-pointer" onclick="router.push('/blog/${i}')">
-                            <div class="h-40 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
-                            <span class="text-xs font-bold text-primary uppercase">Article</span>
-                            <h3 class="font-bold text-lg mt-1">${t}</h3>
-                            <p class="text-sm text-gray-500 mt-2">Comprehensive guide covering all aspects of ${t.toLowerCase()}...</p>
-                        </div>
-                    `).join('');
-                }
-            },
-
-            renderBlogPost(id) {
-                document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
-                document.getElementById('page-blog-post').classList.remove('hidden');
-                
-                const title = CONTENT.blogTopics[id] || "Article Not Found";
-                document.getElementById('post-title').innerText = title;
-                document.getElementById('post-content').innerHTML = `
-                    <p class="mb-4">In the world of barcode technology, understanding <strong>${title}</strong> is crucial for efficiency and accuracy.</p>
-                    <p class="mb-4">This comprehensive guide explores the intricacies of ${title.toLowerCase()}, providing expert insights and practical tips for implementation in your business workflow.</p>
-                    <h3 class="text-xl font-bold mt-6 mb-2">Key Benefits</h3>
-                    <ul class="list-disc pl-5 mb-4">
-                        <li>Increased operational speed</li>
-                        <li>Reduction in human error</li>
-                        <li>Real-time data synchronization</li>
-                    </ul>
-                    <p>Whether you are a small business owner or an enterprise manager, leveraging ${title.toLowerCase()} can significantly impact your bottom line.</p>
-                    <div class="my-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded border-l-4 border-blue-500">
-                        <strong>Expert Tip:</strong> Always ensure your scanning equipment is calibrated correctly for the specific symbology you are using.
-                    </div>
-                `;
-                window.scrollTo(0,0);
-            },
-
-            // --- SEO PAGE RENDERER ---
-            renderSEOLanding(page) {
-                document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
-                document.getElementById('page-seo-landing').classList.remove('hidden');
-                
-                document.getElementById('seo-title').innerText = page.title;
-                document.getElementById('seo-content').innerHTML = `
-                    <p class="mb-4">Welcome to the ultimate resource for <strong>${page.title}</strong>. Our tools are designed to help you ${page.keywords.join(' and ')} with ease.</p>
-                    <h3 class="text-2xl font-bold mt-6 mb-2">Why Choose Our ${page.keywords[0]} Tool?</h3>
-                    <p class="mb-4">We provide industry-leading accuracy and speed. Our ${page.keywords[0]} solution works directly in your browser, ensuring privacy and convenience.</p>
-                    <h3 class="text-2xl font-bold mt-6 mb-2">How it Works</h3>
-                    <ol class="list-decimal pl-5 space-y-2">
-                        <li>Access the tool via our secure platform.</li>
-                        <li>Upload an image or use your camera.</li>
-                        <li>Receive instant results ready for export.</li>
-                    </ol>
-                    <div class="mt-8">
-                        <button onclick="router.push('/scanner')" class="bg-primary text-white px-6 py-3 rounded-lg font-bold">Try Now</button>
-                    </div>
-                `;
-                window.scrollTo(0,0);
-            },
-
-            renderGenericPage(path) {
-                document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
-                document.getElementById('page-seo-landing').classList.remove('hidden');
-                
-                const title = path.replace('/', '').charAt(0).toUpperCase() + path.slice(1);
-                document.getElementById('seo-title').innerText = title;
-                document.getElementById('seo-content').innerHTML = `
-                    <p>This is the ${title} page for ScanBarcode Pro.</p>
-                    <p>We are committed to transparency and user safety. Please contact support@scanbarcodepro.com for more details regarding this page.</p>
-                `;
-                window.scrollTo(0,0);
-            }
-        };
-
-        // --- BOOTSTRAP ---
-        window.addEventListener('DOMContentLoaded', () => app.init());
-
-    </script>
+if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');document.getElementById('themeBtn').textContent='☀️'}
+switchGenTab('qr');
+</script>
 </body>
 </html>
