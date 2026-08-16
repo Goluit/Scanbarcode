@@ -1,1274 +1,223 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Generator Pro - Semua Fitur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     
-    <!-- Library QR Code -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- Font Awesome untuk ikon -->
+    <title>ScanBarcode Pro | Pemindai Barcode #1 di Indonesia 2026 - Scan Barcode Online Gratis</title>
+    <meta name="description" content="ScanBarcode Pro - Pemindai barcode #1 Indonesia. Scan barcode online gratis, QR scanner, barcode scanner. Live camera, 50+ format, 100% privat, tanpa upload.">
+    <meta name="keywords" content="scan barcode, scan barcode online, pemindai barcode, barcode scanner, scan qr code, pemindai qr, scanner barcode indonesia, gratis barcode scanner, barcode reader, qr code generator">
+    <meta name="author" content="ScanBarcode Pro Indonesia">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="language" content="id">
+    <meta name="geo.country" content="ID">
+    <meta name="theme-color" content="#2563eb">
+    
+    <meta property="og:title" content="ScanBarcode Pro | Pemindai Barcode #1 di Indonesia 2026">
+    <meta property="og:description" content="Scan barcode online gratis. Pemindai barcode & QR scanner #1 Indonesia. 100% privat.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:site_name" content="ScanBarcode Pro">
+
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            padding: 30px;
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .header h1 i {
-            color: #06b6d4;
-            margin-right: 10px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .header p {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .section {
-            margin-bottom: 25px;
-            padding-bottom: 25px;
-            border-bottom: 2px solid #f1f5f9;
-        }
-
-        .section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title i {
-            color: #6366f1;
-            font-size: 20px;
-        }
-
-        .type-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
-        .type-btn {
-            padding: 15px 10px;
-            border: 2px solid #e2e8f0;
-            background: white;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 13px;
-            font-weight: 600;
-            color: #64748b;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .type-btn:hover {
-            border-color: #6366f1;
-            color: #6366f1;
-            background: #f8fafc;
-            transform: translateY(-2px);
-        }
-
-        .type-btn.active {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            border-color: transparent;
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-        }
-
-        .type-btn i {
-            font-size: 20px;
-        }
-
-        .content-panel {
-            display: none;
-        }
-
-        .content-panel.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #64748b;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s;
-            background: #f8fafc;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #6366f1;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        textarea.form-input {
-            resize: vertical;
-            min-height: 70px;
-        }
-
-        select.form-input {
-            cursor: pointer;
-        }
-
-        .color-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .color-picker {
-            width: 50px;
-            height: 45px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            cursor: pointer;
-            padding: 2px;
-        }
-
-        .color-hex {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 14px;
-            font-family: 'Courier New', monospace;
-            font-weight: 600;
-        }
-
-        .range-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .range-slider {
-            flex: 1;
-            height: 8px;
-            border-radius: 4px;
-            background: #e2e8f0;
-            outline: none;
-            -webkit-appearance: none;
-            cursor: pointer;
-        }
-
-        .range-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            cursor: pointer;
-            border: 3px solid white;
-            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
-        }
-
-        .range-value {
-            font-weight: 700;
-            color: #6366f1;
-            min-width: 50px;
-            text-align: center;
-        }
-
-        .upload-box {
-            border: 2px dashed #cbd5e1;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: #f8fafc;
-        }
-
-        .upload-box:hover {
-            border-color: #6366f1;
-            background: #f0f0ff;
-        }
-
-        .upload-box i {
-            font-size: 40px;
-            color: #94a3b8;
-            margin-bottom: 10px;
-        }
-
-        .upload-box p {
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .file-preview {
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px;
-            background: #f0fdf4;
-            border-radius: 10px;
-            border: 2px solid #10b981;
-        }
-
-        .file-preview img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .file-info {
-            flex: 1;
-        }
-
-        .file-name {
-            font-weight: 600;
-            color: #1e293b;
-            font-size: 14px;
-        }
-
-        .file-size {
-            font-size: 12px;
-            color: #64748b;
-        }
-
-        .btn-remove {
-            padding: 8px 15px;
-            background: #ef4444;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-remove:hover {
-            background: #dc2626;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .preview-box {
-            background: #f8fafc;
-            border: 2px dashed #cbd5e1;
-            border-radius: 16px;
-            padding: 40px;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-
-        .preview-placeholder {
-            text-align: center;
-            color: #94a3b8;
-        }
-
-        .preview-placeholder i {
-            font-size: 80px;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        #qrDisplay {
-            width: 100%;
-            text-align: center;
-        }
-
-        #qrDisplay img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .download-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .btn-download {
-            padding: 12px;
-            background: #10b981;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-download:hover {
-            background: #059669;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-action {
-            flex: 1;
-            padding: 12px;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-action:hover {
-            border-color: #6366f1;
-            color: #6366f1;
-            background: #f8fafc;
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, #f0f0ff, #f8f0ff);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid #e0e0ff;
-        }
-
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            font-size: 14px;
-        }
-
-        .info-label {
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .info-value {
-            font-weight: 600;
-            color: #6366f1;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #e2e8f0;
-            border-top: 4px solid #6366f1;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .toast-container {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .toast {
-            background: #1e293b;
-            color: white;
-            padding: 16px 24px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: slideIn 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-            min-width: 300px;
-        }
-
-        .toast.success { border-left: 4px solid #10b981; }
-        .toast.error { border-left: 4px solid #ef4444; }
-        .toast.info { border-left: 4px solid #6366f1; }
-        .toast.warning { border-left: 4px solid #f59e0b; }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-
-        @media (max-width: 1024px) {
-            .main-grid { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .type-grid { grid-template-columns: repeat(2, 1fr); }
-            .download-grid { grid-template-columns: 1fr; }
-            .header h1 { font-size: 32px; }
-            .card { padding: 20px; }
-        }
+        :root{--bg:#f8fafc;--text:#1e293b;--card:#ffffff;--border:#e5e7eb;--primary:#2563eb;--secondary:#7c3aed;--hover:#eff6ff;--accent:#f97316}
+        .dark{--bg:#0f172a;--text:#e2e8f0;--card:#1e293b;--border:#334155;--hover:#1e3a5f}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:all 0.3s;line-height:1.7;display:flex;flex-direction:column;font-size:16px}
+        
+        .navbar{background:var(--card);border-bottom:1px solid var(--border);padding:0 16px;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.04);backdrop-filter:blur(10px)}
+        .nav-container{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:62px}
+        .logo{display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none;color:var(--text);font-weight:800;font-size:18px}
+        .logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:700}
+        .logo span{color:#2563eb}.logo sub{font-size:7px;color:#9ca3af;letter-spacing:1px;display:block;margin-top:-3px}
+        .nav-links{display:flex;gap:1px;list-style:none}.nav-links a{padding:7px 11px;border-radius:7px;text-decoration:none;color:var(--text);font-size:13px;font-weight:600;transition:all 0.2s;white-space:nowrap}.nav-links a:hover{background:var(--hover);color:#2563eb}
+        .menu-btn,.theme-btn{width:38px;height:38px;border-radius:8px;border:none;background:0 0;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;color:var(--text)}.menu-btn{display:none}
+        .mobile-menu{display:none;background:var(--card);border-top:1px solid var(--border);padding:6px}.mobile-menu.show{display:block}.mobile-menu a{display:block;padding:13px 16px;font-weight:600;text-decoration:none;color:var(--text);border-radius:8px;font-size:14px}
+        
+        .main-content{flex:1;max-width:1280px;margin:0 auto;padding:28px 18px 45px;width:100%}
+        .page{display:none}.page.active{display:block;animation:fadeIn 0.4s}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+        
+        .hero{text-align:center;padding:60px 0 50px}.hero h1{font-size:clamp(2.2rem,5vw,4rem);font-weight:900;line-height:1.15;margin-bottom:18px;background:linear-gradient(135deg,#2563eb,#7c3aed,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero p{font-size:18px;color:#6b7280;max-width:800px;margin:0 auto 30px;line-height:1.8}
+        
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 30px;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;border:none;text-decoration:none;transition:all 0.3s}
+        .btn-primary{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;box-shadow:0 4px 15px rgba(37,99,235,0.3)}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,99,235,0.4)}
+        .btn-outline{background:var(--card);border:2px solid var(--border);color:var(--text)}.btn-outline:hover{border-color:#2563eb;color:#2563eb}
+        .btn-success{background:#10b981;color:#fff}.btn-danger{background:#ef4444;color:#fff}.btn-dark{background:#374151;color:#fff}
+        .btn-sm{padding:8px 16px;font-size:13px;border-radius:8px}
+        .btn-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;border:none;background:#374151;color:#fff;transition:all 0.3s}.btn-icon:hover{background:#4b5563}.torch-on{background:#fbbf24!important;color:#000!important}
+        
+        .card{background:var(--card);border-radius:16px;padding:28px;box-shadow:0 4px 24px rgba(0,0,0,0.05);border:1px solid var(--border);transition:all 0.3s}.card:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,0.08)}
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:35px 0}.stat-card{background:var(--card);border-radius:14px;padding:24px;text-align:center;border:1px solid var(--border)}.stat-num{font-size:36px;font-weight:900}.stat-label{color:#6b7280;font-size:14px;margin-top:4px}
+        .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:35px 0}
+        
+        .scanner-wrapper{display:flex;flex-direction:column;align-items:center;gap:20px}
+        .scanner-content{display:grid;grid-template-columns:1fr;gap:20px;width:100%;max-width:950px}@media(min-width:900px){.scanner-content{grid-template-columns:1fr 1fr}}
+        .scanner-box{background:#000;border-radius:18px;overflow:hidden;position:relative;aspect-ratio:4/3;box-shadow:0 20px 50px rgba(0,0,0,0.35),0 0 0 3px rgba(37,99,235,0.2);max-width:420px;width:100%;margin:0 auto}
+        .scanner-box video{width:100%;height:100%;object-fit:cover}
+        .scanner-laser{position:absolute;left:8%;right:8%;height:2px;background:linear-gradient(90deg,transparent,#ef4444,#ef4444,#ef4444,transparent);z-index:10;pointer-events:none;animation:laser 2.2s ease-in-out infinite;box-shadow:0 0 25px #ef4444;display:none}@keyframes laser{0%,100%{top:18%;opacity:0.5}50%{top:82%;opacity:1}}
+        .cam-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0a0a0a;color:#9ca3af;z-index:5}
+        
+        .result-box{min-height:200px;display:flex;align-items:center;justify-content:center;background:var(--bg);border:2px dashed var(--border);border-radius:12px;padding:20px;text-align:center}.result-box.success{background:#f0fdf4;border-color:#10b981;border-style:solid}
+        
+        .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
+        .blog-card{background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 4px 16px rgba(0,0,0,0.04);cursor:pointer;transition:all 0.3s}.blog-card:hover{transform:translateY(-5px);box-shadow:0 14px 35px rgba(0,0,0,0.1)}
+        .blog-img{height:210px;background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:800;font-size:18px;position:relative;overflow:hidden}.blog-img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(transparent,rgba(0,0,0,0.75))}.blog-img span{position:relative;z-index:1}
+        .blog-info{padding:18px}.blog-cat{font-size:10px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:0.5px}.blog-title{font-size:17px;font-weight:700;margin:6px 0;line-height:1.3}.blog-date{font-size:12px;color:#9ca3af}.blog-excerpt{font-size:13px;color:#6b7280;margin-top:6px;line-height:1.5}
+        
+        .blog-detail-header{height:280px;background-size:cover;background-position:center;border-radius:18px;display:flex;align-items:flex-end;padding:28px;color:#fff;position:relative;overflow:hidden;margin-bottom:28px}.blog-detail-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(transparent,rgba(0,0,0,0.8))}.blog-detail-header div{position:relative;z-index:1}
+        .blog-detail-content{max-width:850px;margin:0 auto;line-height:2;font-size:16px}.blog-detail-content h2{font-size:1.6rem;font-weight:800;color:#2563eb;margin:30px 0 14px}.blog-detail-content p{margin-bottom:18px}.blog-detail-content ul,.blog-detail-content ol{margin:16px 0;padding-left:24px}.blog-detail-content li{margin-bottom:10px}
+        .blog-back{display:inline-flex;align-items:center;gap:6px;padding:11px 20px;background:var(--hover);border:none;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;color:var(--text);margin-bottom:22px;transition:all 0.2s}.blog-back:hover{background:#2563eb;color:#fff}
+        
+        .gen-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}@media(max-width:768px){.gen-grid{grid-template-columns:1fr}}
+        .keywords-section{background:var(--card);border-radius:16px;padding:24px;margin:35px 0;border:1px solid var(--border)}.kw-list{display:flex;flex-wrap:wrap;gap:10px}.kw-tag{padding:8px 18px;background:var(--hover);border-radius:22px;font-size:14px;font-weight:500;text-decoration:none;color:var(--text);border:1px solid var(--border)}.kw-tag:hover{background:#2563eb;color:#fff;border-color:#2563eb}
+        
+        .prose{max-width:900px;line-height:2}.prose h2{font-size:1.5rem;font-weight:800;color:#2563eb;margin:28px 0 14px}.prose p{margin-bottom:16px;font-size:16px}.prose ul{margin:14px 0;padding-left:24px}.prose li{margin-bottom:8px;font-size:15px}
+        
+        .footer{background:#0f172a;color:#94a3b8;padding:50px 22px 22px;margin-top:auto;border-top:1px solid #1e293b}
+        .footer-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px;margin-bottom:35px}
+        .footer h4{color:#fff;font-size:15px;font-weight:700;margin-bottom:14px;position:relative;padding-bottom:10px}.footer h4::after{content:'';position:absolute;bottom:0;left:0;width:28px;height:2px;background:#2563eb;border-radius:1px}
+        .footer p{font-size:14px;line-height:1.9;opacity:0.8}.footer ul{list-style:none;padding:0}.footer ul li{margin-bottom:8px}.footer ul li a{font-size:14px;text-decoration:none;color:#94a3b8;opacity:0.8;transition:all 0.2s}.footer ul li a:hover{color:#fff;opacity:1;padding-left:4px}
+        .footer-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.footer-tag{font-size:11px;color:#94a3b8;text-decoration:none;padding:5px 12px;border:1px solid #334155;border-radius:16px}.footer-tag:hover{color:#fff;border-color:#fff}
+        .footer-bottom{max-width:1280px;margin:0 auto;text-align:center;padding-top:18px;border-top:1px solid #1e293b;font-size:12px;opacity:0.6;line-height:2}
+        
+        .toast{position:fixed;top:18px;right:18px;z-index:999;padding:13px 22px;border-radius:12px;color:#fff;font-weight:600;box-shadow:0 10px 35px rgba(0,0,0,0.25);animation:slide 0.35s;font-size:14px;max-width:380px}@keyframes slide{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+        .hidden{display:none!important}
+        
+        @media(max-width:768px){.nav-links{display:none}.menu-btn{display:flex}.stats-grid{grid-template-columns:repeat(2,1fr)}.features-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr;gap:28px;text-align:center}.footer h4::after{left:50%;transform:translateX(-50%)}.blog-grid{grid-template-columns:1fr}.scanner-content{grid-template-columns:1fr}.hero{padding:35px 0 25px}}
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1><i class="fas fa-qrcode"></i>QR Code Pro</h1>
-            <p>✨ Buat Kode QR Profesional dengan Logo & Warna Kustom ✨</p>
-        </div>
 
-        <div class="main-grid">
-            <!-- Panel Kiri - Kontrol -->
-            <div class="card">
-                <!-- Pilihan Jenis Konten -->
-                <div class="section">
-                    <div class="section-title">
-                        <i class="fas fa-cube"></i> Pilih Jenis Konten
-                    </div>
-                    <div class="type-grid" id="typeGrid">
-                        <button class="type-btn active" data-type="url">
-                            <i class="fas fa-globe"></i> URL
-                        </button>
-                        <button class="type-btn" data-type="text">
-                            <i class="fas fa-font"></i> Teks
-                        </button>
-                        <button class="type-btn" data-type="email">
-                            <i class="fas fa-envelope"></i> Email
-                        </button>
-                        <button class="type-btn" data-type="phone">
-                            <i class="fas fa-phone"></i> Telepon
-                        </button>
-                        <button class="type-btn" data-type="sms">
-                            <i class="fas fa-sms"></i> SMS
-                        </button>
-                        <button class="type-btn" data-type="wifi">
-                            <i class="fas fa-wifi"></i> WiFi
-                        </button>
-                        <button class="type-btn" data-type="vcard">
-                            <i class="fas fa-address-card"></i> vCard
-                        </button>
-                        <button class="type-btn" data-type="geo">
-                            <i class="fas fa-map-marker-alt"></i> Lokasi
-                        </button>
-                    </div>
-                </div>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo" onclick="go('home')"><div class="logo-icon">📷</div><div>ScanBarcode<span>Pro</span><sub>#1 INDONESIA 2026</sub></div></a>
+        <ul class="nav-links">
+            <li><a href="#" onclick="go('home')">Beranda</a></li><li><a href="#" onclick="go('scanner')">Pemindai</a></li><li><a href="#" onclick="go('generator')">Generator</a></li><li><a href="#" onclick="go('riwayat')">Riwayat</a></li><li><a href="#" onclick="go('blog')">Blog</a></li><li><a href="#" onclick="go('tentang')">Tentang</a></li><li><a href="#" onclick="go('kontak')">Kontak</a></li>
+        </ul>
+        <div style="display:flex;align-items:center;gap:6px"><button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button><button class="menu-btn" onclick="toggleMenu()">☰</button></div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#" onclick="go('home')">🏠 Beranda</a><a href="#" onclick="go('scanner')">📷 Pemindai</a><a href="#" onclick="go('generator')">🔧 Generator</a><a href="#" onclick="go('riwayat')">📋 Riwayat</a><a href="#" onclick="go('blog')">📚 Blog</a><a href="#" onclick="go('tentang')">ℹ️ Tentang</a><a href="#" onclick="go('kontak')">📧 Kontak</a>
+    </div>
+</nav>
 
-                <!-- Area Input Konten -->
-                <div class="section">
-                    <div class="section-title">
-                        <i class="fas fa-edit"></i> Masukkan Konten
-                    </div>
-                    
-                    <div id="panel-url" class="content-panel active">
-                        <div class="form-group">
-                            <label class="form-label">URL Website *</label>
-                            <input type="url" id="url-input" placeholder="https://www.contoh.com" class="form-input" required>
-                        </div>
-                    </div>
+<div class="main-content">
 
-                    <div id="panel-text" class="content-panel">
-                        <div class="form-group">
-                            <label class="form-label">Konten Teks *</label>
-                            <textarea id="text-input" placeholder="Masukkan teks Anda di sini..." class="form-input" rows="3" required></textarea>
-                        </div>
-                    </div>
-
-                    <div id="panel-email" class="content-panel">
-                        <div class="form-group">
-                            <label class="form-label">Alamat Email *</label>
-                            <input type="email" id="email-input" placeholder="halo@contoh.com" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Subjek</label>
-                            <input type="text" id="email-subject" placeholder="Subjek email" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Isi Pesan</label>
-                            <textarea id="email-body" placeholder="Pesan email..." class="form-input" rows="2"></textarea>
-                        </div>
-                    </div>
-
-                    <div id="panel-phone" class="content-panel">
-                        <div class="form-group">
-                            <label class="form-label">Nomor Telepon *</label>
-                            <input type="tel" id="phone-input" placeholder="+6281234567890" class="form-input">
-                        </div>
-                    </div>
-
-                    <div id="panel-sms" class="content-panel">
-                        <div class="form-group">
-                            <label class="form-label">Nomor Telepon *</label>
-                            <input type="tel" id="sms-number" placeholder="+6281234567890" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Pesan</label>
-                            <textarea id="sms-message" placeholder="Pesan SMS Anda..." class="form-input" rows="2"></textarea>
-                        </div>
-                    </div>
-
-                    <div id="panel-wifi" class="content-panel">
-                        <div class="form-group">
-                            <label class="form-label">Nama Jaringan (SSID) *</label>
-                            <input type="text" id="wifi-ssid" placeholder="WiFi Saya" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Kata Sandi</label>
-                            <input type="text" id="wifi-password" placeholder="Kata Sandi" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Jenis Enkripsi</label>
-                            <select id="wifi-encryption" class="form-input">
-                                <option value="WPA">WPA/WPA2</option>
-                                <option value="WEP">WEP</option>
-                                <option value="nopass">Tanpa Password</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div id="panel-vcard" class="content-panel">
-                        <div class="form-group">
-                            <label class="form-label">Nama Lengkap *</label>
-                            <input type="text" id="vcard-name" placeholder="Budi Santoso" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Organisasi</label>
-                            <input type="text" id="vcard-org" placeholder="PT Contoh" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Telepon</label>
-                            <input type="tel" id="vcard-phone" placeholder="+6281234567890" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Email</label>
-                            <input type="email" id="vcard-email" placeholder="budi@contoh.com" class="form-input">
-                        </div>
-                    </div>
-
-                    <div id="panel-geo" class="content-panel">
-                        <div class="form-group">
-                            <label class="form-label">Garis Lintang *</label>
-                            <input type="number" id="geo-lat" placeholder="-6.2088" step="any" class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Garis Bujur *</label>
-                            <input type="number" id="geo-lng" placeholder="106.8456" step="any" class="form-input">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Warna -->
-                <div class="section">
-                    <div class="section-title">
-                        <i class="fas fa-palette"></i> Kustomisasi Warna
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Warna Depan</label>
-                        <div class="color-group">
-                            <input type="color" id="fg-color" value="#000000" class="color-picker">
-                            <input type="text" id="fg-hex" value="#000000" class="color-hex form-input" maxlength="7">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Warna Latar</label>
-                        <div class="color-group">
-                            <input type="color" id="bg-color" value="#ffffff" class="color-picker">
-                            <input type="text" id="bg-hex" value="#ffffff" class="color-hex form-input" maxlength="7">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Unggah Logo -->
-                <div class="section">
-                    <div class="section-title">
-                        <i class="fas fa-image"></i> Unggah Logo / Gambar
-                    </div>
-                    <div class="upload-box" id="uploadBox">
-                        <input type="file" id="logoFile" accept="image/*" style="display: none;">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Klik untuk Unggah Logo atau Gambar</p>
-                        <small style="color: #94a3b8;">PNG, JPG, JPEG, GIF, SVG (Maks 5MB)</small>
-                    </div>
-                    <div id="logoPreview" class="file-preview hidden">
-                        <img id="logoPreviewImg" src="" alt="Pratinjau Logo">
-                        <div class="file-info">
-                            <div class="file-name" id="logoFileName"></div>
-                            <div class="file-size" id="logoFileSize"></div>
-                        </div>
-                        <button class="btn-remove" id="btnRemoveLogo">
-                            <i class="fas fa-times"></i> Hapus
-                        </button>
-                    </div>
-                    <div class="form-group" style="margin-top: 15px;">
-                        <label class="form-label">Ukuran Logo: <span id="logoSizeLabel">20</span>%</label>
-                        <div class="range-group">
-                            <input type="range" id="logoSize" min="10" max="40" value="20" class="range-slider">
-                            <span class="range-value" id="logoSizeValue">20%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pengaturan QR -->
-                <div class="section">
-                    <div class="section-title">
-                        <i class="fas fa-sliders-h"></i> Pengaturan QR Code
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Ukuran: <span id="qrSizeLabel">500</span>px</label>
-                        <div class="range-group">
-                            <input type="range" id="qrSize" min="200" max="2000" value="500" step="50" class="range-slider">
-                            <span class="range-value" id="qrSizeValue">500px</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Margin: <span id="marginLabel">2</span></label>
-                        <div class="range-group">
-                            <input type="range" id="margin" min="0" max="10" value="2" class="range-slider">
-                            <span class="range-value" id="marginValue">2</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Koreksi Kesalahan</label>
-                        <select id="errorCorrection" class="form-input">
-                            <option value="L">Rendah (7%)</option>
-                            <option value="M">Sedang (15%)</option>
-                            <option value="Q">Kuartil (25%)</option>
-                            <option value="H" selected>Tinggi (30%)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Tombol Generate -->
-                <button id="generateBtn" class="btn btn-primary">
-                    <i class="fas fa-magic"></i> Buat QR Code
-                </button>
-            </div>
-
-            <!-- Panel Kanan - Pratinjau -->
-            <div class="card">
-                <div class="section-title" style="margin-bottom: 20px;">
-                    <i class="fas fa-qrcode"></i> Pratinjau
-                </div>
-
-                <div class="preview-box" id="previewBox">
-                    <div id="previewPlaceholder" class="preview-placeholder">
-                        <i class="fas fa-qrcode"></i>
-                        <p>QR Code Anda Akan Muncul Di Sini</p>
-                        <p style="font-size: 14px; color: #cbd5e1; margin-top: 10px;">Klik "Buat QR Code" untuk membuat</p>
-                    </div>
-                    <div id="qrDisplay" class="hidden"></div>
-                </div>
-
-                <div id="downloadOptions" class="hidden">
-                    <div class="download-grid">
-                        <button class="btn-download" id="btnDownloadPNG">
-                            <i class="fas fa-download"></i> Unduh PNG
-                        </button>
-                        <button class="btn-download" id="btnDownloadJPG">
-                            <i class="fas fa-download"></i> Unduh JPG
-                        </button>
-                        <button class="btn-download" id="btnDownloadSVG">
-                            <i class="fas fa-download"></i> Unduh SVG
-                        </button>
-                        <button class="btn-download" id="btnPrint">
-                            <i class="fas fa-print"></i> Cetak QR
-                        </button>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn-action" id="btnCopy">
-                            <i class="fas fa-copy"></i> Salin ke Clipboard
-                        </button>
-                        <button class="btn-action" id="btnShare">
-                            <i class="fas fa-share-alt"></i> Bagikan QR
-                        </button>
-                    </div>
-                </div>
-
-                <div id="qrInfo" class="info-box hidden">
-                    <div class="info-item">
-                        <span class="info-label">Konten:</span>
-                        <span class="info-value" id="infoContent">-</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Jenis:</span>
-                        <span class="info-value" id="infoType">-</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Ukuran:</span>
-                        <span class="info-value" id="infoSize">-</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Koreksi Kesalahan:</span>
-                        <span class="info-value" id="infoErrorCorrection">-</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- HOME -->
+    <div class="page active" id="page-home">
+        <div class="hero"><h1>ScanBarcode Pro<br>Pemindai Barcode #1 di Indonesia</h1><p><strong>ScanBarcode Pro</strong> adalah platform pemindai barcode dan QR code online terdepan di Indonesia. Scan barcode online gratis, super cepat dengan AI detection, 100% privat. Dipercaya jutaan pengguna sejak 2023.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="btn btn-primary" onclick="go('scanner')"><i class="fas fa-camera"></i> Scan Barcode Sekarang</button><button class="btn btn-outline" onclick="go('generator')"><i class="fas fa-qrcode"></i> Buat QR Code</button></div></div>
+        <div class="keywords-section"><h3 style="font-weight:700;font-size:17px;margin-bottom:12px">🔍 Populer Keywords</h3><div class="kw-list"><a href="#" class="kw-tag" onclick="go('scanner')">scan barcode</a><a href="#" class="kw-tag" onclick="go('scanner')">scan barcode online</a><a href="#" class="kw-tag" onclick="go('scanner')">pemindai barcode</a><a href="#" class="kw-tag" onclick="go('scanner')">barcode scanner</a></div></div>
+        <div class="stats-grid"><div class="stat-card"><div class="stat-num" style="color:#2563eb">5M+</div><div class="stat-label">Total Pemindaian</div></div><div class="stat-card"><div class="stat-num" style="color:#7c3aed">#1</div><div class="stat-label">Di Indonesia</div></div><div class="stat-card"><div class="stat-num" style="color:#10b981">50+</div><div class="stat-label">Format Barcode</div></div><div class="stat-card"><div class="stat-num" style="color:#f97316">4.9★</div><div class="stat-label">Rating Pengguna</div></div></div>
+        <div class="features-grid"><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">🔒</div><h3 style="font-weight:700;font-size:1.1rem;margin-bottom:8px">100% Privat & Aman</h3><p style="color:#6b7280;font-size:15px">Data TIDAK PERNAH diupload ke server. Semua di browser Anda.</p></div><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">🤖</div><h3 style="font-weight:700;font-size:1.1rem;margin-bottom:8px">AI Smart Detection</h3><p style="color:#6b7280;font-size:15px">Auto-detect URL, WiFi, Email, Phone, Product Code.</p></div><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">⚡</div><h3 style="font-weight:700;font-size:1.1rem;margin-bottom:8px">Super Cepat</h3><p style="color:#6b7280;font-size:15px">WebAssembly powered. Hasil dalam milidetik.</p></div></div>
+        <div class="card prose" style="margin-top:30px"><h2>Apa Itu Scan Barcode dan Kenapa Penting?</h2><p>Scan barcode adalah cara termudah untuk membaca informasi dari kode batang menggunakan kamera smartphone. Di era digital, teknologi ini sudah sangat canggih sehingga Anda tidak perlu alat mahal—cukup smartphone saja. ScanBarcode Pro hadir sebagai alat scan barcode online yang tinggal buka browser, langsung pakai, tanpa unduh aplikasi.</p><p>Komitmen kami sederhana: memberikan pengalaman scan barcode terbaik di Indonesia. Mau scan barcode produk, kode QRIS, atau tiket? Semua bisa langsung, tanpa ribet, tanpa biaya.</p></div>
     </div>
 
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
+    <!-- SCANNER -->
+    <div class="page" id="page-scanner">
+        <h2 style="font-weight:800;font-size:1.4rem;margin-bottom:14px"><i class="fas fa-camera"></i> Pemindai - Scan Barcode Live Camera</h2>
+        <div class="scanner-wrapper"><div class="scanner-content"><div><div class="scanner-box"><div id="reader" style="width:100%;height:100%"></div><div class="cam-placeholder" id="camPlaceholder"><div style="font-size:3.5rem;margin-bottom:10px">📷</div><p style="font-size:15px">Klik "Mulai Kamera" untuk mengaktifkan</p></div><div class="scanner-laser" id="scanLaser"></div></div><div style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap"><button id="btnStart" class="btn btn-primary" onclick="startScanner()"><i class="fas fa-play"></i> Mulai Kamera</button><button id="btnStop" class="btn btn-danger hidden" onclick="stopScanner()"><i class="fas fa-stop"></i> Stop</button><button id="btnTorch" class="btn-icon hidden" onclick="toggleTorch()">💡</button><button id="btnSwitch" class="btn-icon hidden" onclick="switchCamera()">🔄</button></div><div class="card" style="margin-top:10px;padding:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap"><label style="cursor:pointer;padding:8px 14px;background:var(--bg);border-radius:8px;font-weight:500;font-size:13px;border:1px solid var(--border);display:inline-flex;align-items:center;gap:6px"><i class="fas fa-image"></i> Upload Gambar<input type="file" accept="image/*" style="display:none" onchange="scanImageFile(this)"></label><span id="scanStatus" style="font-size:12px;padding:5px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--border)">⚪ Kamera Mati</span></div></div><div class="card" style="padding:20px"><h3 style="font-weight:700;margin-bottom:12px;font-size:1.1rem"><i class="fas fa-clipboard-check"></i> Hasil Scan</h3><div id="resultDisplay" class="result-box"><div style="font-size:2.5rem;margin-bottom:6px">📷</div><p style="font-size:14px">Arahkan kamera ke barcode</p></div><div id="resultActions" style="margin-top:10px;display:none;flex-direction:column;gap:8px"></div><div id="resultInfo" style="margin-top:8px;display:none;padding:8px;background:var(--hover);border-left:3px solid #2563eb;border-radius:6px;font-size:12px"></div><div id="productSearch" style="margin-top:8px;display:none"></div></div></div></div>
+    </div>
 
-    <script>
-        // ============================================
-        // QR CODE GENERATOR PRO - SEMUA FITUR BEKERJA
-        // ============================================
+    <!-- GENERATOR -->
+    <div class="page" id="page-generator"><h2 style="font-weight:800;font-size:1.4rem;margin-bottom:14px"><i class="fas fa-qrcode"></i> Generator QR Code & Barcode</h2><div class="card" style="padding:0;overflow:hidden"><div style="display:flex;border-bottom:1px solid var(--border)"><button onclick="genTab('qr')" id="tabQr" style="flex:1;padding:16px;font-weight:700;border:none;cursor:pointer;background:var(--hover);color:#2563eb;font-size:15px"><i class="fas fa-qrcode"></i> QR Generator</button><button onclick="genTab('barcode')" id="tabBc" style="flex:1;padding:16px;font-weight:700;border:none;cursor:pointer;background:var(--card);color:var(--text);font-size:15px"><i class="fas fa-barcode"></i> Barcode Generator</button></div><div style="padding:24px" class="gen-grid"><div id="genControls"></div><div style="background:var(--bg);border-radius:12px;padding:24px;min-height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center"><div id="genPreview" style="background:#fff;padding:24px;border-radius:10px;margin-bottom:14px;min-width:200px;min-height:200px;display:flex;align-items:center;justify-content:center"><span style="color:#9ca3af;font-size:14px">Preview</span></div><button id="btnDownloadGen" class="btn btn-primary btn-sm hidden"><i class="fas fa-download"></i> Unduh Gambar</button></div></div></div></div>
 
-        let currentType = 'url';
-        let logoImage = null;
-        let currentQRCanvas = null;
+    <!-- RIWAYAT -->
+    <div class="page" id="page-riwayat"><div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px"><h2 style="font-weight:700;font-size:1.2rem"><i class="fas fa-history"></i> Riwayat Scan Barcode</h2><div style="display:flex;gap:8px"><button onclick="exportHistory()" class="btn btn-primary btn-sm"><i class="fas fa-file-csv"></i> Export CSV</button><button onclick="clearHistory()" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus Semua</button></div></div><div id="historyList" style="max-height:420px;overflow-y:auto"></div><div id="historyEmpty" style="text-align:center;color:#9ca3af;padding:50px"><div style="font-size:2.5rem;margin-bottom:8px">📭</div><p style="font-size:15px">Belum ada riwayat pemindaian</p></div></div></div>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Menginisialisasi QR Code Generator Pro...');
-            setupTypeButtons();
-            setupColorSync();
-            setupRangeSliders();
-            setupLogoUpload();
-            setupGenerateButton();
-            setupDownloadButtons();
-            setupActionButtons();
-            console.log('✅ Semua fitur siap!');
-        });
+    <!-- BLOG -->
+    <div class="page" id="page-blog"><div id="blogListView"><h2 style="font-weight:800;font-size:2rem;margin-bottom:6px"><i class="fas fa-newspaper"></i> Blog ScanBarcode</h2><p style="color:#6b7280;margin-bottom:26px;font-size:16px">10 Artikel lengkap tentang scan barcode, QR code, dan teknologi scanning</p><div class="blog-grid" id="blogGrid"></div></div><div id="blogDetailView" class="hidden"><button class="blog-back" onclick="closeBlog()"><i class="fas fa-arrow-left"></i> Kembali ke Blog</button><div id="blogDetailContent"></div></div></div>
 
-        function setupTypeButtons() {
-            const buttons = document.querySelectorAll('.type-btn');
-            const panels = document.querySelectorAll('.content-panel');
+    <!-- TENTANG -->
+    <div class="page" id="page-tentang"><div class="card prose" style="max-width:900px;margin:0 auto"><h1 style="font-weight:800;font-size:1.8rem;margin-bottom:16px">ℹ️ Tentang ScanBarcode Pro</h1><h2 style="font-weight:700;color:#2563eb;font-size:1.3rem">Sejarah</h2><p>ScanBarcode Pro didirikan 2023, kini #1 di Indonesia dengan 5M+ pemindaian.</p><h2 style="font-weight:700;color:#2563eb;font-size:1.3rem">Misi</h2><p>Menyediakan barcode scanner gratis, cepat, dan 100% privat untuk seluruh Indonesia.</p><h2 style="font-weight:700;color:#2563eb;font-size:1.3rem">Keunggulan</h2><ul style="padding-left:20px"><li>✅ 5M+ pemindaian sukses</li><li>✅ 50+ format barcode</li><li>✅ AI-powered detection</li><li>✅ 100% client-side</li><li>✅ Gratis selamanya</li></ul></div></div>
 
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    buttons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    currentType = this.dataset.type;
-                    
-                    panels.forEach(panel => panel.classList.remove('active'));
-                    const activePanel = document.getElementById('panel-' + currentType);
-                    if (activePanel) activePanel.classList.add('active');
-                });
-            });
-        }
+    <!-- KONTAK -->
+    <div class="page" id="page-kontak"><div class="card prose" style="max-width:900px;margin:0 auto"><h1 style="font-weight:800;font-size:1.8rem;margin-bottom:16px">📧 Hubungi ScanBarcode Pro</h1><p>Punya pertanyaan, saran, atau masukan? Hubungi tim ScanBarcode Pro.</p><h3 style="font-weight:700;color:#2563eb;font-size:1.2rem;margin-top:20px">❓ FAQ</h3><p><strong>Q: Apakah gratis?</strong><br>A: Ya, 100% gratis selamanya!</p><p><strong>Q: Apakah data aman?</strong><br>A: Sangat aman! Tidak ada upload data.</p><p><strong>Q: Format apa yang didukung?</strong><br>A: 50+ format termasuk EAN, UPC, QR, DataMatrix.</p></div></div>
 
-        function getContent() {
-            let content = '';
-            switch(currentType) {
-                case 'url':
-                    content = document.getElementById('url-input').value.trim();
-                    break;
-                case 'text':
-                    content = document.getElementById('text-input').value.trim();
-                    break;
-                case 'email':
-                    const email = document.getElementById('email-input').value.trim();
-                    if (!email) return '';
-                    const subject = document.getElementById('email-subject').value.trim();
-                    const body = document.getElementById('email-body').value.trim();
-                    content = 'mailto:' + email;
-                    const params = [];
-                    if (subject) params.push('subject=' + encodeURIComponent(subject));
-                    if (body) params.push('body=' + encodeURIComponent(body));
-                    if (params.length > 0) content += '?' + params.join('&');
-                    break;
-                case 'phone':
-                    const phone = document.getElementById('phone-input').value.trim();
-                    content = phone ? 'tel:' + phone : '';
-                    break;
-                case 'sms':
-                    const smsNum = document.getElementById('sms-number').value.trim();
-                    if (!smsNum) return '';
-                    content = 'sms:' + smsNum;
-                    const msg = document.getElementById('sms-message').value.trim();
-                    if (msg) content += '?body=' + encodeURIComponent(msg);
-                    break;
-                case 'wifi':
-                    const ssid = document.getElementById('wifi-ssid').value.trim();
-                    if (!ssid) return '';
-                    const pass = document.getElementById('wifi-password').value.trim();
-                    const enc = document.getElementById('wifi-encryption').value;
-                    content = 'WIFI:S:' + ssid + ';T:' + enc + ';P:' + pass + ';;';
-                    break;
-                case 'vcard':
-                    const name = document.getElementById('vcard-name').value.trim();
-                    if (!name) return '';
-                    content = 'BEGIN:VCARD\nVERSION:3.0\nFN:' + name + '\n';
-                    const org = document.getElementById('vcard-org').value.trim();
-                    if (org) content += 'ORG:' + org + '\n';
-                    const vPhone = document.getElementById('vcard-phone').value.trim();
-                    if (vPhone) content += 'TEL:' + vPhone + '\n';
-                    const vEmail = document.getElementById('vcard-email').value.trim();
-                    if (vEmail) content += 'EMAIL:' + vEmail + '\n';
-                    content += 'END:VCARD';
-                    break;
-                case 'geo':
-                    const lat = document.getElementById('geo-lat').value.trim();
-                    const lng = document.getElementById('geo-lng').value.trim();
-                    if (!lat || !lng) return '';
-                    content = 'geo:' + lat + ',' + lng;
-                    break;
-            }
-            return content;
-        }
+</div>
 
-        function setupColorSync() {
-            const fgColor = document.getElementById('fg-color');
-            const fgHex = document.getElementById('fg-hex');
-            const bgColor = document.getElementById('bg-color');
-            const bgHex = document.getElementById('bg-hex');
-            
-            fgColor.addEventListener('input', () => fgHex.value = fgColor.value);
-            bgColor.addEventListener('input', () => bgHex.value = bgColor.value);
-            
-            fgHex.addEventListener('input', function() {
-                if (/^#[0-9A-Fa-f]{6}$/.test(this.value)) fgColor.value = this.value;
-            });
-            bgHex.addEventListener('input', function() {
-                if (/^#[0-9A-Fa-f]{6}$/.test(this.value)) bgColor.value = this.value;
-            });
-        }
+<footer class="footer"><div class="footer-grid"><div><h4>📷 ScanBarcode Pro</h4><p>Platform pemindai barcode online terbaik di Indonesia. Gratis, cepat, dan aman untuk semua kebutuhan scan barcode Anda.</p><div class="footer-tags"><span class="footer-tag">scan barcode</span><span class="footer-tag">scan barcode online</span><span class="footer-tag">pemindai barcode</span><span class="footer-tag">barcode scanner</span></div></div><div><h4>📋 Menu</h4><ul><li><a href="#" onclick="go('scanner')">📷 Scan Barcode</a></li><li><a href="#" onclick="go('blog')">📝 Blog</a></li><li><a href="#" onclick="go('tentang')">ℹ️ Tentang Kami</a></li><li><a href="#" onclick="go('kontak')">✉ Hubungi Kami</a></li></ul></div><div><h4>⚖️ Legal</h4><ul><li><a href="#" onclick="go('privacy')">🔐 Kebijakan Privasi</a></li><li><a href="#" onclick="go('terms')">⚖️ Syarat Dan Ketentuan</a></li><li><a href="#" onclick="go('disclaimer')">⚠️ Penafian</a></li></ul></div></div><div class="footer-bottom"><p>ScanBarcode Pro adalah alat independen untuk scan barcode umum.</p><p>© 2026 ScanBarcode Pro. Hak Cipta Dilindungi.</p></div></footer>
 
-        function setupRangeSliders() {
-            document.getElementById('logoSize').addEventListener('input', function() {
-                document.getElementById('logoSizeValue').textContent = this.value + '%';
-                document.getElementById('logoSizeLabel').textContent = this.value;
-            });
-            document.getElementById('qrSize').addEventListener('input', function() {
-                document.getElementById('qrSizeValue').textContent = this.value + 'px';
-                document.getElementById('qrSizeLabel').textContent = this.value;
-            });
-            document.getElementById('margin').addEventListener('input', function() {
-                document.getElementById('marginValue').textContent = this.value;
-                document.getElementById('marginLabel').textContent = this.value;
-            });
-        }
+<script>
+function toast(m,t){let c=document.createElement('div');c.className='toast';c.style.background=t==='error'?'#ef4444':'#10b981';c.textContent=m;document.body.appendChild(c);setTimeout(()=>{c.style.opacity='0';c.style.transition='.3s';setTimeout(()=>c.remove(),300)},2500)}
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('show')}
+function go(n){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    let el=document.getElementById('page-'+n);
+    if(el)el.classList.add('active');else document.getElementById('page-home').classList.add('active');
+    document.getElementById('mobileMenu').classList.remove('show');window.scrollTo(0,0);
+    if(n==='blog')renderBlogs();if(n==='riwayat')renderHistory();if(n==='generator')genTab('qr');if(n!=='scanner')stopScanner()
+}
+function toggleTheme(){let d=document.documentElement.classList.toggle('dark');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';localStorage.setItem('theme',d?'dark':'light')}
 
-        function setupLogoUpload() {
-            const uploadBox = document.getElementById('uploadBox');
-            const fileInput = document.getElementById('logoFile');
-            const logoPreview = document.getElementById('logoPreview');
-            const logoPreviewImg = document.getElementById('logoPreviewImg');
-            const logoFileName = document.getElementById('logoFileName');
-            const logoFileSize = document.getElementById('logoFileSize');
-            const btnRemoveLogo = document.getElementById('btnRemoveLogo');
-            
-            uploadBox.addEventListener('click', () => fileInput.click());
-            
-            fileInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                
-                const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/svg+xml'];
-                if (!allowedTypes.includes(file.type)) {
-                    showToast('❌ Pilih file gambar (PNG, JPG, GIF, SVG)', 'error');
-                    return;
-                }
-                if (file.size > 5 * 1024 * 1024) {
-                    showToast('❌ Ukuran file maksimal 5MB', 'error');
-                    return;
-                }
-                
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.onload = function() {
-                        logoImage = img;
-                        logoPreviewImg.src = event.target.result;
-                        logoFileName.textContent = file.name;
-                        logoFileSize.textContent = formatFileSize(file.size);
-                        logoPreview.classList.remove('hidden');
-                        uploadBox.classList.add('hidden');
-                        showToast('✅ Logo berhasil diunggah!', 'success');
-                    };
-                    img.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
-            
-            btnRemoveLogo.addEventListener('click', function(e) {
-                e.stopPropagation();
-                logoImage = null;
-                fileInput.value = '';
-                logoPreview.classList.add('hidden');
-                uploadBox.classList.remove('hidden');
-                showToast('🗑️ Logo dihapus', 'info');
-            });
-        }
+// ===== BLOG IMAGES (easy to change) =====
+const blogImgs=[
+    'https://images.unsplash.com/photo-1586281380349-632531db7ed1?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1553729459-afe8a1f19b2a?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1553413077-190dd305871c?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1586281380117-5a60cdc5c2a5?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop',
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop'
+];
+const blogs=[
+    {id:1,title:'Cara Memindai Barcode dengan Kamera HP Menggunakan ScanBarcode Pro',cat:'Tutorial',date:'15 Maret 2026',excerpt:'Panduan lengkap langkah demi langkah cara scan barcode pakai HP Android dan iPhone.',content:'<p>Di era digital yang semakin maju ini, memindai barcode sudah menjadi kebutuhan sehari-hari bagi banyak orang. Mulai dari sekadar cek harga produk di supermarket, melacak resi pengiriman paket, hingga membaca QR code undangan pernikahan. ScanBarcode Pro hadir sebagai solusi scan barcode online yang praktis, gratis, dan 100% privat.</p><p>ScanBarcode Pro adalah platform pemindai barcode #1 di Indonesia yang tidak memerlukan instalasi aplikasi apapun. Cukup buka browser di HP Anda, izinkan kamera, dan langsung scan. Semua pemrosesan terjadi secara lokal di perangkat Anda sehingga data tetap aman dan privasi terjaga.</p><h2>Mengapa Memilih ScanBarcode Pro?</h2><p>Ada banyak alasan mengapa ScanBarcode Pro menjadi pilihan utama masyarakat Indonesia untuk kebutuhan scan barcode. Pertama, platform ini 100% gratis tanpa biaya tersembunyi. Kedua, tidak perlu download aplikasi yang memakan ruang penyimpanan HP. Ketiga, semua pemrosesan dilakukan di browser (client-side) sehingga data Anda tidak pernah dikirim ke server manapun.</p><h2>Langkah 1: Buka Website ScanBarcode Pro</h2><p>Buka browser favorit Anda di HP (Chrome, Safari, Firefox, atau browser bawaan) dan kunjungi website ScanBarcode Pro. Pastikan koneksi internet Anda stabil untuk loading pertama kali. Setelah halaman terbuka, Anda akan melihat tampilan yang bersih dan profesional.</p><h2>Langkah 2: Izinkan Akses Kamera</h2><p>Klik tombol "Mulai Kamera" pada halaman pemindai. Browser akan menampilkan popup permintaan izin kamera. Pilih "Allow" atau "Izinkan" untuk memberikan akses kamera ke ScanBarcode Pro. Ini diperlukan agar scanner dapat membaca barcode melalui kamera Anda.</p><h2>Langkah 3: Arahkan Kamera ke Barcode</h2><p>Posisikan barcode atau QR code dalam area pemindaian yang ditandai di layar. Pastikan pencahayaan cukup dan barcode tidak rusak, terlipat, atau terlalu kecil. Jarak ideal untuk memindai adalah sekitar 15-30 cm dari barcode.</p><h2>Langkah 4: Dapatkan Hasil Instan</h2><p>ScanBarcode Pro akan mendeteksi dan mendekode barcode dalam hitungan milidetik. Hasil pemindaian akan langsung muncul di panel sebelah kanan lengkap dengan informasi tipe data dan tombol aksi yang sesuai.</p><h2>Tips untuk Hasil Pemindaian Optimal</h2><ul><li>Gunakan fitur senter (💡) untuk kondisi pencahayaan yang kurang</li><li>Ganti kamera (🔄) jika ingin menggunakan kamera depan atau belakang</li><li>Upload gambar barcode jika kamera mengalami masalah</li><li>Jaga tangan tetap stabil saat memindai</li></ul>'},
+    {id:2,title:'Perbedaan EAN dan UPC: Panduan Lengkap untuk Produk Retail',cat:'Retail',date:'10 Maret 2026',excerpt:'Memahami perbedaan EAN-13 dan UPC-A sangat penting untuk bisnis retail.',content:'<p>Dalam dunia retail modern, barcode adalah komponen yang sangat penting untuk identifikasi produk, manajemen inventori, dan proses transaksi. Dua standar barcode yang paling umum digunakan secara global adalah EAN (European Article Number) dan UPC (Universal Product Code). ScanBarcode Pro mendukung pembacaan kedua format ini dengan akurasi tinggi.</p><h2>Apa itu EAN-13?</h2><p>EAN-13 adalah standar barcode 13 digit yang digunakan secara luas di seluruh dunia, termasuk di Indonesia. EAN-13 dikembangkan dari sistem UPC-A dengan menambahkan satu digit di depan sebagai kode negara. Format ini wajib digunakan untuk produk yang dijual di supermarket dan toko retail modern.</p><h2>Apa itu UPC-A?</h2><p>UPC-A adalah standar barcode 12 digit yang terutama digunakan di Amerika Serikat dan Kanada. Meskipun memiliki 1 digit lebih sedikit, UPC-A kompatibel dengan sistem EAN karena scanner modern dapat membaca kedua format tersebut.</p><h2>Perbandingan Utama</h2><p>EAN-13 memiliki 13 digit dan digunakan secara global termasuk Indonesia. UPC-A memiliki 12 digit dan penggunaannya terbatas di Amerika Utara. Scanner modern seperti ScanBarcode Pro dapat membaca kedua format ini tanpa masalah.</p>'},
+    {id:3,title:'QRIS: Standar Pembayaran Digital Indonesia',cat:'Fintech',date:'5 Maret 2026',excerpt:'QRIS adalah standar nasional pembayaran digital yang ditetapkan Bank Indonesia.',content:'<p>QRIS (Quick Response Code Indonesian Standard) adalah standar QR code nasional yang ditetapkan oleh Bank Indonesia untuk menyatukan berbagai sistem pembayaran digital di Indonesia. Semua aplikasi pembayaran digital di Indonesia wajib mendukung QRIS, termasuk GoPay, OVO, DANA, ShopeePay, LinkAja, dan aplikasi perbankan mobile.</p><h2>Apa itu QRIS?</h2><p>QRIS menyatukan berbagai kode QR dari berbagai Penyelenggara Jasa Pembayaran (PJP) menjadi satu standar nasional. Dengan QRIS, merchant cukup menyediakan satu kode QR yang bisa dibaca oleh semua aplikasi pembayaran digital.</p><h2>Cara Kerja QRIS</h2><p>Saat Anda memindai QR code QRIS menggunakan ScanBarcode Pro, scanner kami akan mendeteksi informasi merchant, nominal transaksi, dan tipe pembayaran.</p><h2>Keuntungan QRIS</h2><ul><li>Satu QR code untuk semua aplikasi pembayaran</li><li>Standar nasional yang diatur Bank Indonesia</li><li>Mendukung pembayaran statis dan dinamis</li></ul>'},
+    {id:4,title:'Manajemen Inventori UMKM dengan Sistem Barcode',cat:'Bisnis',date:'28 Februari 2026',excerpt:'Optimalkan manajemen stok barang UMKM Anda dengan sistem barcode.',content:'<p>Bagi pelaku UMKM di Indonesia, manajemen inventori yang efisien adalah kunci kesuksesan bisnis. Sistem barcode dapat membantu melacak stok barang dengan akurat, mengurangi kesalahan input data, dan menghemat waktu operasional.</p><h2>Mengapa UMKM Perlu Sistem Barcode?</h2><p>Pencatatan manual rentan terhadap kesalahan manusia. Dengan barcode, setiap produk memiliki identitas unik yang bisa dilacak secara digital.</p><h2>Cara Memulai Sistem Barcode</h2><ol><li>Identifikasi produk dengan kode unik</li><li>Generate barcode menggunakan ScanBarcode Pro</li><li>Tempelkan label barcode pada setiap produk</li><li>Gunakan scanner untuk scan saat barang masuk/keluar</li></ol><h2>Manfaat untuk UMKM</h2><ul><li>Akurasi data stok mencapai 99%</li><li>Proses inventarisasi 5x lebih cepat</li><li>Biaya implementasi rendah</li></ul>'},
+    {id:5,title:'Cara Membuat WiFi QR Code untuk Bisnis Kafe dan Restoran',cat:'Tools',date:'20 Februari 2026',excerpt:'Permudah pelanggan terhubung ke WiFi bisnis Anda dengan QR code.',content:'<p>Di era digital saat ini, menyediakan WiFi gratis sudah menjadi ekspektasi standar pelanggan di kafe, restoran, dan hotel. Solusi modernnya adalah WiFi QR Code.</p><h2>Apa itu WiFi QR Code?</h2><p>WiFi QR code adalah kode QR yang berisi informasi koneksi WiFi lengkap, termasuk SSID, password, dan tipe keamanan. Saat pelanggan memindai QR code ini, perangkat akan otomatis terhubung tanpa perlu mengetik password.</p><h2>Cara Membuat</h2><p>Gunakan format berikut di ScanBarcode Pro QR Generator:</p><p style="background:var(--hover);padding:12px;border-radius:8px;font-family:monospace">WIFI:S:NAMA_WIFI;T:WPA;P:PASSWORD;;</p><h2>Keuntungan</h2><ul><li>Pelanggan tidak perlu mengetik password</li><li>Mengurangi pertanyaan berulang</li><li>Kesan profesional untuk bisnis</li></ul>'},
+    {id:6,title:'Keamanan Scan QR Code: Tips Menghindari Penipuan',cat:'Keamanan',date:'15 Februari 2026',excerpt:'Waspada QR code palsu! Pelajari tips keamanan saat scan QR code.',content:'<p>QR code semakin populer, namun keamanannya sering diabaikan. Penipu bisa menempelkan QR code palsu di tempat umum untuk mengarahkan korban ke situs phishing.</p><h2>Bahaya QR Code Palsu</h2><p>QR code palsu bisa mengarahkan ke situs phishing, download malware, atau pembayaran ke rekening penipu.</p><h2>Tips Aman Scan QR Code</h2><ol><li><strong>Periksa URL:</strong> Cek URL sebelum membuka setelah scan</li><li><strong>Waspada QR tempelan:</strong> Hati-hati dengan QR code yang ditempel di atas QR code asli</li><li><strong>Gunakan scanner terpercaya:</strong> ScanBarcode Pro menampilkan preview sebelum action</li></ol>'},
+    {id:7,title:'Penggunaan Barcode dalam Industri Logistik Modern',cat:'Logistik',date:'10 Februari 2026',excerpt:'Code128 adalah standar industri untuk tracking pengiriman.',content:'<p>Industri logistik sangat bergantung pada barcode untuk tracking dan manajemen pengiriman. Setiap paket memiliki barcode unik yang memungkinkan pelacakan real-time.</p><h2>Jenis Barcode dalam Logistik</h2><ul><li><strong>Code 128:</strong> Standar paling umum untuk label pengiriman</li><li><strong>ITF-14:</strong> Untuk karton dan kemasan besar</li><li><strong>GS1-128:</strong> Standar internasional dengan informasi tambahan</li></ul><h2>Manfaat Barcode dalam Logistik</h2><ul><li>Tracking real-time setiap paket</li><li>Mengurangi kesalahan pengiriman</li><li>Otomatisasi pencatatan barang</li></ul>'},
+    {id:8,title:'vCard QR Code: Kartu Nama Digital Modern',cat:'Tools',date:'5 Februari 2026',excerpt:'Gantikan kartu nama kertas dengan vCard QR code.',content:'<p>Kartu nama kertas sudah mulai ditinggalkan. Dengan vCard QR code, Anda bisa berbagi informasi kontak secara digital dan instan.</p><h2>Apa itu vCard?</h2><p>vCard adalah format standar elektronik untuk pertukaran data kontak. Berisi nama, telepon, email, dan informasi perusahaan.</p><h2>Cara Membuat</h2><p style="background:var(--hover);padding:12px;border-radius:8px;font-family:monospace;font-size:13px">BEGIN:VCARD<br>VERSION:3.0<br>FN:Nama Anda<br>TEL:08123456789<br>END:VCARD</p><h2>Keuntungan</h2><ul><li>Hemat biaya cetak</li><li>Informasi selalu update</li><li>Ramah lingkungan</li></ul>'},
+    {id:9,title:'Teknologi Barcode 2026-2030: Tren Masa Depan',cat:'Teknologi',date:'1 Februari 2026',excerpt:'Dari AR barcode hingga digital product passport.',content:'<p>Teknologi barcode terus berkembang pesat. Berikut tren yang akan dominan di tahun 2026-2030.</p><h2>1. Augmented Reality (AR) Barcode</h2><p>AR barcode menggabungkan pemindaian dengan pengalaman augmented reality.</p><h2>2. Digital Product Passport</h2><p>Uni Eropa mewajibkan DPP untuk produk tertentu mulai 2026.</p><h2>3. Blockchain Barcode</h2><p>Integrasi blockchain memungkinkan verifikasi keaslian yang tidak bisa dipalsukan.</p>'},
+    {id:10,title:'Panduan Lengkap QR Code Generator ScanBarcode Pro',cat:'Tutorial',date:'25 Januari 2026',excerpt:'Pelajari cara membuat berbagai jenis QR code untuk bisnis dan personal.',content:'<p>ScanBarcode Pro menyediakan QR Code Generator yang lengkap, profesional, dan sepenuhnya gratis.</p><h2>Jenis QR Code yang Bisa Dibuat</h2><ul><li><strong>URL:</strong> Arahkan ke website</li><li><strong>Teks:</strong> Tampilkan pesan</li><li><strong>WiFi:</strong> Hubungkan ke WiFi</li><li><strong>vCard:</strong> Simpan kontak</li><li><strong>Email:</strong> Buka aplikasi email</li><li><strong>SMS:</strong> Buka aplikasi SMS</li></ul><h2>Cara Menggunakan</h2><ol><li>Buka halaman Generator</li><li>Pilih tab QR Generator</li><li>Masukkan data</li><li>Klik Generate</li><li>Unduh hasil PNG</li></ol>'}
+];
+function renderBlogs(){document.getElementById('blogGrid').innerHTML=blogs.map((b,i)=>`<div class="blog-card" onclick="openBlog(${b.id})"><div class="blog-img" style="background-image:url('${blogImgs[i]}')"><span>${b.title}</span></div><div class="blog-info"><span class="blog-cat">${b.cat}</span><h3 class="blog-title">${b.title}</h3><p class="blog-excerpt">${b.excerpt}</p><span class="blog-date">📅 ${b.date} • 5 menit baca</span></div></div>`).join('')}
+function openBlog(id){let b=blogs.find(x=>x.id===id)||blogs[0];document.getElementById('blogListView').classList.add('hidden');document.getElementById('blogDetailView').classList.remove('hidden');document.getElementById('blogDetailContent').innerHTML=`<div class="blog-detail-header" style="background-image:url('${blogImgs[id-1]}')"><div><span style="font-size:11px;font-weight:700;text-transform:uppercase;opacity:0.9">${b.cat}</span><h1 style="font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin:8px 0">${b.title}</h1><span style="font-size:13px;opacity:0.85">📅 ${b.date} • 5 menit baca</span></div></div><div class="blog-detail-content">${b.content}</div>`;window.scrollTo(0,0)}
+function closeBlog(){document.getElementById('blogListView').classList.remove('hidden');document.getElementById('blogDetailView').classList.add('hidden');window.scrollTo(0,0)}
 
-        function formatFileSize(bytes) {
-            if (bytes < 1024) return bytes + ' B';
-            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-        }
+// ===== CAMERA SCANNER =====
+let scanner=null,scanRes='',scanning=!1,torchOn=!1,curCam=null,cams=[];
+async function startScanner(){let sb=document.getElementById('btnStart'),tb=document.getElementById('btnStop'),rb=document.getElementById('btnTorch'),wb=document.getElementById('btnSwitch'),st=document.getElementById('scanStatus'),laser=document.getElementById('scanLaser'),ph=document.getElementById('camPlaceholder');sb.classList.add('hidden');tb.classList.add('hidden');rb.classList.add('hidden');wb.classList.add('hidden');st.innerHTML='<span style="color:#f59e0b">●</span> Membuka kamera...';if(scanner){try{if(scanning)await scanner.stop();scanner.clear();}catch(e){}scanner=null}try{scanner=new Html5Qrcode("reader");cams=await Html5Qrcode.getCameras();if(!cams||cams.length===0){st.innerHTML='<span style="color:#ef4444">✕</span> Kamera tidak ditemukan';sb.classList.remove('hidden');ph.style.display='flex';toast('Tidak ada kamera','error');return}let bc=cams.find(c=>{let l=c.label.toLowerCase();return l.includes('back')||l.includes('environment')||l.includes('belakang')});curCam=bc||cams[0];await scanner.start(curCam.id,{fps:10,qrbox:{width:250,height:250},aspectRatio:1.0},(t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner();toast('✅ Barcode terdeteksi!')},()=>{});scanning=!0;tb.classList.remove('hidden');rb.classList.remove('hidden');if(cams.length>1)wb.classList.remove('hidden');st.innerHTML='<span style="color:#10b981">●</span> Scanning...';laser.style.display='block';ph.style.display='none'}catch(e){st.innerHTML='<span style="color:#ef4444">✕</span> Gagal akses kamera';sb.classList.remove('hidden');ph.style.display='flex';toast('Gagal: '+(e.message||e),'error')}}
+function stopScanner(){if(scanner&&scanning){scanner.stop().catch(()=>{}).finally(()=>{try{scanner.clear()}catch(e){}})}scanning=!1;torchOn=!1;document.getElementById('btnStart').classList.remove('hidden');document.getElementById('btnStop').classList.add('hidden');document.getElementById('btnTorch').classList.add('hidden');document.getElementById('btnSwitch').classList.add('hidden');document.getElementById('scanStatus').innerHTML='⚪ Kamera Mati';document.getElementById('scanLaser').style.display='none';document.getElementById('camPlaceholder').style.display='flex'}
+async function toggleTorch(){if(!scanner||!scanning)return;try{let t=scanner.getRunningTrack?scanner.getRunningTrack():null;if(!t){let v=document.querySelector('#reader video');if(v?.srcObject)t=v.srcObject.getVideoTracks()[0]}if(t&&t.getCapabilities?.()?.torch){torchOn=!torchOn;await t.applyConstraints({advanced:[{torch:torchOn}]});document.getElementById('btnTorch').classList.toggle('torch-on',torchOn)}}catch(e){}}
+async function switchCamera(){if(!scanner||!scanning||cams.length<2)return;try{await scanner.stop();let i=cams.findIndex(c=>c.id===curCam.id);curCam=cams[(i+1)%cams.length];await scanner.start(curCam.id,{fps:10,qrbox:{width:250,height:250},aspectRatio:1.0},(t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner()},()=>{});document.getElementById('scanLaser').style.display='block'}catch(e){}}
+function scanImageFile(input){if(!input.files||!input.files[0])return;let t=new Html5Qrcode("reader");t.scanFile(input.files[0],!0).then(x=>{scanRes=x;if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(x,'File Image');saveHist(x,'File Image');t.clear();toast('✅ Terdeteksi!')}).catch(()=>{toast('Tidak ada barcode','error');t.clear()});input.value=''}
 
-        function setupGenerateButton() {
-            document.getElementById('generateBtn').addEventListener('click', async function() {
-                const content = getContent();
-                if (!content) {
-                    showToast('⚠️ Silakan masukkan konten terlebih dahulu!', 'warning');
-                    return;
-                }
-                
-                const btn = document.getElementById('generateBtn');
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Membuat...';
-                
-                const qrDisplay = document.getElementById('qrDisplay');
-                const previewPlaceholder = document.getElementById('previewPlaceholder');
-                
-                qrDisplay.innerHTML = '<div class="spinner"></div>';
-                qrDisplay.classList.remove('hidden');
-                previewPlaceholder.classList.add('hidden');
-                
-                try {
-                    const qrSize = parseInt(document.getElementById('qrSize').value);
-                    const margin = parseInt(document.getElementById('margin').value);
-                    const fgColor = document.getElementById('fg-color').value;
-                    const bgColor = document.getElementById('bg-color').value;
-                    const errorCorrection = document.getElementById('errorCorrection').value;
-                    
-                    qrDisplay.innerHTML = '';
-                    const qrCode = new QRCode(qrDisplay, {
-                        text: content,
-                        width: qrSize,
-                        height: qrSize,
-                        colorDark: fgColor,
-                        colorLight: bgColor,
-                        correctLevel: QRCode.CorrectLevel[errorCorrection]
-                    });
-                    
-                    await new Promise(resolve => setTimeout(resolve, 500));
-                    
-                    const canvas = qrDisplay.querySelector('canvas');
-                    if (canvas) {
-                        currentQRCanvas = canvas;
-                        
-                        if (logoImage) {
-                            const ctx = canvas.getContext('2d');
-                            const logoSizePercent = parseInt(document.getElementById('logoSize').value) / 100;
-                            const logoSize = canvas.width * logoSizePercent;
-                            const logoX = (canvas.width - logoSize) / 2;
-                            const logoY = (canvas.height - logoSize) / 2;
-                            const padding = logoSize * 0.1;
-                            ctx.fillStyle = '#ffffff';
-                            ctx.fillRect(logoX - padding, logoY - padding, logoSize + padding*2, logoSize + padding*2);
-                            ctx.drawImage(logoImage, logoX, logoY, logoSize, logoSize);
-                        }
-                        
-                        const img = document.createElement('img');
-                        img.src = canvas.toDataURL('image/png');
-                        img.style.maxWidth = '100%';
-                        img.style.height = 'auto';
-                        img.style.borderRadius = '12px';
-                        img.style.boxShadow = '0 10px 40px rgba(0,0,0,0.1)';
-                        qrDisplay.innerHTML = '';
-                        qrDisplay.appendChild(img);
-                        
-                        document.getElementById('downloadOptions').classList.remove('hidden');
-                        document.getElementById('qrInfo').classList.remove('hidden');
-                        document.getElementById('infoContent').textContent = content.substring(0, 50) + (content.length > 50 ? '...' : '');
-                        document.getElementById('infoType').textContent = currentType.toUpperCase();
-                        document.getElementById('infoSize').textContent = qrSize + 'x' + qrSize + 'px';
-                        document.getElementById('infoErrorCorrection').textContent = document.getElementById('errorCorrection').selectedOptions[0].text;
-                        
-                        showToast('✅ QR Code berhasil dibuat!', 'success');
-                    }
-                } catch (error) {
-                    console.error(error);
-                    showToast('❌ Gagal membuat QR code', 'error');
-                    previewPlaceholder.classList.remove('hidden');
-                    qrDisplay.classList.add('hidden');
-                } finally {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-magic"></i> Buat QR Code';
-                }
-            });
-        }
+// ===== RESULT =====
+function showResult(t,f){let d=document.getElementById('resultDisplay'),a=document.getElementById('resultActions'),i=document.getElementById('resultInfo'),p=document.getElementById('productSearch');let type=/^https?:\/\//i.test(t)?'url':/^WIFI:/i.test(t)?'wifi':/^tel:/i.test(t)?'phone':/^mailto:/i.test(t)?'email':/^\d{8,14}$/.test(t)?'product':'text';let ic={url:'🔗',wifi:'📶',phone:'📞',email:'✉️',product:'📦',text:'📝'},lb={url:'Link',wifi:'WiFi',phone:'Telepon',email:'Email',product:'Produk',text:'Teks'};d.className='result-box success';d.innerHTML=`<div style="text-align:center"><div style="font-size:2rem">${ic[type]}</div><div style="font-size:11px;font-weight:700;color:#2563eb;margin:4px 0">${lb[type]}</div><div style="font-family:monospace;font-weight:600;word-break:break-all;background:#fff;padding:8px;border-radius:5px;font-size:12px">${t.length>60?t.substring(0,60)+'...':t}</div></div>`;let ac=`<button onclick="copyRes()" class="btn btn-dark" style="padding:7px;width:100%;font-size:12px">📋 Salin</button>`;if(type==='url')ac+=`<button onclick="window.open('${t}','_blank')" class="btn btn-success" style="padding:7px;width:100%;font-size:12px">🔗 Buka</button>`;if(type==='product')ac+=`<button onclick="searchGoogle('${t}')" class="btn btn-success" style="padding:7px;width:100%;font-size:12px">🔍 Cari Google</button>`;ac+=`<button onclick="shareRes()" class="btn btn-outline" style="padding:7px;width:100%;font-size:12px">📤 Bagikan</button>`;a.innerHTML=ac;a.style.display='flex';i.style.display='block';i.innerHTML=`<strong>Format:</strong> ${f} | <strong>Waktu:</strong> ${new Date().toLocaleString('id-ID')}`;if(type==='product'){p.style.display='block';searchGoogle(t)}else{p.style.display='none'}}
+function searchGoogle(c){let q=encodeURIComponent(c);document.getElementById('productSearch').innerHTML=`<div class="card" style="padding:10px;text-align:center;margin-top:6px"><p style="font-size:12px;margin-bottom:6px;font-weight:600">🔍 Cari: <strong>${c}</strong></p><a href="https://www.google.com/search?q=${q}+product" target="_blank" class="btn btn-primary btn-sm" style="margin:2px">🔍 Google</a><a href="https://www.google.com/search?q=${q}+barcode+info" target="_blank" class="btn btn-outline btn-sm" style="margin:2px">📦 Info</a></div>`}
+function copyRes(){navigator.clipboard.writeText(scanRes).then(()=>toast('✅ Disalin!'))}
+function shareRes(){if(navigator.share)navigator.share({text:scanRes});else copyRes()}
 
-        function setupDownloadButtons() {
-            document.getElementById('btnDownloadPNG').addEventListener('click', () => downloadQR('png'));
-            document.getElementById('btnDownloadJPG').addEventListener('click', () => downloadQR('jpg'));
-            document.getElementById('btnDownloadSVG').addEventListener('click', () => downloadQR('svg'));
-            document.getElementById('btnPrint').addEventListener('click', printQR);
-        }
+// ===== HISTORY =====
+function saveHist(t,f){let h=JSON.parse(localStorage.getItem('sh')||'[]');h.unshift({text:t,format:f,time:new Date().toLocaleString('id-ID')});localStorage.setItem('sh',JSON.stringify(h.slice(0,100)))}
+function renderHistory(){let h=JSON.parse(localStorage.getItem('sh')||'[]');document.getElementById('historyEmpty').style.display=h.length?'none':'block';document.getElementById('historyList').innerHTML=h.map(i=>`<div style="padding:8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:6px"><div style="flex:1"><span style="font-size:10px;font-weight:700;color:#2563eb;background:var(--hover);padding:2px 6px;border-radius:3px">${i.format}</span> <span style="font-size:10px;color:#9ca3af;margin-left:6px">${i.time}</span><p style="font-family:monospace;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px">${i.text}</p></div><button onclick="navigator.clipboard.writeText('${i.text.replace(/'/g,"\\'")}');toast('Disalin!')" style="border:none;background:var(--bg);cursor:pointer;padding:6px;border-radius:5px">📋</button></div>`).join('')}
+function clearHistory(){if(confirm('Hapus semua riwayat?')){localStorage.removeItem('sh');renderHistory();toast('Dihapus')}}
+function exportHistory(){let h=JSON.parse(localStorage.getItem('sh')||'[]');if(!h.length)return;let c='Waktu,Format,Konten\n'+h.map(i=>`"${i.time}","${i.format}","${i.text.replace(/"/g,'""')}"`).join('\n');let b=new Blob(['\uFEFF'+c],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='scan-history.csv';a.click()}
 
-        function downloadQR(format) {
-            if (!currentQRCanvas) {
-                showToast('⚠️ Silakan buat QR code terlebih dahulu!', 'warning');
-                return;
-            }
-            
-            const canvas = currentQRCanvas;
-            let blob, filename;
-            
-            if (format === 'png') {
-                blob = dataURItoBlob(canvas.toDataURL('image/png'));
-                filename = 'qrcode.png';
-            } else if (format === 'jpg') {
-                blob = dataURItoBlob(canvas.toDataURL('image/jpeg', 0.95));
-                filename = 'qrcode.jpg';
-            } else if (format === 'svg') {
-                const content = getContent();
-                const qrSize = parseInt(document.getElementById('qrSize').value);
-                const margin = parseInt(document.getElementById('margin').value);
-                const fgColor = document.getElementById('fg-color').value;
-                const bgColor = document.getElementById('bg-color').value;
-                const errorCorrection = document.getElementById('errorCorrection').value;
-                
-                const tempDiv = document.createElement('div');
-                new QRCode(tempDiv, {
-                    text: content,
-                    width: qrSize,
-                    height: qrSize,
-                    colorDark: fgColor,
-                    colorLight: bgColor,
-                    correctLevel: QRCode.CorrectLevel[errorCorrection]
-                });
-                
-                setTimeout(() => {
-                    const svgElement = tempDiv.querySelector('svg');
-                    if (svgElement) {
-                        const svgData = new XMLSerializer().serializeToString(svgElement);
-                        const svgBlob = new Blob([svgData], { type: 'image/svg+xml' });
-                        saveBlob(svgBlob, 'qrcode.svg');
-                        showToast('✅ SVG berhasil diunduh', 'success');
-                    }
-                    tempDiv.remove();
-                }, 100);
-                return;
-            } else {
-                return;
-            }
-            
-            saveBlob(blob, filename);
-            showToast('✅ ' + format.toUpperCase() + ' berhasil diunduh', 'success');
-        }
+// ===== GENERATOR =====
+let gBlob=null,gType='png';
+function genTab(t){document.getElementById('tabQr').style.background=t==='qr'?'var(--hover)':'var(--card)';document.getElementById('tabQr').style.color=t==='qr'?'#2563eb':'var(--text)';document.getElementById('tabBc').style.background=t==='barcode'?'var(--hover)':'var(--card)';document.getElementById('tabBc').style.color=t==='barcode'?'#2563eb':'var(--text)';document.getElementById('genControls').innerHTML=t==='qr'?`<textarea id="qrData" placeholder="Masukkan URL atau teks untuk QR code..." style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;min-height:100px;font-size:14px;background:var(--bg);color:var(--text);resize:vertical;font-family:Inter"></textarea><button onclick="genQR()" class="btn btn-primary" style="padding:12px;width:100%;margin-top:8px"><i class="fas fa-qrcode"></i> Generate QR Code</button>`:`<select id="barFormat" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font-size:14px;background:var(--bg);color:var(--text)"><option value="CODE128">Code 128 (Umum)</option><option value="EAN13">EAN-13 (Produk Retail)</option><option value="UPC">UPC-A (Amerika)</option></select><input id="barData" placeholder="Masukkan angka barcode..." style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font-size:14px;background:var(--bg);color:var(--text);margin-top:8px"><button onclick="genBC()" class="btn btn-primary" style="padding:12px;width:100%;margin-top:8px"><i class="fas fa-barcode"></i> Generate Barcode</button>`;document.getElementById('genPreview').innerHTML='<span style="color:#9ca3af;font-size:14px">Preview akan muncul di sini</span>';document.getElementById('btnDownloadGen').classList.add('hidden');gBlob=null;gType=t==='qr'?'png':'svg'}
+function genQR(){let d=document.getElementById('qrData')?.value.trim();if(!d){toast('Masukkan data!','error');return}document.getElementById('genPreview').innerHTML='';new QRCode(document.getElementById('genPreview'),{text:d,width:200,height:200});setTimeout(()=>{let c=document.querySelector('#genPreview canvas');if(c){c.toBlob(b=>{gBlob=b;document.getElementById('btnDownloadGen').classList.remove('hidden')},'image/png')}},250)}
+function genBC(){let d=document.getElementById('barData')?.value.trim(),f=document.getElementById('barFormat')?.value||'CODE128';if(!d){toast('Masukkan data!','error');return}document.getElementById('genPreview').innerHTML='';let s=document.createElementNS("http://www.w3.org/2000/svg","svg");document.getElementById('genPreview').appendChild(s);try{JsBarcode(s,d,{format:f,height:80,displayValue:!0,fontSize:14});gBlob=new Blob([new XMLSerializer().serializeToString(s)],{type:'image/svg+xml'});document.getElementById('btnDownloadGen').classList.remove('hidden')}catch(e){toast('Data tidak valid!','error')}}
+document.getElementById('btnDownloadGen').addEventListener('click',()=>{if(!gBlob){toast('Generate dulu!','error');return}let a=document.createElement('a');a.href=URL.createObjectURL(gBlob);a.download=gType==='png'?'qr-code.png':'barcode.svg';a.click();toast('✅ Terunduh!')});
 
-        function dataURItoBlob(dataURI) {
-            const byteString = atob(dataURI.split(',')[1]);
-            const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-            const ab = new ArrayBuffer(byteString.length);
-            const ia = new Uint8Array(ab);
-            for (let i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-            }
-            return new Blob([ab], { type: mimeString });
-        }
-
-        function saveBlob(blob, filename) {
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            setTimeout(() => URL.revokeObjectURL(url), 100);
-        }
-
-        function printQR() {
-            if (!currentQRCanvas) {
-                showToast('⚠️ Silakan buat QR code terlebih dahulu!', 'warning');
-                return;
-            }
-            const dataUrl = currentQRCanvas.toDataURL('image/png');
-            const printWindow = window.open('', '_blank', 'width=800,height=600');
-            printWindow.document.write(`
-                <html>
-                <head><title>Cetak QR Code</title></head>
-                <body style="display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;">
-                    <img src="${dataUrl}" style="max-width:100%;" onload="setTimeout(()=>window.print(),500)">
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-            showToast('🖨️ Dialog cetak dibuka', 'info');
-        }
-
-        function setupActionButtons() {
-            document.getElementById('btnCopy').addEventListener('click', copyQR);
-            document.getElementById('btnShare').addEventListener('click', shareQR);
-        }
-
-        async function copyQR() {
-            if (!currentQRCanvas) {
-                showToast('⚠️ Silakan buat QR code terlebih dahulu!', 'warning');
-                return;
-            }
-            try {
-                const blob = await new Promise(resolve => currentQRCanvas.toBlob(resolve, 'image/png'));
-                await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-                showToast('✅ QR Code disalin ke clipboard!', 'success');
-            } catch (error) {
-                showToast('❌ Gagal menyalin. Coba unduh saja.', 'error');
-            }
-        }
-
-        async function shareQR() {
-            if (!currentQRCanvas) {
-                showToast('⚠️ Silakan buat QR code terlebih dahulu!', 'warning');
-                return;
-            }
-            if (navigator.share) {
-                try {
-                    const blob = await new Promise(resolve => currentQRCanvas.toBlob(resolve, 'image/png'));
-                    const file = new File([blob], 'qrcode.png', { type: 'image/png' });
-                    await navigator.share({ title: 'QR Code', text: 'Lihat kode QR ini!', files: [file] });
-                    showToast('✅ Berhasil dibagikan!', 'success');
-                } catch (error) {
-                    if (error.name !== 'AbortError') showToast('❌ Gagal berbagi', 'error');
-                }
-            } else {
-                showToast('⚠️ Fitur berbagi tidak didukung. Gunakan unduh.', 'warning');
-            }
-        }
-
-        function showToast(message, type = 'info') {
-            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
-            const toast = document.createElement('div');
-            toast.className = 'toast ' + type;
-            toast.innerHTML = '<i class="fas ' + (icons[type] || icons.info) + '"></i> ' + message;
-            document.getElementById('toastContainer').appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.3s ease forwards';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        document.addEventListener('keydown', function(e) {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                e.preventDefault();
-                document.getElementById('generateBtn').click();
-            }
-        });
-    </script>
+// ===== INIT =====
+if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');document.getElementById('themeBtn').textContent='☀️'}
+genTab('qr');
+</script>
 </body>
 </html>
