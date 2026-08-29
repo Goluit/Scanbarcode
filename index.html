@@ -212,11 +212,98 @@
         <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px"><h2 style="font-weight:700;font-size:1.2rem"><i class="fas fa-history"></i> Riwayat Scan</h2><div style="display:flex;gap:8px"><button onclick="exportHistory()" class="btn btn-primary btn-sm"><i class="fas fa-file-csv"></i> Export CSV</button><button onclick="clearHistory()" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button></div></div><div id="historyList" style="max-height:450px;overflow-y:auto"></div><div id="historyEmpty" style="text-align:center;color:#9ca3af;padding:55px"><div style="font-size:2.8rem">📭</div><p>Belum ada riwayat</p></div></div>
     </div>
 
-    <!-- BLOG -->
-    <div class="page" id="page-blog">
-        <div id="blogListView"><h2 style="font-weight:800;font-size:2rem;margin-bottom:6px"><i class="fas fa-newspaper"></i> Blog ScanBarcode</h2><p style="color:#64748b;margin-bottom:28px;font-size:16px">Artikel lengkap tentang scan barcode</p><div class="blog-grid" id="blogGrid"></div></div>
-        <div id="blogDetailView" class="hidden"><button class="blog-back" onclick="closeBlog()"><i class="fas fa-arrow-left"></i> Kembali</button><div id="blogDetailContent"></div></div>
-    </div>
+    
+   <!-- BLOG / ARTIKEL TERBARU -->
+<div class="page" id="page-blog">
+  <h2 style="font-weight:800;font-size:1.8rem;margin-bottom:8px">
+    <i class="fas fa-newspaper"></i> Artikel Terbaru
+  </h2>
+  <p style="color:#6b7280;margin-bottom:28px;font-size:16px">
+    Tips & panduan scan barcode dan QR code
+  </p>
+
+  <div class="blog-grid">
+
+    <a href="https://scanbarcode-pro.vercel.app/qr-code-scanner-from-image.html" class="blog-card" style="text-decoration:none;color:inherit">
+      <div class="blog-img" style="background-image:url('https://scanbarcode-pro.vercel.app/qr-code-scanner-from-image.jpg')">
+        <span>QR Scanner from Image</span>
+      </div>
+      <div class="blog-info">
+        <span class="blog-cat">Tutorial</span>
+        <h3 class="blog-title">QR Code Scanner from Image – Scan dari Foto</h3>
+        <p class="blog-excerpt">Upload gambar QR Code atau screenshot dan langsung dapatkan hasilnya.</p>
+        <span class="blog-date">24 Agustus 2026 · 5 menit</span>
+      </div>
+    </a>
+
+    <a href="https://scanbarcode-pro.vercel.app/tips-scan-barcode-rusak.html" class="blog-card" style="text-decoration:none;color:inherit">
+      <div class="blog-img" style="background-image:url('https://scanbarcode-pro.vercel.app/tips-scan-barcode-rusak.png')">
+        <span>Tips Barcode Rusak</span>
+      </div>
+      <div class="blog-info">
+        <span class="blog-cat">Tips</span>
+        <h3 class="blog-title">Tips Scan Barcode yang Rusak atau Buram</h3>
+        <p class="blog-excerpt">Panduan lengkap mengatasi barcode yang sulit dibaca, pudar, atau terlipat.</p>
+        <span class="blog-date">20 Agustus 2026 · 7 menit</span>
+      </div>
+    </a>
+
+    <a href="https://scanbarcode-pro.vercel.app/perbedaan-qris-static-vs-dynamic.html" class="blog-card" style="text-decoration:none;color:inherit">
+      <div class="blog-img" style="background-image:url('https://scanbarcode-pro.vercel.app/perbedaan-qris-static-vs-dynamic.png')">
+        <span>QRIS Static vs Dynamic</span>
+      </div>
+      <div class="blog-info">
+        <span class="blog-cat">QRIS</span>
+        <h3 class="blog-title">Perbedaan QRIS Static vs Dynamic</h3>
+        <p class="blog-excerpt">Tabel perbandingan lengkap dan rekomendasi untuk bisnis Anda.</p>
+        <span class="blog-date">20 Agustus 2026 · 8 menit</span>
+      </div>
+    </a>
+
+    <a href="https://scanbarcode-pro.vercel.app/cara-scan-barcode-di-hp.html" class="blog-card" style="text-decoration:none;color:inherit">
+      <div class="blog-img" style="background-image:url('https://scanbarcode-pro.vercel.app/cara-scan-barcode-di-hp.png')">
+        <span>Scan di HP</span>
+      </div>
+      <div class="blog-info">
+        <span class="blog-cat">Tutorial</span>
+        <h3 class="blog-title">Cara Scan Barcode di HP Tanpa Aplikasi</h3>
+        <p class="blog-excerpt">Langkah mudah scan barcode produk, QRIS, dan QR Code dari browser HP.</p>
+        <span class="blog-date">18 Agustus 2026 · 6 menit</span>
+      </div>
+    </a>
+
+    <a href="https://scanbarcode-pro.vercel.app/cara-scan-resi.html" class="blog-card" style="text-decoration:none;color:inherit">
+      <div class="blog-img" style="background-image:url('https://scanbarcode-pro.vercel.app/cara-scan-resi.png')">
+        <span>Scan Resi</span>
+      </div>
+      <div class="blog-info">
+        <span class="blog-cat">Tutorial</span>
+        <h3 class="blog-title">Cara Scan Resi Pengiriman Online</h3>
+        <p class="blog-excerpt">Scan resi JNE, J&T, SiCepat langsung dari HP tanpa aplikasi.</p>
+        <span class="blog-date">19 Agustus 2026 · 6 menit</span>
+      </div>
+    </a>
+
+    <a href="https://scanbarcode-pro.vercel.app/jenis-barcode.html" class="blog-card" style="text-decoration:none;color:inherit">
+      <div class="blog-img" style="background-image:url('https://scanbarcode-pro.vercel.app/jenis-barcode.jpg')">
+        <span>Jenis Barcode</span>
+      </div>
+      <div class="blog-info">
+        <span class="blog-cat">Edukasi</span>
+        <h3 class="blog-title">Jenis-Jenis Barcode yang Perlu Diketahui</h3>
+        <p class="blog-excerpt">Penjelasan EAN, UPC, Code 128, QR Code, Data Matrix dan lainnya.</p>
+        <span class="blog-date">15 Agustus 2026 · 8 menit</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div style="text-align:center;margin-top:36px">
+    <a href="https://scanbarcode-pro.vercel.app/blog.html" class="btn btn-primary" style="display:inline-block;padding:14px 28px;border-radius:12px;font-weight:700;text-decoration:none">
+      Lihat Semua Artikel →
+    </a>
+  </div>
+</div>
 
     <!-- TENTANG -->
     <div class="page" id="page-tentang"><div class="card" style="max-width:880px;margin:0 auto;line-height:2"><h1 style="font-weight:800;font-size:1.8rem;margin-bottom:18px">ℹ️ Tentang ScanBarcode Pro</h1><p>ScanBarcode Pro didirikan 2023 sebagai pemindai barcode online gratis #1 di Indonesia. 5M+ pemindaian, 50+ format, 100% privat.</p></div></div>
