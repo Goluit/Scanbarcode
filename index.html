@@ -62,28 +62,21 @@
         .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:40px 0}.stat-card{background:var(--card);border-radius:16px;padding:26px 18px;text-align:center;border:1px solid var(--border)}.stat-num{font-size:38px;font-weight:900}.stat-label{color:#64748b;font-size:14px;margin-top:5px}
         .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:40px 0}
         
-        /* FULL CAMERA BOX WITH LASER */
-        .scanner-wrapper{display:flex;flex-direction:column;align-items:center;gap:26px}
-        .scanner-content{display:grid;grid-template-columns:1fr;gap:26px;width:100%;max-width:1000px}@media(min-width:900px){.scanner-content{grid-template-columns:1fr 1fr}}
-        .scanner-box{background:#000;border-radius:24px;overflow:hidden;position:relative;aspect-ratio:4/3;box-shadow:0 30px 80px rgba(0,0,0,0.45),0 0 0 5px rgba(37,99,235,0.35),0 0 60px rgba(37,99,235,0.25);max-width:460px;width:100%;margin:0 auto;border:3px solid rgba(37,99,235,0.6)}
+        /* FULL CAMERA BOX - CLEAN */
+        .scanner-wrapper{display:flex;flex-direction:column;align-items:center;gap:24px}
+        .scanner-content{display:grid;grid-template-columns:1fr;gap:24px;width:100%;max-width:1000px}@media(min-width:900px){.scanner-content{grid-template-columns:1fr 1fr}}
+        .scanner-box{background:#000;border-radius:20px;overflow:hidden;position:relative;aspect-ratio:4/3;box-shadow:0 30px 80px rgba(0,0,0,0.45),0 0 0 4px rgba(37,99,235,0.35);max-width:460px;width:100%;margin:0 auto;border:2px solid rgba(37,99,235,0.6)}
         .scanner-box video{width:100%;height:100%;object-fit:cover;display:block}
         
-        /* MOTA BLUE LASER - Full height scan */
-        .scanner-laser{position:absolute;left:0;right:0;height:6px;background:linear-gradient(90deg,transparent,#3b82f6,#60a5fa,#93c5fd,#60a5fa,#3b82f6,transparent);z-index:10;pointer-events:none;animation:laserFullScan 2.5s ease-in-out infinite;box-shadow:0 0 50px #3b82f6,0 0 100px #60a5fa,0 0 150px #93c5fd;display:none;border-radius:50%}
-        @keyframes laserFullScan{
-            0%{top:0%;opacity:0.3}
-            10%{top:5%;opacity:1}
-            50%{top:50%;opacity:1}
-            90%{top:95%;opacity:1}
-            100%{top:100%;opacity:0.3}
+        /* FAST BLUE LASER - Full Box Scan */
+        .scanner-laser{position:absolute;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,#3b82f6,#60a5fa,#93c5fd,#60a5fa,#3b82f6,transparent);z-index:10;pointer-events:none;animation:laserFast 1.2s linear infinite;box-shadow:0 0 40px #3b82f6,0 0 80px #60a5fa;display:none;border-radius:50%}
+        @keyframes laserFast{
+            0%{top:0%}
+            50%{top:50%}
+            100%{top:100%}
         }
         
-        .cam-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0a0a,#0f172a);color:#64748b;z-index:5}
-        .scan-corner{position:absolute;width:36px;height:36px;border:4px solid #3b82f6;z-index:8;pointer-events:none}
-        .corner-tl{top:16px;left:16px;border-right:none;border-bottom:none;border-radius:12px 0 0 0}
-        .corner-tr{top:16px;right:16px;border-left:none;border-bottom:none;border-radius:0 12px 0 0}
-        .corner-bl{bottom:16px;left:16px;border-right:none;border-top:none;border-radius:0 0 0 12px}
-        .corner-br{bottom:16px;right:16px;border-left:none;border-top:none;border-radius:0 0 12px 0}
+        .cam-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;color:#64748b;z-index:5}
         
         .result-box{min-height:240px;display:flex;align-items:center;justify-content:center;background:var(--bg);border:2px dashed var(--border);border-radius:16px;padding:24px;text-align:center;transition:all 0.4s}
         .result-box.success{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-color:#3b82f6;border-style:solid;box-shadow:0 8px 30px rgba(59,130,246,0.15)}
@@ -144,13 +137,13 @@
         
         <div class="stats-grid"><div class="stat-card"><div class="stat-num" style="color:#2563eb">5M+</div><div class="stat-label">Pemindaian</div></div><div class="stat-card"><div class="stat-num" style="color:#3b82f6">#1</div><div class="stat-label">Di Indonesia</div></div><div class="stat-card"><div class="stat-num" style="color:#10b981">50+</div><div class="stat-label">Format</div></div><div class="stat-card"><div class="stat-num" style="color:#f97316">4.9★</div><div class="stat-label">Rating</div></div></div>
         
-        <div class="features-grid"><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:14px">🔒</div><h3 style="font-weight:700;font-size:1.15rem;margin-bottom:8px">100% Privat</h3><p style="color:#64748b;font-size:14px">Data tidak pernah diupload.</p></div><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:14px">📷</div><h3 style="font-weight:700;font-size:1.15rem;margin-bottom:8px">Live Camera</h3><p style="color:#64748b;font-size:14px">Scan dengan laser biru yang indah.</p></div><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:14px">⚡</div><h3 style="font-weight:700;font-size:1.15rem;margin-bottom:8px">Super Cepat</h3><p style="color:#64748b;font-size:14px">Hasil dalam milidetik.</p></div></div>
+        <div class="features-grid"><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:14px">🔒</div><h3 style="font-weight:700;font-size:1.15rem;margin-bottom:8px">100% Privat</h3><p style="color:#64748b;font-size:14px">Data tidak pernah diupload.</p></div><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:14px">📷</div><h3 style="font-weight:700;font-size:1.15rem;margin-bottom:8px">Live Camera</h3><p style="color:#64748b;font-size:14px">Scan dengan laser biru cepat.</p></div><div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:14px">⚡</div><h3 style="font-weight:700;font-size:1.15rem;margin-bottom:8px">Super Cepat</h3><p style="color:#64748b;font-size:14px">Hasil dalam milidetik.</p></div></div>
         
         <div class="card prose" style="margin-top:35px;line-height:2">
             <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem">Apa Itu Pemindai Barcode Online?</h2>
             <p>Pemindai barcode online adalah alat digital untuk membaca informasi dari kode batang menggunakan kamera smartphone. ScanBarcode Pro hadir sebagai solusi pemindai barcode online gratis terbaik di Indonesia.</p>
-            <p>Teknologi pemindaian barcode telah berkembang pesat. Sekarang, cukup dengan smartphone dan browser, Anda bisa memindai berbagai jenis barcode dengan akurasi tinggi. ScanBarcode Pro menggunakan WebAssembly dan ZXing.</p>
-            <p>Aktivitas scan barcode sangat bermanfaat: cek harga produk, lacak resi, verifikasi keaslian barang, dan membaca QR code menu restoran. Semua bisa dilakukan dengan cepat.</p>
+            <p>Teknologi pemindaian barcode telah berkembang pesat. Sekarang, cukup dengan smartphone dan browser, Anda bisa memindai berbagai jenis barcode dengan akurasi tinggi.</p>
+            <p>Aktivitas scan barcode sangat bermanfaat: cek harga produk, lacak resi, verifikasi keaslian barang, dan membaca QR code menu restoran.</p>
             
             <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin:25px 0 14px">Keunggulan ScanBarcode Pro</h2>
             <ul>
@@ -158,7 +151,7 @@
                 <li><strong>Tanpa Install:</strong> Cukup buka browser</li>
                 <li><strong>Privasi Terjamin:</strong> Semua di browser Anda</li>
                 <li><strong>50+ Format:</strong> EAN, UPC, QR Code, DataMatrix</li>
-                <li><strong>Live Camera:</strong> Laser biru yang indah</li>
+                <li><strong>Live Camera:</strong> Laser biru cepat</li>
             </ul>
         </div>
     </div>
@@ -173,7 +166,6 @@
                         <div id="reader" style="width:100%;height:100%"></div>
                         <div class="cam-placeholder" id="camPlaceholder"><div style="font-size:3.5rem;margin-bottom:10px">📷</div><p style="font-size:15px">Klik "Mulai Kamera" untuk mengaktifkan</p></div>
                         <div class="scanner-laser" id="scanLaser"></div>
-                        <div class="scan-corner corner-tl"></div><div class="scan-corner corner-tr"></div><div class="scan-corner corner-bl"></div><div class="scan-corner corner-br"></div>
                     </div>
                     <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap">
                         <button id="btnStart" class="btn btn-primary" onclick="startScanner()"><i class="fas fa-play"></i> Mulai Kamera</button>
@@ -249,7 +241,7 @@ function renderBlogs(){document.getElementById('blogGrid').innerHTML=blogs.map((
 function openBlog(id){let b=blogs.find(x=>x.id===id)||blogs[0];document.getElementById('blogListView').classList.add('hidden');document.getElementById('blogDetailView').classList.remove('hidden');document.getElementById('blogDetailContent').innerHTML=`<div class="blog-detail-header" style="background-image:url('${blogImgs[id-1]}')"><div><span style="font-size:12px;font-weight:700;text-transform:uppercase">${b.cat}</span><h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:900;margin:10px 0">${b.title}</h1><span style="font-size:14px">📅 ${b.date}</span></div></div><div class="blog-detail-content">${b.content}</div>`;window.scrollTo(0,0)}
 function closeBlog(){document.getElementById('blogListView').classList.remove('hidden');document.getElementById('blogDetailView').classList.add('hidden');window.scrollTo(0,0)}
 
-// ===== CAMERA SCANNER =====
+// ===== CAMERA SCANNER - FAST =====
 let scanner=null,scanRes='',scanning=!1,torchOn=!1,curCam=null,cams=[];
 async function startScanner(){
     let sb=document.getElementById('btnStart'),tb=document.getElementById('btnStop'),rb=document.getElementById('btnTorch'),wb=document.getElementById('btnSwitch'),st=document.getElementById('scanStatus'),laser=document.getElementById('scanLaser'),ph=document.getElementById('camPlaceholder');
@@ -262,7 +254,7 @@ async function startScanner(){
         if(!cams||cams.length===0){st.innerHTML='<span style="color:#ef4444">✕</span> Kamera tidak ditemukan';sb.classList.remove('hidden');ph.style.display='flex';toast('Tidak ada kamera','error');return}
         let bc=cams.find(c=>{let l=c.label.toLowerCase();return l.includes('back')||l.includes('environment')||l.includes('belakang')});
         curCam=bc||cams[0];
-        await scanner.start(curCam.id,{fps:10,qrbox:{width:250,height:250},aspectRatio:1.0},
+        await scanner.start(curCam.id,{fps:30,qrbox:{width:300,height:300},aspectRatio:1.0},
             (t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner();toast('✅ Barcode terdeteksi!')},()=>{});
         scanning=!0;tb.classList.remove('hidden');rb.classList.remove('hidden');if(cams.length>1)wb.classList.remove('hidden');
         st.innerHTML='<span style="color:#10b981">●</span> Scanning...';
@@ -272,7 +264,7 @@ async function startScanner(){
 }
 function stopScanner(){if(scanner&&scanning){scanner.stop().catch(()=>{}).finally(()=>{try{scanner.clear()}catch(e){}})}scanning=!1;torchOn=!1;document.getElementById('btnStart').classList.remove('hidden');document.getElementById('btnStop').classList.add('hidden');document.getElementById('btnTorch').classList.add('hidden');document.getElementById('btnSwitch').classList.add('hidden');document.getElementById('scanStatus').innerHTML='⚪ Kamera Mati';document.getElementById('scanLaser').style.display='none';document.getElementById('camPlaceholder').style.display='flex'}
 async function toggleTorch(){if(!scanner||!scanning)return;try{let t=scanner.getRunningTrack?scanner.getRunningTrack():null;if(!t){let v=document.querySelector('#reader video');if(v?.srcObject)t=v.srcObject.getVideoTracks()[0]}if(t&&t.getCapabilities?.()?.torch){torchOn=!torchOn;await t.applyConstraints({advanced:[{torch:torchOn}]});document.getElementById('btnTorch').classList.toggle('torch-on',torchOn)}}catch(e){}}
-async function switchCamera(){if(!scanner||!scanning||cams.length<2)return;try{await scanner.stop();let i=cams.findIndex(c=>c.id===curCam.id);curCam=cams[(i+1)%cams.length];await scanner.start(curCam.id,{fps:10,qrbox:{width:250,height:250},aspectRatio:1.0},(t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner()},()=>{});document.getElementById('scanLaser').style.display='block'}catch(e){}}
+async function switchCamera(){if(!scanner||!scanning||cams.length<2)return;try{await scanner.stop();let i=cams.findIndex(c=>c.id===curCam.id);curCam=cams[(i+1)%cams.length];await scanner.start(curCam.id,{fps:30,qrbox:{width:300,height:300},aspectRatio:1.0},(t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner()},()=>{});document.getElementById('scanLaser').style.display='block'}catch(e){}}
 function scanImageFile(input){if(!input.files||!input.files[0])return;let t=new Html5Qrcode("reader");t.scanFile(input.files[0],!0).then(x=>{scanRes=x;if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(x,'File Image');saveHist(x,'File Image');t.clear();toast('✅ Terdeteksi!')}).catch(()=>{toast('Tidak ada barcode','error');t.clear()});input.value=''}
 
 // ===== RESULT =====
