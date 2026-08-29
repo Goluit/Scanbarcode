@@ -341,7 +341,7 @@
 <script>
 function toast(m,t){let c=document.createElement('div');c.className='toast';c.style.background=t==='error'?'#ef4444':'#10b981';c.innerHTML=m;document.body.appendChild(c);setTimeout(()=>{c.style.opacity='0';c.style.transition='.3s';setTimeout(()=>c.remove(),300)},3000)}
 function toggleMenu(){let m=document.getElementById('mobileMenu'),h=document.getElementById('hamburgerBtn');m.classList.toggle('show');h.classList.toggle('open')}
-function go(n){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));let el=document.getElementById('page-'+n);if(el)el.classList.add('active');else document.getElementById('page-home').classList.add('active');document.getElementById('mobileMenu').classList.remove('show');document.getElementById('hamburgerBtn').classList.remove('open');window.scrollTo(0,0);if(n==='blog')renderBlogs();if(n==='riwayat')renderHistory();if(n==='generator')genTab('qr');if(n!=='scanner')stopScanner()}
+function go(n){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));let el=document.getElementById('page-'+n);if(el)el.classList.add('active');else document.getElementById('page-home').classList.add('active');document.getElementById('mobileMenu').classList.remove('show');document.getElementById('hamburgerBtn').classList.remove('open');window.scrollTo(0,0);if(n==='riwayat')renderHistory();if(n==='generator')genTab('qr');if(n!=='scanner')stopScanner()}
 function toggleTheme(){let d=document.documentElement.classList.toggle('dark');document.getElementById('themeBtn').textContent=d?'☀️':'🌙';localStorage.setItem('theme',d?'dark':'light')}
 
 // ===== BLOG =====
