@@ -85,6 +85,13 @@
         .product-info-item { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px; text-align:center; }
         .product-info-label { font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700; }
         .product-info-value { font-size:14px; font-weight:700; }
+        .product-images { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+        .product-image-thumb { width:70px; height:70px; object-fit:cover; border-radius:8px; cursor:pointer; border:2px solid transparent; }
+        .product-image-thumb:hover { border-color:#2563eb; }
+        .product-description { margin-top:10px; background:var(--bg); padding:12px; border-radius:10px; font-size:13px; color:var(--text); }
+        .product-price-row { display:flex; align-items:center; gap:10px; margin-top:10px; background:var(--bg); padding:10px; border-radius:10px; }
+        .product-price-row strong { font-size:14px; }
+        .price-btn { margin-left:auto; }
         .blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:24px; }
         .blog-card { background:var(--card); border-radius:16px; overflow:hidden; border:1px solid var(--border); cursor:pointer; transition:all 0.35s; }
         .blog-card:hover { transform:translateY(-6px); }
@@ -103,27 +110,19 @@
         .toast { position:fixed; top:18px; right:18px; z-index:9999; padding:13px 22px; border-radius:12px; color:#fff; font-weight:600; box-shadow:0 10px 35px rgba(0,0,0,0.3); animation:toastIn 0.4s; font-size:14px; }
         @keyframes toastIn { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
         .hidden { display:none!important; }
-        /* Modal */
+        /* Modal for full image */
         .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:99999; display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeInModal 0.3s; }
-        .modal-content { background:var(--card); border-radius:16px; max-width:600px; width:100%; max-height:90vh; overflow-y:auto; padding:25px; position:relative; }
-        .modal-close { position:absolute; top:15px; right:15px; background:var(--hover); border:none; color:var(--text); font-size:20px; width:35px; height:35px; border-radius:50%; cursor:pointer; }
-        .modal-image { width:100%; max-height:300px; object-fit:contain; border-radius:12px; margin-bottom:15px; cursor:zoom-in; }
-        .modal-details h3 { font-size:1.4rem; font-weight:800; margin-bottom:5px; }
-        .modal-details .brand { color:#64748b; font-size:14px; margin-bottom:10px; }
-        .modal-details .desc { font-size:14px; color:var(--text); line-height:1.6; }
-        .modal-details .price { font-weight:700; color:#2563eb; font-size:18px; margin:10px 0; }
-        .thumbnails { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
-        .thumbnail { width:70px; height:70px; object-fit:cover; border-radius:8px; cursor:pointer; border:2px solid var(--border); transition:border 0.3s; }
-        .thumbnail:hover { border-color:#2563eb; }
+        .modal-overlay img { max-width:90vw; max-height:90vh; border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+        .modal-close { position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; color:#fff; font-size:24px; width:40px; height:40px; border-radius:50%; cursor:pointer; }
         @keyframes fadeInModal { from{opacity:0} to{opacity:1} }
-        /* FAQ */
+        /* FAQ accordion */
         .faq-item { border-bottom:1px solid var(--border); }
         .faq-question { width:100%; text-align:left; padding:16px 0; background:none; border:none; cursor:pointer; font-size:16px; font-weight:600; color:var(--text); display:flex; justify-content:space-between; align-items:center; }
         .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; }
-        .faq-answer.show { max-height:200px; padding-bottom:16px; }
+        .faq-answer.show { max-height:300px; padding-bottom:16px; }
         .faq-answer p { color:#64748b; font-size:14px; }
-        @media(max-width:768px){ .nav-links{display:none} .hamburger-btn{display:flex} .stats-grid{grid-template-columns:repeat(2,1fr)} .features-grid{grid-template-columns:1fr} .footer-grid{grid-template-columns:1fr} .blog-grid{grid-template-columns:1fr} .scanner-content{grid-template-columns:1fr} .product-info-grid{grid-template-columns:1fr} }
-        /* Generator page styles (kept) */
+        @media(max-width:768px){ .nav-links{display:none} .hamburger-btn{display:flex} .stats-grid{grid-template-columns:repeat(2,1fr)} .features-grid{grid-template-columns:1fr} .footer-grid{grid-template-columns:1fr} .blog-grid{grid-template-columns:1fr} .scanner-content{grid-template-columns:1fr} .product-info-grid{grid-template-columns:1fr} .product-images { justify-content:center; } }
+        /* Generator page styles (kept from previous) */
         .generator-page .header { text-align:center; padding:30px; color:white; margin-bottom:20px; }
         .generator-page .header h1 { font-size:42px; font-weight:800; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.2); }
         .generator-page .tabs { display:flex; justify-content:center; gap:20px; margin-bottom:30px; }
@@ -240,6 +239,7 @@
                 <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">📷</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Live Camera</h3><p style="color:#64748b;font-size:14px">Laser biru dengan pemindaian real-time.</p></div>
                 <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">⚙️</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Generator Pro</h3><p style="color:#64748b;font-size:14px">QR & Barcode dengan kustomisasi penuh.</p></div>
             </div>
+            <!-- Professional content -->
             <div class="card" style="margin-top:25px;line-height:2;padding:32px">
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin-bottom:14px">Apa Itu Pemindai Barcode Online?</h2>
                 <p>Pemindai barcode online adalah alat digital yang memungkinkan Anda membaca informasi dari kode batang (barcode) atau kode matriks (QR code) menggunakan kamera smartphone tanpa perlu menginstal aplikasi tambahan. ScanBarcode Pro hadir sebagai solusi pemindai barcode online gratis terbaik di Indonesia yang dapat diakses langsung dari browser favorit Anda.</p>
@@ -257,28 +257,28 @@
                     <li><strong>Riwayat:</strong> Export CSV.</li>
                 </ul>
             </div>
-            <!-- FAQ 5 items -->
+            <!-- FAQ Accordion (5 items) -->
             <div class="card" style="margin-top:25px;padding:28px">
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin-bottom:14px">❓ Pertanyaan Singkat (FAQ)</h2>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ(this)">Apakah ScanBarcode Pro gratis? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer"><p>Ya, 100% gratis tanpa batasan.</p></div>
+                    <div class="faq-answer"><p>Ya, 100% gratis tanpa batasan dan tanpa biaya tersembunyi.</p></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ(this)">Apakah perlu install aplikasi? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer"><p>Tidak, cukup buka browser dan gunakan langsung.</p></div>
+                    <div class="faq-answer"><p>Tidak, cukup buka browser dan gunakan langsung. Tidak perlu download atau install apa pun.</p></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ(this)">Format apa saja yang didukung? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer"><p>50+ format termasuk EAN, UPC, QR Code, DataMatrix, WiFi, vCard, ISBN.</p></div>
+                    <div class="faq-answer"><p>50+ format termasuk EAN, UPC, QR Code, DataMatrix, WiFi, vCard, ISBN, dan banyak lagi.</p></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ(this)">Bisakah scan dari gambar? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer"><p>Ya, gunakan tombol "Upload Gambar".</p></div>
+                    <div class="faq-answer"><p>Ya, gunakan tombol "Upload Gambar" untuk memindai barcode dari file gambar.</p></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFAQ(this)">Apakah data saya aman? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer"><p>Semua pemrosesan terjadi di perangkat Anda, tidak ada upload data.</p></div>
+                    <div class="faq-answer"><p>Semua pemrosesan dilakukan di perangkat Anda. Data tidak dikirim ke server mana pun.</p></div>
                 </div>
             </div>
         </div>
@@ -514,13 +514,10 @@
 
     <div class="toast-container" id="toastContainer" style="position:fixed;bottom:30px;right:30px;z-index:10000;"></div>
 
-    <!-- Product Detail Modal -->
-    <div id="productModal" class="modal-overlay hidden" onclick="closeProductModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeProductModal()"><i class="fas fa-times"></i></button>
-            <img id="modalProductImage" src="" alt="Product Image" class="modal-image">
-            <div class="modal-details" id="modalProductDetails"></div>
-        </div>
+    <!-- Modal for full image -->
+    <div id="imageModal" class="modal-overlay hidden" onclick="closeImageModal()">
+        <button class="modal-close" onclick="closeImageModal()"><i class="fas fa-times"></i></button>
+        <img id="modalImage" src="" alt="Product Full Image">
     </div>
 
     <script>
@@ -566,20 +563,13 @@
                 icon.style.transform = 'rotate(180deg)';
             }
         }
-        // Product Modal
-        function openProductModal(imageSrc, productData) {
-            document.getElementById('modalProductImage').src = imageSrc;
-            let detailsHtml = `<h3>${productData.name || 'Produk'}</h3>`;
-            if(productData.brand) detailsHtml += `<div class="brand">Merek: ${productData.brand}</div>`;
-            if(productData.description) detailsHtml += `<div class="desc">${productData.description}</div>`;
-            if(productData.price) detailsHtml += `<div class="price">💰 Harga: ${productData.price}</div>`;
-            else detailsHtml += `<div class="price">💰 Harga: Tidak tersedia</div>`;
-            detailsHtml += `<a href="https://www.google.com/search?q=${encodeURIComponent(productData.barcode)}+harga" target="_blank" class="btn btn-primary btn-sm" style="margin-top:10px;"><i class="fas fa-search"></i> Cek Harga di Google</a>`;
-            document.getElementById('modalProductDetails').innerHTML = detailsHtml;
-            document.getElementById('productModal').classList.remove('hidden');
+        // Image modal
+        function openImageModal(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').classList.remove('hidden');
         }
-        function closeProductModal() {
-            document.getElementById('productModal').classList.add('hidden');
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.add('hidden');
         }
 
         const GS1_COUNTRIES = {'899':'Indonesia','888':'Singapura','955':'Malaysia','885':'Thailand','893':'Vietnam','890':'India','690':'China','691':'China','692':'China','693':'China','694':'China','695':'China','500':'Inggris','501':'Inggris','502':'Inggris','503':'Inggris','504':'Inggris','505':'Inggris','506':'Inggris','507':'Inggris','508':'Inggris','509':'Inggris','400':'Jerman','401':'Jerman','402':'Jerman','403':'Jerman','404':'Jerman','405':'Jerman','406':'Jerman','407':'Jerman','408':'Jerman','409':'Jerman','410':'Jerman','411':'Jerman','412':'Jerman','413':'Jerman','414':'Jerman','415':'Jerman','416':'Jerman','417':'Jerman','418':'Jerman','419':'Jerman','420':'Jerman','421':'Jerman','422':'Jerman','423':'Jerman','424':'Jerman','425':'Jerman','426':'Jerman','427':'Jerman','428':'Jerman','429':'Jerman','430':'Jerman','431':'Jerman','432':'Jerman','433':'Jerman','434':'Jerman','435':'Jerman','436':'Jerman','437':'Jerman','438':'Jerman','439':'Jerman','440':'Jerman','450':'Jepang','451':'Jepang','452':'Jepang','453':'Jepang','454':'Jepang','455':'Jepang','456':'Jepang','457':'Jepang','458':'Jepang','459':'Jepang','490':'Jepang','491':'Jepang','492':'Jepang','493':'Jepang','494':'Jepang','495':'Jepang','496':'Jepang','497':'Jepang','498':'Jepang','499':'Jepang','000':'Amerika Serikat','001':'Amerika Serikat','002':'Amerika Serikat','003':'Amerika Serikat','004':'Amerika Serikat','005':'Amerika Serikat','006':'Amerika Serikat','007':'Amerika Serikat','008':'Amerika Serikat','009':'Amerika Serikat','010':'Amerika Serikat','011':'Amerika Serikat','012':'Amerika Serikat','013':'Amerika Serikat','300':'Prancis','301':'Prancis','302':'Prancis','303':'Prancis','304':'Prancis','305':'Prancis','306':'Prancis','307':'Prancis','308':'Prancis','309':'Prancis','310':'Prancis','311':'Prancis','312':'Prancis','313':'Prancis','314':'Prancis','315':'Prancis','316':'Prancis','317':'Prancis','318':'Prancis','319':'Prancis','320':'Prancis','321':'Prancis','322':'Prancis','323':'Prancis','324':'Prancis','325':'Prancis','326':'Prancis','327':'Prancis','328':'Prancis','329':'Prancis','330':'Prancis','331':'Prancis','332':'Prancis','333':'Prancis','334':'Prancis','335':'Prancis','336':'Prancis','337':'Prancis','338':'Prancis','339':'Prancis','340':'Prancis','341':'Prancis','342':'Prancis','343':'Prancis','344':'Prancis','345':'Prancis','346':'Prancis','347':'Prancis','348':'Prancis','349':'Prancis','471':'Taiwan','474':'Estonia','475':'Latvia','476':'Azerbaijan','477':'Lithuania','478':'Uzbekistan','479':'Sri Lanka','480':'Filipina','481':'Belarus','482':'Ukraina','483':'Turkmenistan','484':'Moldova','485':'Armenia','486':'Georgia','487':'Kazakhstan','488':'Tajikistan','489':'Hong Kong','520':'Yunani','521':'Yunani','528':'Lebanon','529':'Siprus','530':'Albania','531':'Makedonia','535':'Malta','539':'Irlandia','540':'Belgia','541':'Belgia','542':'Belgia','543':'Belgia','544':'Belgia','545':'Belgia','546':'Belgia','547':'Belgia','548':'Belgia','549':'Belgia','560':'Portugal','569':'Islandia','570':'Denmark','571':'Denmark','572':'Denmark','573':'Denmark','574':'Denmark','575':'Denmark','576':'Denmark','577':'Denmark','578':'Denmark','579':'Denmark','590':'Polandia','594':'Rumania','599':'Hungaria','700':'Norwegia','701':'Norwegia','702':'Norwegia','703':'Norwegia','704':'Norwegia','705':'Norwegia','706':'Norwegia','707':'Norwegia','708':'Norwegia','709':'Norwegia','730':'Swedia','731':'Swedia','732':'Swedia','733':'Swedia','734':'Swedia','735':'Swedia','736':'Swedia','737':'Swedia','738':'Swedia','739':'Swedia','740':'Guatemala','741':'El Salvador','742':'Honduras','743':'Nikaragua','744':'Kosta Rika','745':'Panama','746':'Republik Dominika','759':'Venezuela','760':'Swiss','761':'Swiss','762':'Swiss','763':'Swiss','764':'Swiss','765':'Swiss','766':'Swiss','767':'Swiss','768':'Swiss','769':'Swiss','773':'Uruguay','775':'Peru','777':'Bolivia','780':'Chili','784':'Paraguay','786':'Ekuador'};
@@ -661,30 +651,42 @@
                     const data=await response.json();
                     if(data.status===1 && data.product){
                         const p=data.product;
+                        let imgUrls=[];
+                        // Gather all available images
+                        if(p.image_url) imgUrls.push(p.image_url);
+                        if(p.image_front_url) imgUrls.push(p.image_front_url);
+                        if(p.image_ingredients_url) imgUrls.push(p.image_ingredients_url);
+                        if(p.image_nutrition_url) imgUrls.push(p.image_nutrition_url);
+                        // Remove duplicates
+                        imgUrls=[...new Set(imgUrls)];
                         let name=p.product_name||'Produk';
                         let brand=p.brands||'Merek tidak diketahui';
-                        let description=p.generic_name || p.ingredients_text || p.categories || 'Deskripsi tidak tersedia';
-                        let price=p.price || null;
-                        // Collect images (up to 4)
-                        let images=[];
-                        if(p.image_url) images.push(p.image_url);
-                        if(p.image_front_url && !images.includes(p.image_front_url)) images.push(p.image_front_url);
-                        if(p.image_ingredients_url && !images.includes(p.image_ingredients_url)) images.push(p.image_ingredients_url);
-                        if(p.image_nutrition_url && !images.includes(p.image_nutrition_url)) images.push(p.image_nutrition_url);
-                        // Limit to 4
-                        images=images.slice(0,4);
-                        container.innerHTML='';
-                        if(images.length>0){
-                            let thumbsHtml='<div class="thumbnails">';
-                            images.forEach((imgSrc,idx)=>{
-                                thumbsHtml+=`<img src="${imgSrc}" class="thumbnail" onclick="openProductModal('${imgSrc}',{name:'${name.replace(/'/g,"\\'")}',brand:'${brand.replace(/'/g,"\\'")}',description:'${description.replace(/'/g,"\\'")}',price:'${price?price:'Tidak tersedia'}',barcode:'${t}'})" onerror="this.style.display='none'">`;
-                            });
-                            thumbsHtml+='</div>';
-                            container.innerHTML+=thumbsHtml;
+                        let categories=p.categories||'';
+                        let quantity=p.quantity||'';
+                        let description = p.generic_name || p.ingredients_text || '';
+                        description = description.length>100 ? description.substring(0,100)+'...' : description;
+
+                        let imgHtml='';
+                        if(imgUrls.length>0){
+                            let thumbs=imgUrls.map((url,idx)=>`<img src="${url}" class="product-image-thumb" onclick="openImageModal('${url}')" onerror="this.style.display='none'">`).join('');
+                            imgHtml=`<div class="product-images">${thumbs}</div>`;
                         } else {
-                            container.innerHTML='<div style="padding:10px;background:var(--bg);border-radius:8px;font-size:13px;color:#64748b;">ℹ️ Tidak ada gambar produk tersedia.</div>';
+                            imgHtml='<div style="font-size:30px;margin:10px;">📦</div>';
                         }
-                        container.innerHTML+=`<div style="margin-top:8px;font-size:13px;color:#64748b;">${name} - ${brand}</div>`;
+                        container.innerHTML=`
+                            ${imgHtml}
+                            <div class="product-description">
+                                <strong>${name}</strong><br>
+                                Merek: ${brand}<br>
+                                ${categories?'Kategori: '+categories+'<br>':''}
+                                ${quantity?'Ukuran: '+quantity+'<br>':''}
+                                ${description?'Deskripsi: '+description:''}
+                            </div>
+                            <div class="product-price-row">
+                                <strong>💰 Harga:</strong> <span style="color:#2563eb; font-weight:600;">Cek di Google</span>
+                                <button class="btn btn-success btn-sm price-btn" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(t)}+harga','_blank')"><i class="fas fa-search"></i> Cek Harga</button>
+                            </div>
+                        `;
                     }else{
                         container.innerHTML='<div style="padding:10px;background:var(--bg);border-radius:8px;font-size:13px;color:#64748b;">ℹ️ Produk tidak ditemukan di database terbuka.</div>';
                     }
@@ -709,7 +711,7 @@
         function clearHistory(){if(confirm('Hapus semua riwayat?')){localStorage.removeItem('sh');renderHistory();toast('Dihapus')}}
         function exportHistory(){let h=JSON.parse(localStorage.getItem('sh')||'[]');if(!h.length)return;let c='Waktu,Format,Konten\n'+h.map(i=>`"${i.time}","${i.format}","${i.text.replace(/"/g,'""')}"`).join('\n');let b=new Blob(['\uFEFF'+c],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='scan-history.csv';a.click()}
 
-        // Generator initialization (same as before)
+        // Generator initialization
         let currentType='url',currentBarcodeFormat='CODE128',logoImage=null,currentQRCanvas=null,currentQRDataURL=null,currentBarcodeCanvas=null,currentBarcodeDataURL=null;
         window.switchTab=function(tab){const qrSection=document.getElementById('qrSection'),barcodeSection=document.getElementById('barcodeSection'),tabQR=document.getElementById('tabQR'),tabBarcode=document.getElementById('tabBarcode');if(tab==='qr'){tabQR.classList.add('active');tabBarcode.classList.remove('active');qrSection.classList.remove('hidden');barcodeSection.classList.add('hidden');}else{tabBarcode.classList.add('active');tabQR.classList.remove('active');barcodeSection.classList.remove('hidden');qrSection.classList.add('hidden');}};
         function setupQRTypeButtons(){document.querySelectorAll('#typeGrid .type-btn').forEach(btn=>{btn.addEventListener('click',function(){document.querySelectorAll('#typeGrid .type-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');currentType=this.dataset.type;document.querySelectorAll('.content-panel').forEach(p=>p.classList.remove('active'));document.getElementById('panel-'+currentType).classList.add('active');});});}
