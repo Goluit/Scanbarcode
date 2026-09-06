@@ -85,9 +85,32 @@
         .product-info-item { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px; text-align:center; }
         .product-info-label { font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700; }
         .product-info-value { font-size:14px; font-weight:700; }
-        /* === IMPROVED SCAN RESULT SECTION (Only these parts are updated) === */
+        /* === SCAN RESULT IMPROVEMENTS (only these were changed) === */
+        .barcode-display {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            word-break: break-all;
+            background: #ffffff;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 16px;
+            border: 2px solid #3b82f6;
+            letter-spacing: 1px;
+            color: #1e293b;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin: 12px auto;
+            max-width: 100%;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .dark .barcode-display {
+            background: #0f172a;
+            border-color: #3b82f6;
+            color: #e2e8f0;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+        }
         .scan-result-product-card {
-            margin-top: 15px;
+            margin-top: 16px;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid var(--border);
@@ -113,7 +136,7 @@
             transition: transform 0.3s;
         }
         .scan-result-product-card .product-image-wrapper img:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
         }
         .scan-result-product-card .product-image-placeholder {
             display: flex;
@@ -186,7 +209,7 @@
             letter-spacing: 0.5px;
         }
         .scan-result-product-card .product-price-display .price-amount {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             color: #3b82f6;
             letter-spacing: -0.5px;
@@ -222,26 +245,6 @@
         }
         .dark .scan-result-product-card .product-thumb {
             background: #1e293b;
-        }
-        /* Clean barcode display for dark mode */
-        .barcode-display {
-            font-family: 'Courier New', monospace;
-            font-weight: 600;
-            word-break: break-all;
-            background: var(--card);
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 15px;
-            border: 2px solid #3b82f6;
-            letter-spacing: 0.5px;
-            color: var(--text);
-            transition: all 0.3s;
-        }
-        .dark .barcode-display {
-            background: #0f172a;
-            border-color: #3b82f6;
-            color: #e2e8f0;
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
         }
         .blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:24px; }
         .blog-card { background:var(--card); border-radius:16px; overflow:hidden; border:1px solid var(--border); cursor:pointer; transition:all 0.35s; }
@@ -324,7 +327,6 @@
     </style>
 </head>
 <body>
-    <!-- NAVBAR (UNCHANGED) -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="logo" onclick="go('home')">
@@ -429,7 +431,7 @@
             </div>
         </div>
 
-        <!-- SCANNER PAGE (Only the result section is updated) -->
+        <!-- SCANNER PAGE (Result section updated) -->
         <div class="page" id="page-scanner">
             <h2 style="font-weight:800;font-size:1.5rem;margin-bottom:18px"><i class="fas fa-camera"></i> Pemindai Barcode Online - Live Camera</h2>
             <div class="scanner-wrapper">
@@ -453,16 +455,12 @@
                     </div>
                     <div class="card" style="padding:22px">
                         <h3 style="font-weight:700;margin-bottom:14px;font-size:1.1rem"><i class="fas fa-clipboard-check"></i> Hasil Scan</h3>
-                        <!-- === RESULT DISPLAY (UPDATED with clean dark-mode barcode display) === -->
                         <div id="resultDisplay" class="result-box">
                             <div style="font-size:2.5rem;margin-bottom:8px">📷</div>
                             <p>Arahkan kamera ke barcode</p>
                         </div>
-                        <!-- Product info section (updated) -->
                         <div id="productInfoSection" style="display:none"></div>
-                        <!-- Action buttons (unchanged) -->
                         <div id="resultActions" style="margin-top:10px;display:none;flex-direction:column;gap:8px"></div>
-                        <!-- Result info (unchanged) -->
                         <div id="resultInfo" style="margin-top:8px;display:none;padding:8px;background:var(--hover);border-left:4px solid #2563eb;border-radius:8px;font-size:12px"></div>
                     </div>
                 </div>
@@ -637,7 +635,6 @@
         </div>
     </div>
 
-    <!-- FOOTER (UNCHANGED) -->
     <footer class="footer">
         <div class="footer-grid">
             <div>
@@ -738,7 +735,7 @@
         function openBlog(id){let b=blogs.find(x=>x.id===id)||blogs[0];document.getElementById('blogListView').classList.add('hidden');document.getElementById('blogDetailView').classList.remove('hidden');document.getElementById('blogDetailContent').innerHTML=`<div class="blog-detail-header" style="background-image:url('${blogImgs[id-1]}')"><div><span style="font-size:12px;font-weight:700;text-transform:uppercase">${b.cat}</span><h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:900;margin:10px 0">${b.title}</h1><span style="font-size:14px">📅 ${b.date}</span></div></div><div class="blog-detail-content">${b.content}</div>`;window.scrollTo(0,0)}
         function closeBlog(){document.getElementById('blogListView').classList.remove('hidden');document.getElementById('blogDetailView').classList.add('hidden');window.scrollTo(0,0)}
 
-        // ===== SCANNER LOGIC (showResult updated for improved product display) =====
+        // ===== SCANNER LOGIC (showResult updated with Open Prices API) =====
         let scanner=null,scanRes='',scanning=!1,torchOn=!1,curCam=null,cams=[];
         async function startScanner(){
             let sb=document.getElementById('btnStart'),tb=document.getElementById('btnStop'),rb=document.getElementById('btnTorch'),wb=document.getElementById('btnSwitch'),st=document.getElementById('scanStatus'),laser=document.getElementById('scanLaser'),ph=document.getElementById('camPlaceholder');
@@ -774,106 +771,208 @@
         async function switchCamera(){if(!scanner||!scanning||cams.length<2)return;try{await scanner.stop();let i=cams.findIndex(c=>c.id===curCam.id);curCam=cams[(i+1)%cams.length];await scanner.start(curCam.id,{fps:15,qrbox:{width:280,height:280},aspectRatio:1.0},(t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner()},()=>{});document.getElementById('scanLaser').style.display='block'}catch(e){}}
         function scanImageFile(input){if(!input.files||!input.files[0])return;let t=new Html5Qrcode("reader");t.scanFile(input.files[0],!0).then(x=>{scanRes=x;if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(x,'File Image');saveHist(x,'File Image');t.clear();toast('✅ Terdeteksi!')}).catch(()=>{toast('Tidak ada barcode','error');t.clear()});input.value=''}
 
-        // === UPDATED showResult with clean dark-mode barcode + product card ===
-        async function showResult(t,f){
-            let d=document.getElementById('resultDisplay'),a=document.getElementById('resultActions'),i=document.getElementById('resultInfo'),pi=document.getElementById('productInfoSection');
-            let isQR = f && (f.toUpperCase().includes('QR') || f.toUpperCase().includes('AZTEC') || f.toUpperCase().includes('DATA_MATRIX'));
-            let scanTypeBadge = isQR ? '<span style="background:#2563eb;color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;">QR Code Scan</span>' : '<span style="background:#10b981;color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;">Barcode Scan</span>';
-            let type = /^https?:\/\//i.test(t)?'url':/^WIFI:/i.test(t)?'wifi':/^tel:/i.test(t)?'phone':/^mailto:/i.test(t)?'email':/^\d{8,14}$/.test(t)?'product':'text';
-            let ic={url:'🔗',wifi:'📶',phone:'📞',email:'✉️',product:'📦',text:'📝'},lb={url:'Link',wifi:'WiFi',phone:'Telepon',email:'Email',product:'Barcode Produk',text:'Teks'};
-            d.className='result-box success';
-            // Barcode display with class for dark mode
-            d.innerHTML=`<div style="text-align:center;width:100%">
-                ${scanTypeBadge}
-                <div style="font-size:2.5rem;margin:10px 0;">${ic[type]}</div>
-                <div style="font-size:13px;font-weight:700;color:#2563eb;margin:6px 0">${lb[type]}</div>
-                <div class="barcode-display">${t}</div>
-                <div style="margin-top:10px;color:#94a3b8;font-size:12px;">Format: ${f}</div>
-            </div>`;
-            pi.innerHTML='';pi.style.display='none';
-            if(type==='product' && /^\d{12,13}$/.test(t)){
-                let country='-',manufacturer='-',product='-';
-                if(t.length===13){let prefix=t.substring(0,3);country=GS1_COUNTRIES[prefix]||'Global ('+prefix+')';manufacturer=t.substring(3,8);product=t.substring(8,12);}
-                else if(t.length===12){country='Amerika Serikat';manufacturer=t.substring(1,6);product=t.substring(6,11);}
-                pi.style.display='block';
-                pi.innerHTML=`<div class="product-info-grid">
-                    <div class="product-info-item"><div class="product-info-label">🌍 Asal Negara</div><div class="product-info-value">${country}</div></div>
-                    <div class="product-info-item"><div class="product-info-label">🏭 Kode Produsen</div><div class="product-info-value">${manufacturer}</div></div>
-                    <div class="product-info-item"><div class="product-info-label">📦 Kode Produk</div><div class="product-info-value">${product}</div></div>
+        // Helper: Fetch price from Open Prices API
+        async function fetchProductPrice(barcode) {
+            try {
+                const url = `https://prices.openfoodfacts.org/api/v1/prices?product_code=${barcode}&size=1`;
+                const resp = await fetch(url);
+                if (!resp.ok) return null;
+                const data = await resp.json();
+                if (data && data.items && data.items.length > 0) {
+                    const item = data.items[0];
+                    return `${item.price} ${item.currency}`;
+                }
+                return null;
+            } catch {
+                return null;
+            }
+        }
+
+        // Helper: hide image loading overlay
+        function hideImageLoading() {
+            const overlay = document.getElementById('imageLoadingOverlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+
+        // Helper: show fallback if image fails
+        function showImageFallback(img) {
+            img.style.display = 'none';
+            const container = document.getElementById('productImageContainer');
+            if (container) container.innerHTML = '<div class="product-image-placeholder"><i class="fas fa-box-open"></i><span style="font-size:12px;margin-top:8px;">Gambar tidak tersedia</span></div>';
+        }
+
+        // Helper: switch main image on thumbnail click
+        function switchProductImage(thumbEl, url) {
+            document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active'));
+            thumbEl.classList.add('active');
+            const mainImg = document.getElementById('mainProductImage');
+            if (mainImg) {
+                mainImg.src = url;
+                mainImg.onclick = () => openImageModal(url);
+            } else {
+                const container = document.getElementById('productImageContainer');
+                container.innerHTML = `<img src="${url}" id="mainProductImage" onclick="openImageModal('${url}')" style="cursor:pointer;max-width:100%;max-height:100%;object-fit:contain;">`;
+            }
+        }
+
+        // Main showResult function (updated)
+        async function showResult(t, f) {
+            const d = document.getElementById('resultDisplay'),
+                  a = document.getElementById('resultActions'),
+                  i = document.getElementById('resultInfo'),
+                  pi = document.getElementById('productInfoSection');
+            
+            // Determine scan type badge
+            const isQR = f && (f.toUpperCase().includes('QR') || f.toUpperCase().includes('AZTEC') || f.toUpperCase().includes('DATA_MATRIX'));
+            const scanTypeBadge = isQR 
+                ? '<span style="background:#2563eb;color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;">QR Code Scan</span>'
+                : '<span style="background:#10b981;color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;">Barcode Scan</span>';
+            
+            // Determine content type
+            const type = /^https?:\/\//i.test(t) ? 'url' : /^WIFI:/i.test(t) ? 'wifi' : /^tel:/i.test(t) ? 'phone' : /^mailto:/i.test(t) ? 'email' : /^\d{8,14}$/.test(t) ? 'product' : 'text';
+            const icons = {url:'🔗', wifi:'📶', phone:'📞', email:'✉️', product:'📦', text:'📝'};
+            const labels = {url:'Link', wifi:'WiFi', phone:'Telepon', email:'Email', product:'Barcode Produk', text:'Teks'};
+            
+            // Set result box HTML with clean barcode display
+            d.className = 'result-box success';
+            d.innerHTML = `
+                <div style="text-align:center;width:100%">
+                    ${scanTypeBadge}
+                    <div style="font-size:2.5rem;margin:10px 0;">${icons[type]}</div>
+                    <div style="font-size:13px;font-weight:700;color:#2563eb;margin:6px 0">${labels[type]}</div>
+                    <div class="barcode-display">${t}</div>
+                    <div style="margin-top:10px;color:#94a3b8;font-size:12px;">Format: ${f}</div>
                 </div>`;
-                let container=document.createElement('div');
-                container.style.cssText='margin-top:10px;';
-                container.innerHTML='<div class="spinner" style="width:30px;height:30px;border-width:3px;"></div><p style="font-size:12px;color:#94a3b8;">Mencari info produk...</p>';
+            
+            // Clear previous product info
+            pi.innerHTML = '';
+            pi.style.display = 'none';
+            
+            // If product barcode (12-13 digits)
+            if (type === 'product' && /^\d{12,13}$/.test(t)) {
+                let country = '-', manufacturer = '-', productCode = '-';
+                if (t.length === 13) {
+                    const prefix = t.substring(0, 3);
+                    country = GS1_COUNTRIES[prefix] || 'Global (' + prefix + ')';
+                    manufacturer = t.substring(3, 8);
+                    productCode = t.substring(8, 12);
+                } else if (t.length === 12) {
+                    country = 'Amerika Serikat';
+                    manufacturer = t.substring(1, 6);
+                    productCode = t.substring(6, 11);
+                }
+                
+                // Show product info grid
+                pi.style.display = 'block';
+                pi.innerHTML = `
+                    <div class="product-info-grid">
+                        <div class="product-info-item"><div class="product-info-label">🌍 Asal Negara</div><div class="product-info-value">${country}</div></div>
+                        <div class="product-info-item"><div class="product-info-label">🏭 Kode Produsen</div><div class="product-info-value">${manufacturer}</div></div>
+                        <div class="product-info-item"><div class="product-info-label">📦 Kode Produk</div><div class="product-info-value">${productCode}</div></div>
+                    </div>`;
+                
+                // Create container for product card (loading state)
+                const container = document.createElement('div');
+                container.style.cssText = 'margin-top:10px;';
+                container.innerHTML = '<div class="spinner" style="width:30px;height:30px;border-width:3px;"></div><p style="font-size:12px;color:#94a3b8;">Mencari info produk...</p>';
                 pi.appendChild(container);
-                try{
-                    const response=await fetch(`https://world.openfoodfacts.org/api/v0/product/${t}.json`);
-                    const data=await response.json();
-                    if(data.status===1 && data.product){
-                        const p=data.product;
-                        let imgUrls=[];
-                        const imageFields=['image_url','image_front_url','image_ingredients_url','image_nutrition_url','image_packaging_url','image_small_url','image_thumb_url'];
-                        imageFields.forEach(field=>{if(p[field])imgUrls.push(p[field]);});
-                        imgUrls=[...new Set(imgUrls)];
-                        let name=p.product_name||'Produk';
-                        let brand=p.brands||'Merek tidak diketahui';
-                        let categories=p.categories||'';
-                        let quantity=p.quantity||'';
-                        let description=p.generic_name||p.ingredients_text||'';
-                        description=description.length>120?description.substring(0,120)+'...':description;
-                        let price=p.price||p.price_per||p.price_per_unit||p.price_per_kilo||p.price_per_liter||'';
-                        if(!price && p.stores_tags && p.stores_tags.length) price=p.stores_tags.join(', ');
-                        let mainImage=imgUrls.length>0?imgUrls[0]:'';
-                        // Enhanced product card
-                        let thumbsHtml=imgUrls.map((url,idx)=>`<img src="${url}" class="product-thumb ${idx===0?'active':''}" onclick="switchProductImage(this,'${url}')" onerror="this.style.display='none'">`).join('');
-                        container.innerHTML=`
+                
+                try {
+                    // Fetch product info and price in parallel
+                    const [productResp, price] = await Promise.all([
+                        fetch(`https://world.openfoodfacts.org/api/v0/product/${t}.json`),
+                        fetchProductPrice(t)
+                    ]);
+                    
+                    const data = await productResp.json();
+                    
+                    if (data.status === 1 && data.product) {
+                        const p = data.product;
+                        
+                        // Gather all image URLs
+                        const imageFields = ['image_url','image_front_url','image_ingredients_url','image_nutrition_url','image_packaging_url','image_small_url','image_thumb_url'];
+                        const imgUrls = [...new Set(imageFields.map(field => p[field]).filter(Boolean))];
+                        
+                        const name = p.product_name || 'Produk';
+                        const brand = p.brands || 'Merek tidak diketahui';
+                        const categories = p.categories || '';
+                        const quantity = p.quantity || '';
+                        let description = p.generic_name || p.ingredients_text || '';
+                        description = description.length > 120 ? description.substring(0, 120) + '...' : description;
+                        
+                        // Determine main image
+                        const mainImage = imgUrls.length > 0 ? imgUrls[0] : '';
+                        
+                        // Build thumbnail HTML
+                        const thumbsHtml = imgUrls.map((url, idx) => 
+                            `<img src="${url}" class="product-thumb ${idx === 0 ? 'active' : ''}" onclick="switchProductImage(this,'${url}')" onerror="this.style.display='none'">`
+                        ).join('');
+                        
+                        // Render product card
+                        container.innerHTML = `
                             <div class="scan-result-product-card">
                                 <div class="product-image-wrapper" id="productImageContainer">
-                                    ${mainImage?`
-                                    <img src="${mainImage}" alt="${name}" id="mainProductImage" onload="hideImageLoading()" onerror="showImageFallback(this)" onclick="openImageModal('${mainImage}')" style="cursor:pointer;">
-                                    <div class="product-image-loading" id="imageLoadingOverlay">
-                                        <div class="spinner"></div>
-                                    </div>`:`
-                                    <div class="product-image-placeholder"><i class="fas fa-box-open"></i><span style="font-size:12px;margin-top:8px;">Gambar tidak tersedia</span></div>`}
+                                    ${mainImage ? `
+                                        <img src="${mainImage}" alt="${name}" id="mainProductImage" onload="hideImageLoading()" onerror="showImageFallback(this)" onclick="openImageModal('${mainImage}')" style="cursor:pointer;">
+                                        <div class="product-image-loading" id="imageLoadingOverlay">
+                                            <div class="spinner"></div>
+                                        </div>` : `
+                                        <div class="product-image-placeholder"><i class="fas fa-box-open"></i><span style="font-size:12px;margin-top:8px;">Gambar tidak tersedia</span></div>`}
                                 </div>
-                                ${imgUrls.length>1?`<div class="product-thumbs-row">${thumbsHtml}</div>`:''}
+                                ${imgUrls.length > 1 ? `<div class="product-thumbs-row">${thumbsHtml}</div>` : ''}
                                 <div class="product-details">
                                     <div class="product-name">${name}</div>
-                                    <div class="product-brand">🏷️ ${brand}${categories?' · '+categories:''}</div>
-                                    <div class="product-short-description">${description||'Deskripsi tidak tersedia'}</div>
-                                    ${quantity?`<div style="font-size:12px;color:#94a3b8;margin-bottom:8px;">📏 ${quantity}</div>`:''}
+                                    <div class="product-brand">🏷️ ${brand}${categories ? ' · ' + categories : ''}</div>
+                                    <div class="product-short-description">${description || 'Deskripsi tidak tersedia'}</div>
+                                    ${quantity ? `<div style="font-size:12px;color:#94a3b8;margin-bottom:8px;">📏 ${quantity}</div>` : ''}
                                     <div class="product-price-display">
                                         <span class="price-icon">💰</span>
                                         <span class="price-label">Harga:</span>
-                                        <span class="price-amount">${price||'Tidak tersedia'}</span>
+                                        <span class="price-amount">${price || 'Price not available'}</span>
                                     </div>
                                 </div>
                             </div>`;
-                    }else{
-                        container.innerHTML=`<div class="scan-result-product-card">
-                            <div class="product-image-wrapper"><div class="product-image-placeholder"><i class="fas fa-box-open"></i><span style="font-size:12px;margin-top:8px;">Produk tidak ditemukan</span></div></div>
+                    } else {
+                        // Product not found in Open Food Facts
+                        container.innerHTML = `
+                            <div class="scan-result-product-card">
+                                <div class="product-image-wrapper">
+                                    <div class="product-image-placeholder"><i class="fas fa-box-open"></i><span style="font-size:12px;margin-top:8px;">Produk tidak ditemukan</span></div>
+                                </div>
+                                <div class="product-details">
+                                    <div class="product-name">Produk tidak dikenal</div>
+                                    <div class="product-price-display">
+                                        <span class="price-icon">💰</span>
+                                        <span class="price-label">Harga:</span>
+                                        <span class="price-amount">${price || 'Price not available'}</span>
+                                    </div>
+                                </div>
+                            </div>`;
+                    }
+                } catch (err) {
+                    container.innerHTML = `
+                        <div class="scan-result-product-card">
+                            <div class="product-image-wrapper">
+                                <div class="product-image-placeholder"><i class="fas fa-wifi"></i><span style="font-size:12px;margin-top:8px;">Koneksi gagal</span></div>
+                            </div>
                             <div class="product-details">
-                                <div class="product-name">Produk tidak dikenal</div>
-                                <div class="product-price-display"><span class="price-icon">💰</span><span class="price-label">Harga:</span><span class="price-amount">Tidak tersedia</span></div>
+                                <div class="product-name">Tidak dapat memuat produk</div>
                             </div>
                         </div>`;
-                    }
-                }catch(err){
-                    container.innerHTML=`<div class="scan-result-product-card">
-                        <div class="product-image-wrapper"><div class="product-image-placeholder"><i class="fas fa-wifi"></i><span style="font-size:12px;margin-top:8px;">Koneksi gagal</span></div></div>
-                        <div class="product-details"><div class="product-name">Tidak dapat memuat produk</div></div>
-                    </div>`;
                 }
             }
-            let ac=`<button onclick="copyRes()" class="btn btn-dark" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-copy"></i> Salin Teks</button>`;
-            if(type==='url')ac+=`<button onclick="window.open('${t}','_blank')" class="btn btn-success" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-external-link-alt"></i> Buka Website</button>`;
-            ac+=`<button onclick="shareRes()" class="btn btn-outline" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-share-alt"></i> Bagikan Hasil</button>`;
-            a.innerHTML=ac;a.style.display='flex';i.style.display='block';i.innerHTML=`<strong>📋 Format:</strong> ${f} | <strong>🕐 Waktu:</strong> ${new Date().toLocaleString('id-ID')}`;
+            
+            // Action buttons (unchanged)
+            let actions = `<button onclick="copyRes()" class="btn btn-dark" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-copy"></i> Salin Teks</button>`;
+            if (type === 'url') actions += `<button onclick="window.open('${t}','_blank')" class="btn btn-success" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-external-link-alt"></i> Buka Website</button>`;
+            actions += `<button onclick="shareRes()" class="btn btn-outline" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-share-alt"></i> Bagikan Hasil</button>`;
+            a.innerHTML = actions;
+            a.style.display = 'flex';
+            
+            // Result info
+            i.style.display = 'block';
+            i.innerHTML = `<strong>📋 Format:</strong> ${f} | <strong>🕐 Waktu:</strong> ${new Date().toLocaleString('id-ID')}`;
         }
-
-        // Product image helpers
-        function hideImageLoading(){let overlay=document.getElementById('imageLoadingOverlay');if(overlay)overlay.style.display='none';}
-        function showImageFallback(img){img.style.display='none';let container=document.getElementById('productImageContainer');if(container)container.innerHTML='<div class="product-image-placeholder"><i class="fas fa-box-open"></i><span style="font-size:12px;margin-top:8px;">Gambar tidak tersedia</span></div>';}
-        function switchProductImage(thumbEl,url){document.querySelectorAll('.product-thumb').forEach(t=>t.classList.remove('active'));thumbEl.classList.add('active');let mainImg=document.getElementById('mainProductImage');if(mainImg){mainImg.src=url;mainImg.onclick=()=>openImageModal(url);}else{let container=document.getElementById('productImageContainer');container.innerHTML=`<img src="${url}" id="mainProductImage" onclick="openImageModal('${url}')" style="cursor:pointer;max-width:100%;max-height:100%;object-fit:contain;">`;}}
 
         function copyRes(){navigator.clipboard.writeText(scanRes).then(()=>toast('✅ Disalin!'))}
         function shareRes(){if(navigator.share)navigator.share({text:scanRes});else copyRes()}
