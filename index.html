@@ -85,13 +85,24 @@
         .product-info-item { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px; text-align:center; }
         .product-info-label { font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700; }
         .product-info-value { font-size:14px; font-weight:700; }
-        .product-images { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-        .product-image-thumb { width:70px; height:70px; object-fit:cover; border-radius:8px; cursor:pointer; border:2px solid transparent; }
-        .product-image-thumb:hover { border-color:#2563eb; }
-        .product-description { margin-top:10px; background:var(--bg); padding:12px; border-radius:10px; font-size:13px; color:var(--text); }
-        .product-price-row { display:flex; align-items:center; gap:10px; margin-top:10px; background:var(--bg); padding:10px; border-radius:10px; }
-        .product-price-row strong { font-size:14px; }
-        .price-btn { margin-left:auto; }
+        /* Enhanced Product Result Card */
+        .product-result-card { margin-top:15px; border-radius:16px; overflow:hidden; border:1px solid var(--border); background:var(--card); }
+        .product-image-container { position:relative; width:100%; height:220px; background:var(--bg); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+        .product-image-container img { max-width:100%; max-height:100%; object-fit:contain; cursor:pointer; }
+        .product-image-placeholder { display:flex; flex-direction:column; align-items:center; justify-content:center; color:#94a3b8; font-size:40px; }
+        .product-image-loading { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.8); }
+        .product-details { padding:15px 20px; }
+        .product-name { font-size:18px; font-weight:800; color:var(--text); margin-bottom:4px; }
+        .product-brand { font-size:13px; color:#64748b; margin-bottom:8px; }
+        .product-description { font-size:13px; color:var(--text); line-height:1.6; margin-bottom:12px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+        .product-price-box { display:flex; align-items:center; gap:12px; background:linear-gradient(135deg,#f0f9ff,#e0f2fe); padding:12px 16px; border-radius:12px; margin-top:8px; }
+        .product-price-box .price-label { font-size:13px; color:#64748b; font-weight:600; }
+        .product-price-box .price-value { font-size:22px; font-weight:900; color:#1e40af; }
+        .product-price-box .price-btn { margin-left:auto; }
+        .product-thumbs { display:flex; gap:6px; flex-wrap:wrap; padding:8px 16px; border-top:1px solid var(--border); }
+        .product-thumb { width:50px; height:50px; object-fit:cover; border-radius:8px; cursor:pointer; border:2px solid transparent; }
+        .product-thumb:hover { border-color:#2563eb; }
+        .product-thumb.active { border-color:#2563eb; }
         .blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:24px; }
         .blog-card { background:var(--card); border-radius:16px; overflow:hidden; border:1px solid var(--border); cursor:pointer; transition:all 0.35s; }
         .blog-card:hover { transform:translateY(-6px); }
@@ -119,7 +130,7 @@
         .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; }
         .faq-answer.show { max-height:300px; padding-bottom:16px; }
         .faq-answer p { color:#64748b; font-size:14px; }
-        @media(max-width:768px){ .nav-links{display:none} .hamburger-btn{display:flex} .stats-grid{grid-template-columns:repeat(2,1fr)} .features-grid{grid-template-columns:1fr} .footer-grid{grid-template-columns:1fr} .blog-grid{grid-template-columns:1fr} .scanner-content{grid-template-columns:1fr} .product-info-grid{grid-template-columns:1fr} .product-images { justify-content:center; } }
+        @media(max-width:768px){ .nav-links{display:none} .hamburger-btn{display:flex} .stats-grid{grid-template-columns:repeat(2,1fr)} .features-grid{grid-template-columns:1fr} .footer-grid{grid-template-columns:1fr} .blog-grid{grid-template-columns:1fr} .scanner-content{grid-template-columns:1fr} .product-info-grid{grid-template-columns:1fr} .product-image-container{height:180px} .product-price-box{flex-direction:column; align-items:flex-start;} .product-price-box .price-btn{margin-left:0; width:100%;} }
         .generator-page .header { text-align:center; padding:30px; color:white; margin-bottom:20px; }
         .generator-page .header h1 { font-size:42px; font-weight:800; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.2); }
         .generator-page .tabs { display:flex; justify-content:center; gap:20px; margin-bottom:30px; }
@@ -236,14 +247,12 @@
                 <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">📷</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Live Camera</h3><p style="color:#64748b;font-size:14px">Laser biru dengan pemindaian real-time.</p></div>
                 <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">⚙️</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Generator Pro</h3><p style="color:#64748b;font-size:14px">QR & Barcode dengan kustomisasi penuh.</p></div>
             </div>
-            <!-- Professional content -->
             <div class="card" style="margin-top:25px;line-height:2;padding:32px">
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin-bottom:14px">Apa Itu Pemindai Barcode Online?</h2>
                 <p>Pemindai barcode online adalah alat digital yang memungkinkan Anda membaca informasi dari kode batang (barcode) atau kode matriks (QR code) menggunakan kamera smartphone tanpa perlu menginstal aplikasi tambahan. ScanBarcode Pro hadir sebagai solusi pemindai barcode online gratis terbaik di Indonesia yang dapat diakses langsung dari browser favorit Anda.</p>
                 <p>Teknologi pemindaian barcode telah berkembang pesat. Dulu, Anda memerlukan alat scanner khusus yang mahal dan rumit. Sekarang, cukup dengan smartphone dan koneksi internet, Anda dapat memindai berbagai jenis barcode dengan akurasi tinggi. ScanBarcode Pro menggunakan teknologi WebAssembly dan ZXing untuk memberikan hasil pemindaian terbaik.</p>
                 <p>Aktivitas scan barcode sangat bermanfaat dalam kehidupan sehari-hari di Indonesia. Dari mengecek harga produk di supermarket, melacak resi pengiriman paket dari toko online, memverifikasi keaslian barang branded, hingga membaca QR code undangan pernikahan atau menu restoran digital. Dengan alat scan barcode yang tepat, semua bisa selesai dalam hitungan detik.</p>
                 <p>ScanBarcode Pro dirancang khusus untuk pengguna Indonesia dengan antarmuka yang sederhana dan mudah digunakan. Tidak perlu pengetahuan teknis khusus - cukup buka browser, izinkan kamera, dan arahkan ke barcode. Hasil akan muncul secara otomatis dengan informasi lengkap.</p>
-
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin:28px 0 14px">Keunggulan ScanBarcode Pro</h2>
                 <ul>
                     <li><strong>100% Gratis:</strong> Tanpa biaya, tanpa batasan.</li>
@@ -254,7 +263,6 @@
                     <li><strong>Riwayat:</strong> Export CSV.</li>
                 </ul>
             </div>
-            <!-- FAQ Accordion (5 items) -->
             <div class="card" style="margin-top:25px;padding:28px">
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin-bottom:14px">❓ Pertanyaan Singkat (FAQ)</h2>
                 <div class="faq-item">
@@ -313,7 +321,7 @@
             </div>
         </div>
 
-        <!-- GENERATOR PAGE (full featured) -->
+        <!-- GENERATOR PAGE (unchanged) -->
         <div class="page" id="page-generator">
             <div class="generator-page">
                 <div class="header">
@@ -647,48 +655,47 @@
                     if(data.status===1 && data.product){
                         const p=data.product;
                         let imgUrls=[];
-                        // Gather all possible image fields
-                        const imageFields=['image_url','image_front_url','image_ingredients_url','image_nutrition_url','image_packaging_url','image_other_url','image_small_url','image_thumb_url'];
-                        imageFields.forEach(field => {
-                            if(p[field]) imgUrls.push(p[field]);
-                        });
+                        const imageFields=['image_url','image_front_url','image_ingredients_url','image_nutrition_url','image_packaging_url','image_small_url','image_thumb_url'];
+                        imageFields.forEach(field=>{if(p[field])imgUrls.push(p[field]);});
                         imgUrls=[...new Set(imgUrls)];
                         let name=p.product_name||'Produk';
                         let brand=p.brands||'Merek tidak diketahui';
                         let categories=p.categories||'';
                         let quantity=p.quantity||'';
-                        let description = p.generic_name || p.ingredients_text || '';
-                        description = description.length>100 ? description.substring(0,100)+'...' : description;
-                        // Price: use several possible fields
-                        let price = p.price || p.price_per || p.price_per_unit || p.price_per_kilo || p.price_per_liter || '';
-                        if(!price && p.stores_tags && p.stores_tags.length) price = p.stores_tags.join(', '); // fallback to stores
-                        let imgHtml='';
-                        if(imgUrls.length>0){
-                            let thumbs=imgUrls.map((url,idx)=>`<img src="${url}" class="product-image-thumb" onclick="openImageModal('${url}')" onerror="this.style.display='none'">`).join('');
-                            imgHtml=`<div class="product-images">${thumbs}</div>`;
-                        } else {
-                            imgHtml='<div style="font-size:30px;margin:10px;">📦</div>';
-                        }
+                        let description=p.generic_name||p.ingredients_text||'';
+                        description=description.length>100?description.substring(0,100)+'...':description;
+                        let price=p.price||p.price_per||p.price_per_unit||p.price_per_kilo||p.price_per_liter||p.stores_tags?.join(', ')||'';
+                        let mainImage=imgUrls.length>0?imgUrls[0]:'';
+                        // Build enhanced product card
+                        let thumbsHtml=imgUrls.map((url,idx)=>`<img src="${url}" class="product-thumb ${idx===0?'active':''}" onclick="switchProductImage(this,'${url}')" onerror="this.style.display='none'">`).join('');
                         container.innerHTML=`
-                            ${imgHtml}
-                            <div class="product-description">
-                                <strong>${name}</strong><br>
-                                Merek: ${brand}<br>
-                                ${categories?'Kategori: '+categories+'<br>':''}
-                                ${quantity?'Ukuran: '+quantity+'<br>':''}
-                                ${description?'Deskripsi: '+description:''}
-                            </div>
-                            <div class="product-price-row">
-                                <strong>💰 Harga:</strong> 
-                                <span style="color:#2563eb; font-weight:600;">${price ? price : 'Harga tidak tersedia'}</span>
-                                ${price ? '' : '<button class="btn btn-success btn-sm price-btn" onclick="window.open(\'https://www.google.com/search?q='+encodeURIComponent(t)+'+harga\',\'_blank\')"><i class="fas fa-search"></i> Cek Harga</button>'}
-                            </div>
-                        `;
+                            <div class="product-result-card">
+                                <div class="product-image-container" id="productImageContainer">
+                                    ${mainImage?`
+                                    <img src="${mainImage}" alt="${name}" id="mainProductImage" onload="hideImageLoading()" onerror="showImageFallback(this)" onclick="openImageModal('${mainImage}')" style="cursor:pointer;">
+                                    <div class="product-image-loading" id="imageLoadingOverlay">
+                                        <i class="fas fa-spinner fa-spin" style="font-size:30px;color:#2563eb;"></i>
+                                    </div>`:`
+                                    <div class="product-image-placeholder"><i class="fas fa-box-open"></i><span style="font-size:12px;margin-top:8px;">Gambar tidak tersedia</span></div>`}
+                                </div>
+                                ${imgUrls.length>1?`<div class="product-thumbs">${thumbsHtml}</div>`:''}
+                                <div class="product-details">
+                                    <div class="product-name">${name}</div>
+                                    <div class="product-brand">🏷️ ${brand}${categories?' · '+categories:''}</div>
+                                    <div class="product-description">${description||'Deskripsi tidak tersedia'}</div>
+                                    ${quantity?`<div style="font-size:12px;color:#64748b;margin-bottom:8px;">📏 ${quantity}</div>`:''}
+                                    <div class="product-price-box">
+                                        <span class="price-label">💰 Harga:</span>
+                                        <span class="price-value">${price||'Tidak tersedia'}</span>
+                                        ${!price?`<button class="btn btn-success btn-sm price-btn" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(t)}+harga','_blank')"><i class="fas fa-search"></i> Cek Harga</button>`:''}
+                                    </div>
+                                </div>
+                            </div>`;
                     }else{
-                        container.innerHTML='<div style="padding:10px;background:var(--bg);border-radius:8px;font-size:13px;color:#64748b;">ℹ️ Produk tidak ditemukan di database terbuka.</div>';
+                        container.innerHTML=`<div class="product-result-card"><div class="product-image-container"><div class="product-image-placeholder"><i class="fas fa-box-open"></i><span style="font-size:12px;margin-top:8px;">Produk tidak ditemukan</span></div></div><div class="product-details"><div class="product-name">Produk tidak dikenal</div><div class="product-price-box"><span class="price-label">💰 Harga:</span><span class="price-value">Tidak tersedia</span><button class="btn btn-success btn-sm price-btn" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(t)}','_blank')"><i class="fas fa-search"></i> Cari</button></div></div></div>`;
                     }
                 }catch(err){
-                    container.innerHTML='<div style="padding:10px;background:var(--bg);border-radius:8px;font-size:13px;color:#64748b;">⚠️ Gagal memuat info produk (offline?).</div>';
+                    container.innerHTML=`<div class="product-result-card"><div class="product-image-container"><div class="product-image-placeholder"><i class="fas fa-wifi"></i><span style="font-size:12px;margin-top:8px;">Koneksi gagal</span></div></div><div class="product-details"><div class="product-name">Tidak dapat memuat produk</div></div></div>`;
                 }
             }
             let ac=`<button onclick="copyRes()" class="btn btn-dark" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-copy"></i> Salin Teks</button>`;
@@ -700,6 +707,12 @@
             ac+=`<button onclick="shareRes()" class="btn btn-outline" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-share-alt"></i> Bagikan Hasil</button>`;
             a.innerHTML=ac;a.style.display='flex';i.style.display='block';i.innerHTML=`<strong>📋 Format:</strong> ${f} | <strong>🕐 Waktu:</strong> ${new Date().toLocaleString('id-ID')}`;
         }
+
+        // Product image helpers
+        function hideImageLoading(){let overlay=document.getElementById('imageLoadingOverlay');if(overlay)overlay.style.display='none';}
+        function showImageFallback(img){img.style.display='none';let container=document.getElementById('productImageContainer');if(container)container.innerHTML='<div class="product-image-placeholder"><i class="fas fa-box-open"></i><span style="font-size:12px;margin-top:8px;">Gambar tidak tersedia</span></div>';}
+        function switchProductImage(thumbEl,url){document.querySelectorAll('.product-thumb').forEach(t=>t.classList.remove('active'));thumbEl.classList.add('active');let mainImg=document.getElementById('mainProductImage');if(mainImg){mainImg.src=url;mainImg.onclick=()=>openImageModal(url);}else{let container=document.getElementById('productImageContainer');container.innerHTML=`<img src="${url}" id="mainProductImage" onclick="openImageModal('${url}')" style="cursor:pointer;max-width:100%;max-height:100%;object-fit:contain;">`;}}
+
         function copyRes(){navigator.clipboard.writeText(scanRes).then(()=>toast('✅ Disalin!'))}
         function shareRes(){if(navigator.share)navigator.share({text:scanRes});else copyRes()}
 
