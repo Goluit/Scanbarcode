@@ -5,8 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 <title>Free Online Barcode Scanner — Professional & Trusted | ScanBarcode Pro</title>
-<meta name="description" content="ScanBarcode Pro — The #1 free online barcode and QR code scanner platform. Scan directly from live camera with blue laser. Complete with professional QR & Barcode Generator.">
-<meta name="keywords" content="barcode scanner, online barcode scanner, qr code scanner, free barcode reader, barcode scanner online, qr code generator, barcode generator">
+<meta name="description" content="ScanBarcode Pro is the #1 free online barcode and QR code scanner. Scan directly from your live camera with blue laser technology — fast, accurate, and 100% free. No app install required.">
+<meta name="keywords" content="barcode scanner, online barcode scanner, qr code scanner, free barcode reader, scan barcode online, live camera scanner">
 <meta name="theme-color" content="#2563eb">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico">
@@ -16,7 +16,7 @@
 <link rel="canonical" href="https://scanbarcode-pro.vercel.app/" />
 
 <meta property="og:title" content="Free Online Barcode Scanner — Professional & Trusted">
-<meta property="og:description" content="Free online barcode & QR code scanner with live camera + professional QR & Barcode Generator.">
+<meta property="og:description" content="Scan barcodes and QR codes instantly from your live camera. Fast, accurate, and 100% free — no installation required.">
 <meta property="og:url" content="https://scanbarcode-pro.vercel.app/">
 <meta property="og:type" content="website">
 
@@ -31,7 +31,7 @@
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 <style>
-    :root { --bg:#f0f4ff; --text:#1e293b; --card:#ffffff; --border:#dbeafe; --primary:#2563eb; --hover:#eff6ff; }
+    :root { --bg:#f0f4ff; --text:#1e293b; --card:#ffffff; --border:#dbeafe; --primary:#2563eb; --hover:#eff6ff; --green:#10b981; --green-dark:#059669; }
     .dark { --bg:#0a0f1e; --text:#e2e8f0; --card:#111827; --border:#1e3a5f; --hover:#1a2744; }
     * { margin:0; padding:0; box-sizing:border-box; }
     body { font-family:'Inter',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; transition:all 0.3s; line-height:1.8; display:flex; flex-direction:column; font-size:16px; }
@@ -90,12 +90,17 @@
     .result-box.success { background:linear-gradient(135deg,#f0f9ff,#e0f2fe); border-color:#3b82f6; border-style:solid; box-shadow:0 8px 30px rgba(59,130,246,0.15); }
     .dark .result-box.success { background:linear-gradient(135deg,#0f172a,#1e3a5f); }
     .product-info-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:12px; }
-    .product-info-item { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px; text-align:center; }
-    .product-info-label { font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700; }
-    .product-info-value { font-size:14px; font-weight:700; }
-    .product-images { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .product-image-thumb { width:70px; height:70px; object-fit:cover; border-radius:8px; cursor:pointer; border:2px solid transparent; }
-    .product-image-thumb:hover { border-color:#2563eb; }
+    .product-info-item { background:linear-gradient(135deg,#ecfdf5,#d1fae5); border:1.5px solid #10b981; border-radius:10px; padding:10px; text-align:center; box-shadow:0 2px 8px rgba(16,185,129,0.15); }
+    .dark .product-info-item { background:linear-gradient(135deg,#064e3b,#065f46); border-color:#10b981; }
+    .product-info-label { font-size:10px; color:#047857; text-transform:uppercase; font-weight:700; }
+    .dark .product-info-label { color:#6ee7b7; }
+    .product-info-value { font-size:14px; font-weight:700; color:#065f46; }
+    .dark .product-info-value { color:#d1fae5; }
+    .product-images { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; justify-content:center; }
+    .product-image-thumb { width:80px; height:80px; object-fit:cover; border-radius:8px; cursor:pointer; border:2px solid transparent; background:#fff; transition:all 0.25s; }
+    .product-image-thumb:hover { border-color:#10b981; transform:scale(1.05); }
+    .product-main-image { width:100%; max-height:220px; object-fit:contain; border-radius:12px; cursor:pointer; background:#fff; transition:transform 0.3s; padding:8px; }
+    .product-main-image:hover { transform:scale(1.02); }
     .product-description { margin-top:10px; background:var(--bg); padding:12px; border-radius:10px; font-size:13px; color:var(--text); }
     .product-price-row { display:flex; align-items:center; gap:10px; margin-top:10px; background:var(--bg); padding:10px; border-radius:10px; }
     .product-price-row strong { font-size:14px; }
@@ -112,22 +117,27 @@
     .toast { position:fixed; top:18px; right:18px; z-index:9999; padding:13px 22px; border-radius:12px; color:#fff; font-weight:600; box-shadow:0 10px 35px rgba(0,0,0,0.3); animation:toastIn 0.4s; font-size:14px; }
     @keyframes toastIn { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
     .hidden { display:none!important; }
-    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:99999; display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeInModal 0.3s; }
-    .modal-overlay img { max-width:90vw; max-height:90vh; border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
-    .modal-close { position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; color:#fff; font-size:24px; width:40px; height:40px; border-radius:50%; cursor:pointer; }
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:99999; display:flex; align-items:center; justify-content:center; padding:20px; animation:fadeInModal 0.3s; }
+    .modal-overlay img { max-width:92vw; max-height:90vh; border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,0.5); background:#fff; padding:10px; }
+    .modal-close { position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.2); border:none; color:#fff; font-size:24px; width:44px; height:44px; border-radius:50%; cursor:pointer; }
     @keyframes fadeInModal { from{opacity:0} to{opacity:1} }
     .faq-item { border-bottom:1px solid var(--border); }
     .faq-question { width:100%; text-align:left; padding:16px 0; background:none; border:none; cursor:pointer; font-size:16px; font-weight:600; color:var(--text); display:flex; justify-content:space-between; align-items:center; }
     .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; }
     .faq-answer.show { max-height:300px; padding-bottom:16px; }
     .faq-answer p { color:#64748b; font-size:14px; }
-    .feature-link-card { display:flex; align-items:center; gap:16px; padding:20px; background:var(--card); border:1px solid var(--border); border-radius:16px; text-decoration:none; color:var(--text); transition:all 0.3s; margin-top:20px; }
-    .feature-link-card:hover { transform:translateY(-3px); box-shadow:0 12px 34px rgba(37,99,235,0.15); border-color:#2563eb; }
-    .feature-link-icon { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; color:#fff; flex-shrink:0; }
-    .feature-link-text { flex:1; }
-    .feature-link-text h3 { font-weight:700; font-size:1.05rem; margin-bottom:4px; }
-    .feature-link-text p { font-size:13px; color:#64748b; line-height:1.6; }
-    .feature-link-arrow { font-size:20px; color:#2563eb; }
+    /* Green Highlight for Google Buttons */
+    .highlight-btn { background: #10b981 !important; color: #ffffff !important; border: none !important; box-shadow: 0 4px 14px rgba(16,185,129,0.4) !important; }
+    .highlight-btn:hover { background: #059669 !important; transform: translateY(-2px); }
+    /* Green highlighted product image box */
+    .product-image-container { width: 100%; max-height: 240px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,#ecfdf5,#d1fae5); padding: 12px; border-radius: 12px; margin-bottom: 12px; border: 1.5px solid #10b981; flex-direction: column; }
+    .dark .product-image-container { background: linear-gradient(135deg,#064e3b,#065f46); }
+    .product-card { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.08); margin-top: 16px; border: 1.5px solid #10b981; }
+    .product-details { padding: 16px; }
+    .product-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+    .product-short-desc { font-size: 13px; color: #64748b; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 12px; }
+    .barcode-number { font-family: monospace; font-weight: 700; background: #ffffff; color: #1e293b; padding: 8px 12px; border-radius: 8px; border: 2px solid #10b981; display: inline-block; margin-top: 8px; font-size: 14px; }
+    .dark .barcode-number { background: #1e293b; color: #ffffff; border-color: #10b981; }
     @media(max-width:768px){ .nav-links{display:none} .hamburger-btn{display:flex} .stats-grid{grid-template-columns:repeat(2,1fr)} .features-grid{grid-template-columns:1fr} .footer-grid{grid-template-columns:1fr} .scanner-content{grid-template-columns:1fr} .product-info-grid{grid-template-columns:1fr} .product-images { justify-content:center; } }
 </style>
 </head>
@@ -141,9 +151,7 @@
             <ul class="nav-links">
                 <li><a href="#" onclick="go('home')">Home</a></li>
                 <li><a href="#" onclick="go('scanner')">Scanner</a></li>
-                <li><a href="https://scanbarcode-pro.vercel.app/generator.html">Generator</a></li>
                 <li><a href="#" onclick="go('riwayat')">History</a></li>
-                <li><a href="https://scanbarcode-pro.vercel.app/blog.html">Blog</a></li>
                 <li><a href="#" onclick="go('tentang')">About</a></li>
                 <li><a href="#" onclick="go('kontak')">Contact</a></li>
             </ul>
@@ -155,9 +163,7 @@
         <div class="mobile-menu" id="mobileMenu">
             <a href="#" onclick="go('home')">🏠 Home</a>
             <a href="#" onclick="go('scanner')">📷 Scanner</a>
-            <a href="https://scanbarcode-pro.vercel.app/generator.html">🎨 Generator</a>
             <a href="#" onclick="go('riwayat')">📋 History</a>
-            <a href="https://scanbarcode-pro.vercel.app/blog.html">📚 Blog</a>
             <a href="#" onclick="go('tentang')">ℹ️ About</a>
             <a href="#" onclick="go('kontak')">📧 Contact</a>
         </div>
@@ -167,104 +173,103 @@
         <!-- HOME PAGE -->
         <div class="page active" id="page-home">
             <div class="hero">
-                <div style="display:inline-block; background:rgba(37,99,235,0.1); border-radius:30px; padding:8px 20px; font-size:13px; font-weight:600; color:#2563eb; margin-bottom:22px;">🔒 Free · No Installation Required</div>
+                <div style="display:inline-block; background:rgba(37,99,235,0.1); border-radius:30px; padding:8px 20px; font-size:13px; font-weight:600; color:#2563eb; margin-bottom:22px;">🔒 100% Free · No App Required</div>
                 <h1>Free Online Barcode Scanner<br>Professional &amp; Trusted</h1>
-                <p><strong>ScanBarcode Pro</strong> — The #1 free online barcode and QR code scanner platform. Scan directly from live camera with blue laser. Complete with professional QR & Barcode Generator.</p>
+                <p><strong>ScanBarcode Pro</strong> is the #1 free online barcode and QR code scanner trusted by millions. Scan directly from your live camera with real-time blue laser precision — no downloads, no sign-ups, no limits. Simply point, scan, and get instant results.</p>
                 <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
                     <button class="btn btn-primary" onclick="go('scanner')"><i class="fas fa-camera"></i> Scan Barcode Now</button>
-                    <a href="https://scanbarcode-pro.vercel.app/generator.html" class="btn btn-outline"><i class="fas fa-qrcode"></i> QR & Barcode Generator</a>
+                    <button class="btn btn-outline" onclick="go('tentang')"><i class="fas fa-info-circle"></i> Learn More</button>
                 </div>
             </div>
             <div style="background:var(--card); border-radius:16px; padding:22px; margin:30px 0;">
-                <h3 style="font-weight:700;font-size:16px;margin-bottom:10px">🔍 Popular Keywords</h3>
+                <h3 style="font-weight:700;font-size:16px;margin-bottom:10px">🔍 Popular Searches</h3>
                 <div style="display:flex;flex-wrap:wrap;gap:10px;">
                     <a href="#" style="padding:8px 18px; background:var(--hover); border-radius:22px; text-decoration:none; color:var(--text); font-size:14px;" onclick="go('scanner')">scan barcode</a>
                     <a href="#" style="padding:8px 18px; background:var(--hover); border-radius:22px; text-decoration:none; color:var(--text); font-size:14px;" onclick="go('scanner')">online barcode scanner</a>
-                    <a href="#" style="padding:8px 18px; background:var(--hover); border-radius:22px; text-decoration:none; color:var(--text); font-size:14px;" onclick="go('scanner')">scan qr code</a>
-                    <a href="https://scanbarcode-pro.vercel.app/generator.html" style="padding:8px 18px; background:var(--hover); border-radius:22px; text-decoration:none; color:var(--text); font-size:14px;">qr code generator</a>
+                    <a href="#" style="padding:8px 18px; background:var(--hover); border-radius:22px; text-decoration:none; color:var(--text); font-size:14px;" onclick="go('scanner')">scan QR code</a>
+                    <a href="#" style="padding:8px 18px; background:var(--hover); border-radius:22px; text-decoration:none; color:var(--text); font-size:14px;" onclick="go('scanner')">barcode reader</a>
                 </div>
             </div>
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-num" style="color:#2563eb">5M+</div><div class="stat-label">Total Scans</div></div>
-                <div class="stat-card"><div class="stat-num" style="color:#3b82f6">#1</div><div class="stat-label">In Indonesia</div></div>
+                <div class="stat-card"><div class="stat-num" style="color:#3b82f6">#1</div><div class="stat-label">Most Trusted</div></div>
                 <div class="stat-card"><div class="stat-num" style="color:#10b981">50+</div><div class="stat-label">Barcode Formats</div></div>
                 <div class="stat-card"><div class="stat-num" style="color:#f97316">4.9★</div><div class="stat-label">User Rating</div></div>
             </div>
             <div class="features-grid">
-                <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">⚡</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Super Fast</h3><p style="color:#64748b;font-size:14px">Results appear in milliseconds.</p></div>
-                <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">📷</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Live Camera</h3><p style="color:#64748b;font-size:14px">Blue laser with real-time scanning.</p></div>
-                <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">⚙️</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Generator Pro</h3><p style="color:#64748b;font-size:14px">QR & Barcode with full customization.</p></div>
+                <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">⚡</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Lightning Fast</h3><p style="color:#64748b;font-size:14px">Instant results in milliseconds with real-time detection.</p></div>
+                <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">📷</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">Live Camera Scan</h3><p style="color:#64748b;font-size:14px">Advanced blue laser overlay with auto-focus precision.</p></div>
+                <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">🎯</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">High Accuracy</h3><p style="color:#64748b;font-size:14px">Supports 50+ formats including EAN, UPC, QR, and DataMatrix.</p></div>
             </div>
 
-            <!-- External Feature Links -->
-            <a href="https://scanbarcode-pro.vercel.app/generator.html" class="feature-link-card">
-                <div class="feature-link-icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);"><i class="fas fa-qrcode"></i></div>
-                <div class="feature-link-text">
-                    <h3>QR & Barcode Generator Pro</h3>
-                    <p>Create professional QR codes & barcodes with logo, custom colors, and PNG/SVG download. 100% free.</p>
-                </div>
-                <i class="fas fa-arrow-right feature-link-arrow"></i>
-            </a>
-
-            <a href="https://scanbarcode-pro.vercel.app/blog.html" class="feature-link-card">
-                <div class="feature-link-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fas fa-newspaper"></i></div>
-                <div class="feature-link-text">
-                    <h3>Blog & Tutorials</h3>
-                    <p>Complete guides about barcodes, QR codes, retail, and inventory management for beginners.</p>
-                </div>
-                <i class="fas fa-arrow-right feature-link-arrow"></i>
-            </a>
-
-            <!-- Professional Content -->
+            <!-- =============================================
+                 PROFESSIONAL ENGLISH CONTENT SECTION
+                 ============================================= -->
             <div class="card" style="margin-top:25px;line-height:2;padding:32px">
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin-bottom:14px">What Is an Online Barcode Scanner?</h2>
-                <p>An online barcode scanner is a digital tool that allows you to read information from a barcode or QR code using your smartphone camera without installing any additional app. ScanBarcode Pro is the best free online barcode scanner in Indonesia, accessible directly from your favorite browser.</p>
-                <p>Barcode scanning technology has advanced rapidly. In the past, you needed an expensive and complex dedicated scanner. Now, with just a smartphone and an internet connection, you can scan any type of barcode with high accuracy. ScanBarcode Pro uses WebAssembly and ZXing technology to deliver the best scanning results.</p>
-                <p>Barcode scanning is very useful in daily life. From checking product prices at the supermarket, tracking package shipments from online stores, verifying the authenticity of branded goods, to reading QR codes on wedding invitations or digital restaurant menus. With the right barcode scanner, everything can be done in seconds.</p>
-                <p>ScanBarcode Pro is designed specifically for users with a simple and easy-to-use interface. No special technical knowledge is needed — just open the browser, allow camera access, and point at the barcode. Results appear automatically with complete information.</p>
+                <p>An <strong>online barcode scanner</strong> is a web-based tool that reads the information stored inside a barcode or QR code using your device's camera. Instead of installing a dedicated app or purchasing hardware, you simply open a browser, grant camera access, and start scanning. ScanBarcode Pro brings this entire experience to your fingertips — free, fast, and accessible from any device.</p>
+                <p>Modern barcode technology has evolved dramatically over the past decade. What once required an expensive, bulky scanning device can now be done instantly with the phone already in your pocket. Using cutting-edge <strong>WebAssembly</strong> and the industry-standard <strong>ZXing</strong> decoding engine, ScanBarcode Pro delivers accurate, real-time results without ever sending your data to a remote server.</p>
+                <p>Every day, people use barcode scanners to check product prices at supermarkets, track delivery packages from online stores, verify the authenticity of branded goods, pay via QRIS, and access digital restaurant menus or wedding invitations. With the right tool, all of this can be done in just a few seconds — no technical expertise required.</p>
+                <p>ScanBarcode Pro was built with a single goal in mind: <em>make barcode scanning effortless for everyone</em>. The interface is clean, intuitive, and works flawlessly on mobile phones, tablets, and desktop computers. Just open the browser, allow camera access, point at any barcode or QR code, and the <strong>result will appear automatically with complete information</strong> — including product name, brand, category, size, and images where available.</p>
 
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin:28px 0 14px">Why Choose ScanBarcode Pro</h2>
+                <p>Thousands of barcode scanners exist online, but ScanBarcode Pro stands out for its combination of speed, accuracy, and simplicity. Here is what makes it the preferred choice for professionals, businesses, and everyday users:</p>
                 <ul>
-                    <li><strong>100% Free:</strong> No fees, no limits.</li>
-                    <li><strong>No Install:</strong> Just a browser.</li>
-                    <li><strong>50+ Barcode Formats:</strong> EAN, UPC, QR Code, and more.</li>
-                    <li><strong>Live Camera:</strong> Blue laser real-time scanning.</li>
-                    <li><strong>QR & Barcode Generator:</strong> Full customization.</li>
-                    <li><strong>History:</strong> Export to CSV.</li>
+                    <li><strong>100% Free Forever:</strong> No subscription, no trial, no hidden fees. Every feature is available to everyone.</li>
+                    <li><strong>No Installation Required:</strong> Runs entirely in your browser — no app store downloads, no permissions headaches, no storage consumption.</li>
+                    <li><strong>Live Camera Scanning:</strong> Real-time detection with a precision blue laser overlay that ensures you scan right the first time.</li>
+                    <li><strong>50+ Supported Formats:</strong> From traditional EAN-13 and UPC-A to modern QR codes, DataMatrix, PDF417, Aztec, and GS1 DataBar.</li>
+                    <li><strong>Automatic Product Information:</strong> When you scan a product barcode, ScanBarcode Pro instantly retrieves the name, brand, category, size, and even product images from global open databases.</li>
+                    <li><strong>Privacy-First Architecture:</strong> All scanning happens locally on your device. Nothing is uploaded, stored, or shared — ever.</li>
+                    <li><strong>Scan History with Export:</strong> Every scan is automatically saved with timestamp and format, and can be exported to CSV for record-keeping.</li>
+                    <li><strong>Upload from Image:</strong> No camera available? Upload a photo of any barcode from your gallery and get results instantly.</li>
+                    <li><strong>Dark Mode Included:</strong> A carefully designed dark theme for comfortable scanning in low-light environments.</li>
+                    <li><strong>Works Everywhere:</strong> Fully responsive on Android, iOS, Windows, macOS, and Linux — on any modern browser.</li>
                 </ul>
 
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin:28px 0 14px">Supported Barcode Formats</h2>
-                <p>ScanBarcode Pro supports more than 50 different barcode formats. Here are the most commonly used:</p>
+                <p>ScanBarcode Pro recognizes more than <strong>50 barcode formats</strong>, making it one of the most versatile scanners available online. The most commonly used formats include:</p>
                 <ul>
-                    <li><strong>1D Barcodes (Linear):</strong> EAN-13, EAN-8, UPC-A, UPC-E, Code128, Code39, Code93, ITF-14, Codabar, MSI Plessey</li>
+                    <li><strong>1D Barcodes (Linear):</strong> EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, Code 93, ITF-14, Codabar, MSI Plessey</li>
                     <li><strong>2D Barcodes (Matrix):</strong> QR Code, DataMatrix, PDF417, Aztec Code, MaxiCode, DotCode</li>
-                    <li><strong>Special Formats:</strong> WiFi QR Code, vCard (Contact), ISBN (Book), ISSN (Publication), GS1 DataBar</li>
+                    <li><strong>Specialized Formats:</strong> WiFi QR Code, vCard (Contact Card), ISBN (Books), ISSN (Publications), GS1 DataBar</li>
                 </ul>
-                <p>Each format has different characteristics and uses. EAN-13 is used for international retail products, Code128 for logistics and shipping, QR Code for various digital purposes, and DataMatrix for industrial applications.</p>
+                <p>Each format serves a different purpose. <strong>EAN-13</strong> is the global standard for retail products, <strong>Code 128</strong> dominates logistics and shipping, <strong>QR Code</strong> powers digital payment and information sharing, and <strong>DataMatrix</strong> is widely used in industrial and pharmaceutical applications. Whatever you need to scan, ScanBarcode Pro has you covered.</p>
+
+                <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin:28px 0 14px">How to Use ScanBarcode Pro</h2>
+                <p>Getting started takes less than 10 seconds. Follow these simple steps:</p>
+                <ol style="padding-left:20px;">
+                    <li><strong>Open the Scanner:</strong> Click the "Scanner" menu or tap the "Scan Barcode Now" button.</li>
+                    <li><strong>Start the Camera:</strong> Press "Start Camera" and allow browser access to your camera when prompted.</li>
+                    <li><strong>Point at the Code:</strong> Align any barcode or QR code within the scanning frame.</li>
+                    <li><strong>Get Instant Results:</strong> The result appears automatically with complete information — no button press needed.</li>
+                    <li><strong>Take Action:</strong> Copy the text, open the link, search the product on Google, or share the result with anyone.</li>
+                </ol>
+                <p>For best results, ensure proper lighting and hold your device steady about 15–30 cm from the code. Use the flashlight button (💡) in dark environments, or switch between front and rear cameras (🔄) as needed.</p>
             </div>
 
             <!-- FAQ -->
             <div class="card" style="margin-top:25px;padding:28px">
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin-bottom:14px">❓ Frequently Asked Questions</h2>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">Is ScanBarcode Pro really free? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer"><p>Yes, 100% free with no limits and no hidden fees.</p></div>
+                    <button class="faq-question" onclick="toggleFAQ(this)">Is ScanBarcode Pro really free to use? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>Yes — 100% free, forever. There are no subscriptions, no premium tiers, no watermarks, and no scan limits. Every feature is available to every user without registration.</p></div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">Do I need to install an app? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer"><p>No, just open your browser and use it directly. No download or installation required.</p></div>
+                    <button class="faq-question" onclick="toggleFAQ(this)">Do I need to install an app or extension? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>No installation is required. ScanBarcode Pro runs entirely inside your web browser. Just visit the site, allow camera access, and start scanning right away.</p></div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">What formats are supported? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer"><p>50+ formats including EAN, UPC, QR Code, DataMatrix, WiFi, vCard, ISBN, and many more.</p></div>
+                    <button class="faq-question" onclick="toggleFAQ(this)">Which barcode and QR code formats are supported? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>ScanBarcode Pro supports over 50 formats, including EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, Code 93, ITF-14, Codabar, QR Code, DataMatrix, PDF417, Aztec Code, WiFi QR, vCard, and ISBN.</p></div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">Can I scan from an image? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer"><p>Yes, use the "Upload Image" button to scan a barcode from a picture file.</p></div>
+                    <button class="faq-question" onclick="toggleFAQ(this)">Can I scan a barcode from a saved image? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>Absolutely. Simply click the "Upload Image" button, select a photo of the barcode from your gallery or file system, and the result will appear automatically within seconds.</p></div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">Is my data safe? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer"><p>All processing happens on your device. Data is not sent to any server.</p></div>
+                    <button class="faq-question" onclick="toggleFAQ(this)">Is my scanning data safe and private? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><p>Yes. Every scan is processed locally on your device using client-side technology. No scan content, image, or personal data is ever uploaded to any server. Your privacy is fully protected.</p></div>
                 </div>
             </div>
         </div>
@@ -318,9 +323,9 @@
         <div class="page" id="page-tentang">
             <div class="card" style="max-width:880px;margin:0 auto;line-height:2">
                 <h1 style="font-weight:800;font-size:1.8rem;margin-bottom:18px">ℹ️ About ScanBarcode Pro</h1>
-                <p>ScanBarcode Pro was founded in 2023 as the #1 free online barcode scanner in Indonesia. With 5M+ scans, 50+ supported formats, and a 4.9-star rating from users, ScanBarcode Pro is committed to providing the best service for everyone.</p>
-                <p>Our mission is to provide a fast, accurate, and easy-to-use barcode and QR code scanning tool that anyone can use, anytime, anywhere — without installing any additional app.</p>
-                <p>All scanning is performed locally in your browser. We do not collect, store, or send any scan data to any server, ensuring 100% privacy.</p>
+                <p>ScanBarcode Pro was founded in 2023 as the #1 free online barcode scanner trusted by millions of users worldwide. With over 5 million scans completed, more than 50 supported barcode formats, and a 4.9-star average rating, we are committed to delivering the fastest and most reliable scanning experience on the web.</p>
+                <p>Our mission is simple: provide a fast, accurate, and easy-to-use barcode and QR code scanning tool that anyone can access — anytime, anywhere, on any device — without installing additional software.</p>
+                <p>All scanning is performed locally in your browser using modern WebAssembly technology. We do not collect, store, or transmit any scan content, image, or personal data to any server. Your privacy is 100% protected by design.</p>
             </div>
         </div>
 
@@ -328,9 +333,9 @@
         <div class="page" id="page-kontak">
             <div class="card" style="max-width:880px;margin:0 auto;line-height:2">
                 <h1 style="font-weight:800;font-size:1.8rem;margin-bottom:18px">📧 Contact ScanBarcode Pro</h1>
-                <p>Have a question, feedback, or want to collaborate with us? Reach out to the ScanBarcode Pro team:</p>
+                <p>Have a question, feedback, or partnership inquiry? We'd love to hear from you. Reach out to the ScanBarcode Pro team:</p>
                 <p style="margin-top:12px"><strong>Email:</strong> <a href="mailto:halo@scanbarcodepro.id" style="color:#2563eb;font-weight:600;">halo@scanbarcodepro.id</a></p>
-                <p><strong>Operating Hours:</strong> Monday – Friday, 09:00 – 17:00 WIB</p>
+                <p><strong>Operating Hours:</strong> Monday – Friday, 09:00 – 17:00 (GMT+7)</p>
                 <p>We aim to respond to every inquiry within 24 business hours.</p>
             </div>
         </div>
@@ -340,15 +345,14 @@
         <div class="footer-grid">
             <div>
                 <h4>📷 ScanBarcode Pro</h4>
-                <p>The best free online barcode scanner. Scan QR & barcodes from live camera, plus professional QR & barcode generator.</p>
-                <div class="footer-tags"><span class="footer-tag">barcode scanner</span><span class="footer-tag">qr code scanner</span><span class="footer-tag">free scanner</span><span class="footer-tag">qr generator</span><span class="footer-tag">barcode generator</span></div>
+                <p>The most trusted free online barcode scanner. Scan QR codes and barcodes instantly from your live camera — fast, accurate, and private.</p>
+                <div class="footer-tags"><span class="footer-tag">barcode scanner</span><span class="footer-tag">qr code scanner</span><span class="footer-tag">free scanner</span><span class="footer-tag">barcode reader</span></div>
             </div>
             <div>
                 <h4>📋 Menu</h4>
                 <ul>
                     <li><a href="#" onclick="go('scanner')">📷 Scanner</a></li>
-                    <li><a href="https://scanbarcode-pro.vercel.app/generator.html">🎨 Generator</a></li>
-                    <li><a href="https://scanbarcode-pro.vercel.app/blog.html">📝 Blog</a></li>
+                    <li><a href="#" onclick="go('riwayat')">📋 History</a></li>
                 </ul>
             </div>
             <div>
@@ -465,7 +469,7 @@
             let type = /^https?:\/\//i.test(t)?'url':/^WIFI:/i.test(t)?'wifi':/^tel:/i.test(t)?'phone':/^mailto:/i.test(t)?'email':/^\d{8,14}$/.test(t)?'product':'text';
             let ic={url:'🔗',wifi:'📶',phone:'📞',email:'✉️',product:'📦',text:'📝'},lb={url:'Link',wifi:'WiFi',phone:'Phone',email:'Email',product:'Product Barcode',text:'Text'};
             d.className='result-box success';
-            d.innerHTML=`<div style="text-align:center;width:100%">${scanTypeBadge}<div style="font-size:2.5rem;margin:10px 0;">${ic[type]}</div><div style="font-size:13px;font-weight:700;color:#2563eb;margin:6px 0">${lb[type]}</div><div style="font-family:monospace;font-weight:600;word-break:break-all;background:#fff;color:#1e293b;padding:12px;border-radius:8px;font-size:14px;border:2px solid #3b82f6" class="barcode-number">${t}</div><div style="margin-top:10px;color:#64748b;font-size:12px;">Format: ${f}</div></div>`;
+            d.innerHTML=`<div style="text-align:center;width:100%">${scanTypeBadge}<div style="font-size:2.5rem;margin:10px 0;">${ic[type]}</div><div style="font-size:13px;font-weight:700;color:#10b981;margin:6px 0">${lb[type]}</div><div style="font-family:monospace;font-weight:600;word-break:break-all;background:#fff;color:#1e293b;padding:12px;border-radius:8px;font-size:14px;border:2px solid #10b981" class="barcode-number">${t}</div><div style="margin-top:10px;color:#64748b;font-size:12px;">Format: ${f}</div></div>`;
             pi.innerHTML='';pi.style.display='none';
             if(type==='product' && /^\d{12,13}$/.test(t)){
                 let country='-',manufacturer='-',product='-';
@@ -479,7 +483,7 @@
                 </div>`;
                 let container=document.createElement('div');
                 container.style.cssText='margin-top:10px;';
-                container.innerHTML='<div class="spinner" style="width:30px;height:30px;border-width:3px;"></div><p style="font-size:12px;color:#64748b;">Looking up product info...</p>';
+                container.innerHTML='<div class="spinner" style="width:30px;height:30px;border-width:3px;border-top-color:#10b981;"></div><p style="font-size:12px;color:#64748b;">Looking up product info...</p>';
                 pi.appendChild(container);
                 try{
                     const response=await fetch(`https://world.openfoodfacts.org/api/v0/product/${t}.json`);
@@ -495,41 +499,47 @@
                         let categories=p.categories||'';
                         let quantity=p.quantity||'';
                         let description = p.generic_name || p.ingredients_text || '';
-                        description = description.length>120 ? description.substring(0,120)+'...' : description;
-                        let imgHtml='';
-                        if(imgUrls.length>0){
-                            let thumbs=imgUrls.map((url,idx)=>`<img src="${url}" class="product-image-thumb" onclick="openImageModal('${url}')" onerror="this.style.display='none'">`).join('');
-                            imgHtml=`<div class="product-images">${thumbs}</div>`;
-                        } else {
-                            imgHtml='<div style="font-size:30px;margin:10px;">📦</div>';
+                        description = description.length>140 ? description.substring(0,140)+'...' : description;
+
+                        let mainImg = imgUrls.length > 0
+                            ? `<img src="${imgUrls[0]}" class="product-main-image" alt="${name}" onclick="openImageModal('${imgUrls[0]}')" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E📦%3C/text%3E%3C/svg%3E'">`
+                            : '<div style="font-size:60px;text-align:center;padding:20px;">📦</div>';
+
+                        let thumbsHtml = '';
+                        if(imgUrls.length > 1){
+                            thumbsHtml = '<div class="product-images">' +
+                                imgUrls.slice(1).map(url => `<img src="${url}" class="product-image-thumb" onclick="openImageModal('${url}')" onerror="this.style.display='none'">`).join('') +
+                                '</div>';
                         }
+
                         container.innerHTML=`
-                            <div class="product-card" style="background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,0.08);margin-top:16px;">
-                                <div class="product-image-container" style="width:100%;max-height:200px;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:12px;">
-                                    ${imgHtml}
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    ${mainImg}
+                                    ${thumbsHtml}
                                 </div>
-                                <div class="product-details" style="padding:16px;">
-                                    <div class="product-name" style="font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--text);">${name}</div>
-                                    <div class="product-short-desc" style="font-size:13px;color:#64748b;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px;">${description || 'No description available.'}</div>
+                                <div class="product-details">
+                                    <div class="product-name">${name}</div>
+                                    <div class="product-short-desc">${description || 'No description available.'}</div>
                                     <div><strong>Brand:</strong> ${brand}</div>
                                     ${categories?`<div><strong>Category:</strong> ${categories}</div>`:''}
                                     ${quantity?`<div><strong>Size:</strong> ${quantity}</div>`:''}
-                                    <div class="barcode-number" style="font-family:monospace;font-weight:700;background:#ffffff;color:#1e293b;padding:8px 12px;border-radius:8px;border:2px solid #3b82f6;display:inline-block;margin-top:8px;font-size:14px;">${t}</div>
+                                    <div class="barcode-number">${t}</div>
                                 </div>
                             </div>
                         `;
                     }else{
-                        container.innerHTML='<div style="padding:10px;background:var(--bg);border-radius:8px;font-size:13px;color:#64748b;">ℹ️ Product not found in the open database.</div>';
+                        container.innerHTML='<div style="padding:12px;background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-radius:10px;font-size:13px;color:#065f46;border:1.5px solid #10b981;">ℹ️ Product not found in the open database.</div>';
                     }
                 }catch(err){
-                    container.innerHTML='<div style="padding:10px;background:var(--bg);border-radius:8px;font-size:13px;color:#64748b;">⚠️ Failed to load product info (offline?).</div>';
+                    container.innerHTML='<div style="padding:12px;background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-radius:10px;font-size:13px;color:#065f46;border:1.5px solid #10b981;">⚠️ Failed to load product info (offline?).</div>';
                 }
             }
             let ac=`<button onclick="copyRes()" class="btn btn-dark" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-copy"></i> Copy Text</button>`;
             if(type==='url')ac+=`<button onclick="window.open('${t}','_blank')" class="btn btn-success" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-external-link-alt"></i> Open Website</button>`;
             if(type==='product'){
-                ac+=`<button onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(t)}+product+info','_blank')" class="btn btn-outline" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-info-circle"></i> Product Info on Google</button>`;
-                ac+=`<button onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(t)}','_blank')" class="btn btn-outline" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-search"></i> Search on Google</button>`;
+                ac+=`<button onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(t)}+product+info','_blank')" class="btn btn-outline highlight-btn" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-info-circle"></i> Product Info on Google</button>`;
+                ac+=`<button onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(t)}','_blank')" class="btn btn-outline highlight-btn" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-search"></i> Search on Google</button>`;
             }
             ac+=`<button onclick="shareRes()" class="btn btn-outline" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-share-alt"></i> Share Result</button>`;
             a.innerHTML=ac;a.style.display='flex';i.style.display='block';i.innerHTML=`<strong>📋 Format:</strong> ${f} | <strong>🕐 Time:</strong> ${new Date().toLocaleString('en-US')}`;
