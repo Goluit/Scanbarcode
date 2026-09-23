@@ -90,15 +90,12 @@
     .result-box.success { background:linear-gradient(135deg,#f0f9ff,#e0f2fe); border-color:#3b82f6; border-style:solid; box-shadow:0 8px 30px rgba(59,130,246,0.15); }
     .dark .result-box.success { background:linear-gradient(135deg,#0f172a,#1e3a5f); }
     .product-info-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:12px; }
-    .product-info-item { background:linear-gradient(135deg,#ecfdf5,#d1fae5); border:1.5px solid #10b981; border-radius:10px; padding:10px; text-align:center; box-shadow:0 2px 8px rgba(16,185,129,0.15); }
-    .dark .product-info-item { background:linear-gradient(135deg,#064e3b,#065f46); border-color:#10b981; }
-    .product-info-label { font-size:10px; color:#047857; text-transform:uppercase; font-weight:700; }
-    .dark .product-info-label { color:#6ee7b7; }
-    .product-info-value { font-size:14px; font-weight:700; color:#065f46; }
-    .dark .product-info-value { color:#d1fae5; }
+    .product-info-item { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:10px; text-align:center; }
+    .product-info-label { font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700; }
+    .product-info-value { font-size:14px; font-weight:700; }
     .product-images { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; justify-content:center; }
     .product-image-thumb { width:80px; height:80px; object-fit:cover; border-radius:8px; cursor:pointer; border:2px solid transparent; background:#fff; transition:all 0.25s; }
-    .product-image-thumb:hover { border-color:#10b981; transform:scale(1.05); }
+    .product-image-thumb:hover { border-color:#2563eb; transform:scale(1.05); }
     .product-main-image { width:100%; max-height:220px; object-fit:contain; border-radius:12px; cursor:pointer; background:#fff; transition:transform 0.3s; padding:8px; }
     .product-main-image:hover { transform:scale(1.02); }
     .product-description { margin-top:10px; background:var(--bg); padding:12px; border-radius:10px; font-size:13px; color:var(--text); }
@@ -126,18 +123,21 @@
     .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; }
     .faq-answer.show { max-height:300px; padding-bottom:16px; }
     .faq-answer p { color:#64748b; font-size:14px; }
-    /* Green Highlight for Google Buttons */
+    /* ONLY Google buttons highlighted green */
     .highlight-btn { background: #10b981 !important; color: #ffffff !important; border: none !important; box-shadow: 0 4px 14px rgba(16,185,129,0.4) !important; }
     .highlight-btn:hover { background: #059669 !important; transform: translateY(-2px); }
-    /* Green highlighted product image box */
-    .product-image-container { width: 100%; max-height: 240px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,#ecfdf5,#d1fae5); padding: 12px; border-radius: 12px; margin-bottom: 12px; border: 1.5px solid #10b981; flex-direction: column; }
-    .dark .product-image-container { background: linear-gradient(135deg,#064e3b,#065f46); }
-    .product-card { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.08); margin-top: 16px; border: 1.5px solid #10b981; }
+    /* Product image container (neutral) */
+    .product-image-container { width: 100%; max-height: 240px; display: flex; align-items: center; justify-content: center; background: var(--bg); padding: 12px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border); flex-direction: column; }
+    .dark .product-image-container { background: var(--hover); }
+    .product-card { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.08); margin-top: 16px; border: 1px solid var(--border); }
     .product-details { padding: 16px; }
     .product-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
     .product-short-desc { font-size: 13px; color: #64748b; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 12px; }
-    .barcode-number { font-family: monospace; font-weight: 700; background: #ffffff; color: #1e293b; padding: 8px 12px; border-radius: 8px; border: 2px solid #10b981; display: inline-block; margin-top: 8px; font-size: 14px; }
-    .dark .barcode-number { background: #1e293b; color: #ffffff; border-color: #10b981; }
+    .barcode-number { font-family: monospace; font-weight: 700; background: #ffffff; color: #1e293b; padding: 8px 12px; border-radius: 8px; border: 2px solid #3b82f6; display: inline-block; margin-top: 8px; font-size: 14px; }
+    .dark .barcode-number { background: #1e293b; color: #ffffff; border-color: #60a5fa; }
+    /* Smooth scroll focus animation for result */
+    @keyframes pulseHighlight { 0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.6); } 70% { box-shadow: 0 0 0 16px rgba(16,185,129,0); } 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
+    .pulse-focus { animation: pulseHighlight 1.4s ease-out; }
     @media(max-width:768px){ .nav-links{display:none} .hamburger-btn{display:flex} .stats-grid{grid-template-columns:repeat(2,1fr)} .features-grid{grid-template-columns:1fr} .footer-grid{grid-template-columns:1fr} .scanner-content{grid-template-columns:1fr} .product-info-grid{grid-template-columns:1fr} .product-images { justify-content:center; } }
 </style>
 </head>
@@ -202,7 +202,6 @@
                 <div class="card" style="text-align:center;padding:24px"><div style="font-size:2.8rem;margin-bottom:12px">🎯</div><h3 style="font-weight:700;font-size:1.05rem;margin-bottom:6px">High Accuracy</h3><p style="color:#64748b;font-size:14px">50+ formats supported with industry-leading precision.</p></div>
             </div>
 
-            <!-- Professional Content: What is Barcode Scanner -->
             <div class="card" style="margin-top:25px;line-height:2;padding:32px">
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin-bottom:14px">What Is an Online Barcode Scanner?</h2>
                 <p>An <strong>online barcode scanner</strong> is a web-based tool that instantly reads and decodes information from barcodes and QR codes using your device's camera — no app download, no registration, and no complicated setup required. Simply open your browser, allow camera access, and point at any barcode or QR code. <strong>The result appears automatically with complete information.</strong></p>
@@ -245,7 +244,6 @@
                 <p>For best results, ensure proper lighting and hold the camera steady. Use the torch button 💡 for low-light conditions and switch between front and rear cameras with the 🔄 button.</p>
             </div>
 
-            <!-- FAQ -->
             <div class="card" style="margin-top:25px;padding:28px">
                 <h2 style="font-weight:800;color:#2563eb;font-size:1.5rem;margin-bottom:14px">❓ Frequently Asked Questions</h2>
                 <div class="faq-item">
@@ -293,7 +291,7 @@
                             <span id="scanStatus" style="font-size:12px;padding:5px 10px;border-radius:20px;background:var(--bg);border:1.5px solid var(--border)">⚪ Camera Off</span>
                         </div>
                     </div>
-                    <div class="card" style="padding:22px">
+                    <div class="card" id="resultCard" style="padding:22px">
                         <h3 style="font-weight:700;margin-bottom:14px;font-size:1.1rem"><i class="fas fa-clipboard-check"></i> Scan Result</h3>
                         <div id="resultDisplay" class="result-box"><div style="font-size:2.5rem;margin-bottom:8px">📷</div><p>Point your camera at a barcode</p></div>
                         <div id="productInfoSection" style="display:none"></div>
@@ -419,6 +417,22 @@
             document.getElementById('imageModal').classList.add('hidden');
         }
 
+        // ===== AUTO SCROLL TO RESULT =====
+        function scrollToResult() {
+            setTimeout(() => {
+                const card = document.getElementById('resultCard');
+                if (card) {
+                    const rect = card.getBoundingClientRect();
+                    const offset = window.scrollY + rect.top - 90;
+                    window.scrollTo({ top: offset, behavior: 'smooth' });
+                    card.classList.remove('pulse-focus');
+                    void card.offsetWidth;
+                    card.classList.add('pulse-focus');
+                    setTimeout(() => card.classList.remove('pulse-focus'), 1600);
+                }
+            }, 250);
+        }
+
         const GS1_COUNTRIES = {'899':'Indonesia','888':'Singapore','955':'Malaysia','885':'Thailand','893':'Vietnam','890':'India','690':'China','691':'China','692':'China','693':'China','694':'China','695':'China','500':'United Kingdom','501':'United Kingdom','502':'United Kingdom','503':'United Kingdom','504':'United Kingdom','400':'Germany','401':'Germany','402':'Germany','403':'Germany','450':'Japan','490':'Japan','000':'United States','300':'France','471':'Taiwan','480':'Philippines','520':'Greece','760':'Switzerland'};
 
         // Scanner logic
@@ -435,7 +449,7 @@
                 let bc=cams.find(c=>{let l=c.label.toLowerCase();return l.includes('back')||l.includes('environment')||l.includes('rear')});
                 curCam=bc||cams[0];
                 await scanner.start(curCam.id,{fps:15,qrbox:{width:280,height:280},aspectRatio:1.0},
-                    (t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner();toast('✅ Detected!')},()=>{});
+                    (t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner();toast('✅ Detected!');scrollToResult();},()=>{});
                 scanning=!0;tb.classList.remove('hidden');rb.classList.remove('hidden');if(cams.length>1)wb.classList.remove('hidden');
                 st.innerHTML='<span style="color:#10b981">●</span> Scanning...';
                 laser.style.display='block';
@@ -454,8 +468,8 @@
             document.getElementById('camPlaceholder').style.display='flex';
         }
         async function toggleTorch(){if(!scanner||!scanning)return;try{let t=scanner.getRunningTrack?scanner.getRunningTrack():null;if(!t){let v=document.querySelector('#reader video');if(v?.srcObject)t=v.srcObject.getVideoTracks()[0]}if(t&&t.getCapabilities?.()?.torch){torchOn=!torchOn;await t.applyConstraints({advanced:[{torch:torchOn}]});document.getElementById('btnTorch').classList.toggle('torch-on',torchOn)}}catch(e){}}
-        async function switchCamera(){if(!scanner||!scanning||cams.length<2)return;try{await scanner.stop();let i=cams.findIndex(c=>c.id===curCam.id);curCam=cams[(i+1)%cams.length];await scanner.start(curCam.id,{fps:15,qrbox:{width:280,height:280},aspectRatio:1.0},(t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner()},()=>{});document.getElementById('scanLaser').style.display='block'}catch(e){}}
-        function scanImageFile(input){if(!input.files||!input.files[0])return;let t=new Html5Qrcode("reader");t.scanFile(input.files[0],!0).then(x=>{scanRes=x;if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(x,'File Image');saveHist(x,'File Image');t.clear();toast('✅ Detected!')}).catch(()=>{toast('No barcode found','error');t.clear()});input.value=''}
+        async function switchCamera(){if(!scanner||!scanning||cams.length<2)return;try{await scanner.stop();let i=cams.findIndex(c=>c.id===curCam.id);curCam=cams[(i+1)%cams.length];await scanner.start(curCam.id,{fps:15,qrbox:{width:280,height:280},aspectRatio:1.0},(t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner();scrollToResult();},()=>{});document.getElementById('scanLaser').style.display='block'}catch(e){}}
+        function scanImageFile(input){if(!input.files||!input.files[0])return;let t=new Html5Qrcode("reader");t.scanFile(input.files[0],!0).then(x=>{scanRes=x;if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(x,'File Image');saveHist(x,'File Image');t.clear();toast('✅ Detected!');scrollToResult();}).catch(()=>{toast('No barcode found','error');t.clear()});input.value=''}
 
         async function showResult(t,f){
             let d=document.getElementById('resultDisplay'),a=document.getElementById('resultActions'),i=document.getElementById('resultInfo'),pi=document.getElementById('productInfoSection');
@@ -464,7 +478,7 @@
             let type = /^https?:\/\//i.test(t)?'url':/^WIFI:/i.test(t)?'wifi':/^tel:/i.test(t)?'phone':/^mailto:/i.test(t)?'email':/^\d{8,14}$/.test(t)?'product':'text';
             let ic={url:'🔗',wifi:'📶',phone:'📞',email:'✉️',product:'📦',text:'📝'},lb={url:'Link',wifi:'WiFi',phone:'Phone',email:'Email',product:'Product Barcode',text:'Text'};
             d.className='result-box success';
-            d.innerHTML=`<div style="text-align:center;width:100%">${scanTypeBadge}<div style="font-size:2.5rem;margin:10px 0;">${ic[type]}</div><div style="font-size:13px;font-weight:700;color:#10b981;margin:6px 0">${lb[type]}</div><div style="font-family:monospace;font-weight:600;word-break:break-all;background:#fff;color:#1e293b;padding:12px;border-radius:8px;font-size:14px;border:2px solid #10b981" class="barcode-number">${t}</div><div style="margin-top:10px;color:#64748b;font-size:12px;">Format: ${f}</div></div>`;
+            d.innerHTML=`<div style="text-align:center;width:100%">${scanTypeBadge}<div style="font-size:2.5rem;margin:10px 0;">${ic[type]}</div><div style="font-size:13px;font-weight:700;color:#2563eb;margin:6px 0">${lb[type]}</div><div style="font-family:monospace;font-weight:600;word-break:break-all;background:#fff;color:#1e293b;padding:12px;border-radius:8px;font-size:14px;border:2px solid #3b82f6" class="barcode-number">${t}</div><div style="margin-top:10px;color:#64748b;font-size:12px;">Format: ${f}</div></div>`;
             pi.innerHTML='';pi.style.display='none';
             if(type==='product' && /^\d{12,13}$/.test(t)){
                 let country='-',manufacturer='-',product='-';
@@ -478,7 +492,7 @@
                 </div>`;
                 let container=document.createElement('div');
                 container.style.cssText='margin-top:10px;';
-                container.innerHTML='<div class="spinner" style="width:30px;height:30px;border-width:3px;border-top-color:#10b981;"></div><p style="font-size:12px;color:#64748b;">Looking up product info...</p>';
+                container.innerHTML='<div class="spinner" style="width:30px;height:30px;border-width:3px;border-top-color:#2563eb;margin:16px auto;"></div><p style="font-size:12px;color:#64748b;text-align:center;">Looking up product info...</p>';
                 pi.appendChild(container);
                 try{
                     const response=await fetch(`https://world.openfoodfacts.org/api/v0/product/${t}.json`);
@@ -524,10 +538,10 @@
                             </div>
                         `;
                     }else{
-                        container.innerHTML='<div style="padding:12px;background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-radius:10px;font-size:13px;color:#065f46;border:1.5px solid #10b981;">ℹ️ Product not found in the open database.</div>';
+                        container.innerHTML='<div style="padding:12px;background:var(--bg);border-radius:10px;font-size:13px;color:#64748b;border:1px solid var(--border);">ℹ️ Product not found in the open database.</div>';
                     }
                 }catch(err){
-                    container.innerHTML='<div style="padding:12px;background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-radius:10px;font-size:13px;color:#065f46;border:1.5px solid #10b981;">⚠️ Failed to load product info (offline?).</div>';
+                    container.innerHTML='<div style="padding:12px;background:var(--bg);border-radius:10px;font-size:13px;color:#64748b;border:1px solid var(--border);">⚠️ Failed to load product info (offline?).</div>';
                 }
             }
             let ac=`<button onclick="copyRes()" class="btn btn-dark" style="padding:9px;width:100%;font-size:13px"><i class="fas fa-copy"></i> Copy Text</button>`;
