@@ -6,8 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 <title>Pemindai Barcode Online Gratis — Profesional & Terpercaya | ScanBarcode Pro</title>
 <meta name="description" content="ScanBarcode Pro — Platform pemindai barcode dan QR code online gratis #1 di Indonesia. Scan langsung dari kamera live dengan laser biru. Cepat, akurat, dan 100% gratis.">
-<meta name="keywords" content="pemindai barcode, scan barcode online, pemindai qr code, barcode scanner gratis, scan barcode online">
+<meta name="keywords" content="pemindai barcode, scan barcode online, pemindai qr code, barcode scanner gratis, scan barcode online, barcode reader">
 <meta name="theme-color" content="#2563eb">
+<meta name="robots" content="index, follow">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -467,7 +468,7 @@
 
         const GS1_COUNTRIES = {'899':'Indonesia','888':'Singapura','955':'Malaysia','885':'Thailand','893':'Vietnam','890':'India','690':'Tiongkok','691':'Tiongkok','692':'Tiongkok','693':'Tiongkok','694':'Tiongkok','695':'Tiongkok','500':'Inggris','501':'Inggris','502':'Inggris','503':'Inggris','504':'Inggris','400':'Jerman','401':'Jerman','402':'Jerman','403':'Jerman','450':'Jepang','490':'Jepang','000':'Amerika Serikat','300':'Prancis','471':'Taiwan','480':'Filipina','520':'Yunani','760':'Swiss'};
 
-        // ===== SCANNER (FAST CONFIG) =====
+        // ===== SCANNER (STANDARD CONFIG) =====
         let scanner=null,scanRes='',scanning=!1,torchOn=!1,curCam=null,cams=[];
         async function startScanner(){
             let sb=document.getElementById('btnStart'),tb=document.getElementById('btnStop'),rb=document.getElementById('btnTorch'),wb=document.getElementById('btnSwitch'),st=document.getElementById('scanStatus'),laser=document.getElementById('scanLaser'),ph=document.getElementById('camPlaceholder');
@@ -475,24 +476,12 @@
             st.innerHTML='<span style="color:#f59e0b">●</span> Membuka kamera...';
             if(scanner){try{if(scanning)await scanner.stop();scanner.clear()}catch(e){}scanner=null}
             try{
-                scanner=new Html5Qrcode("reader",{ verbose:false, useBarCodeDetectorIfSupported: true });
+                scanner=new Html5Qrcode("reader");
                 cams=await Html5Qrcode.getCameras();
                 if(!cams||cams.length===0){st.innerHTML='<span style="color:#ef4444">✕</span> Kamera tidak ditemukan';sb.classList.remove('hidden');ph.style.display='flex';toast('Kamera tidak ditemukan','error');return}
                 let bc=cams.find(c=>{let l=c.label.toLowerCase();return l.includes('back')||l.includes('environment')||l.includes('belakang')});
                 curCam=bc||cams[0];
-                // FAST SCAN CONFIG
-                const config = {
-                    fps: 25,
-                    qrbox: function(viewfinderWidth, viewfinderHeight){
-                        const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
-                        const qrboxSize = Math.floor(minEdge * 0.75);
-                        return { width: qrboxSize, height: qrboxSize };
-                    },
-                    aspectRatio: 1.0,
-                    disableFlip: false,
-                    experimentalFeatures: { useBarCodeDetectorIfSupported: true }
-                };
-                await scanner.start(curCam.id, config,
+                await scanner.start(curCam.id,{fps:15,qrbox:{width:280,height:280},aspectRatio:1.0},
                     (t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner();toast('✅ Terdeteksi!');scrollToResult();},()=>{});
                 scanning=!0;tb.classList.remove('hidden');rb.classList.remove('hidden');if(cams.length>1)wb.classList.remove('hidden');
                 st.innerHTML='<span style="color:#10b981">●</span> Memindai...';
@@ -512,9 +501,7 @@
             document.getElementById('camPlaceholder').style.display='flex';
         }
         async function toggleTorch(){if(!scanner||!scanning)return;try{let t=scanner.getRunningTrack?scanner.getRunningTrack():null;if(!t){let v=document.querySelector('#reader video');if(v?.srcObject)t=v.srcObject.getVideoTracks()[0]}if(t&&t.getCapabilities?.()?.torch){torchOn=!torchOn;await t.applyConstraints({advanced:[{torch:torchOn}]});document.getElementById('btnTorch').classList.toggle('torch-on',torchOn)}}catch(e){}}
-        async function switchCamera(){if(!scanner||!scanning||cams.length<2)return;try{await scanner.stop();let i=cams.findIndex(c=>c.id===curCam.id);curCam=cams[(i+1)%cams.length];
-            const config = { fps: 25, qrbox: function(w,h){ const m=Math.min(w,h); const s=Math.floor(m*0.75); return { width:s, height:s }; }, aspectRatio: 1.0, experimentalFeatures: { useBarCodeDetectorIfSupported: true } };
-            await scanner.start(curCam.id, config, (t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner();scrollToResult();},()=>{});document.getElementById('scanLaser').style.display='block'}catch(e){}}
+        async function switchCamera(){if(!scanner||!scanning||cams.length<2)return;try{await scanner.stop();let i=cams.findIndex(c=>c.id===curCam.id);curCam=cams[(i+1)%cams.length];await scanner.start(curCam.id,{fps:15,qrbox:{width:280,height:280},aspectRatio:1.0},(t,r)=>{scanRes=t;let fn='Unknown';try{if(r?.result?.format?.formatName)fn=r.result.format.formatName}catch(e){}if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(t,fn);saveHist(t,fn);stopScanner();scrollToResult();},()=>{});document.getElementById('scanLaser').style.display='block'}catch(e){}}
         function scanImageFile(input){if(!input.files||!input.files[0])return;let t=new Html5Qrcode("reader");t.scanFile(input.files[0],!0).then(x=>{scanRes=x;if(navigator.vibrate)navigator.vibrate([100,50,100]);showResult(x,'File Gambar');saveHist(x,'File Gambar');t.clear();toast('✅ Terdeteksi!');scrollToResult();}).catch(()=>{toast('Barcode tidak ditemukan','error');t.clear()});input.value=''}
 
         // ===== MULTI-SOURCE PRODUCT LOOKUP =====
